@@ -1,0 +1,64 @@
+"use client"
+import { useRouter } from "next/navigation"
+import React from "react"
+import useAuthState from "../hooks/useAuthState"
+import { Button, Spinner } from "@nextui-org/react"
+import validateOSUserPageAccess from "../functions/validateOSUserPageAccess"
+import { getOSUserHomePagePath } from "../functions/getOSUserHomePagePath"
+import Icon from "@mdi/react"
+import { mdiCloseCircleOutline, mdiLockOutline } from "@mdi/js"
+import useDynamicPathname from "@/~sml-os-kit/common/hooks/useDynamicPathname"
+
+export default function AuthWrapper({ children }: { children: React.ReactNode }) {
+  const pathname = useDynamicPathname()
+  const router = useRouter()
+  const auth = useAuthState()
+
+  if (auth.state === "error") {
+    return (
+      <div className="w-screen h-screen flex flex-col items-center justify-center space-y-2">
+        <Icon path={mdiCloseCircleOutline} className="w-12 text-default-500" />
+        <h1 className="text-2xl font-medium">Authentication Error</h1>
+        <Button variant="flat" onPress={() => router.push("/login")}>
+          Go to Login
+        </Button>
+      </div>
+    )
+  }
+
+  if (auth.state === "noUser") {
+    if (pathname === "/login" || pathname === "/handle-login") {
+      return <React.Fragment>{children}</React.Fragment>
+    } else {
+      router.replace("/login")
+    }
+  }
+  // hasUser
+  if (auth.state === "hasUser" && auth.user) {
+    const userHomePage = getOSUserHomePagePath(auth.user)
+    const hasAccess = validateOSUserPageAccess(auth.user, pathname)
+
+    if (!hasAccess) {
+      // no access - display no access to user
+      return (
+        <div className="w-screen h-screen flex flex-col items-center justify-center space-y-2">
+          <Icon path={mdiLockOutline} className="w-12 text-default-500" />
+          <h1 className="text-2xl font-medium">No access</h1>
+          <Button variant="flat" onPress={() => router.push(userHomePage)}>
+            Back to App
+          </Button>
+        </div>
+      )
+    } else {
+      // has access - display the page
+      return <React.Fragment>{children}</React.Fragment>
+    }
+  }
+
+  // LOADING
+  return (
+    <div className="w-screen h-screen flex flex-col items-center justify-center">
+      <Spinner />
+    </div>
+  )
+}
