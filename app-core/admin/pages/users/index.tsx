@@ -4,7 +4,7 @@ import usePageRouter from "@/~sml-os-kit/common/hooks/usePageRouter"
 import { getSiteConfig } from "@/~sml-os-kit/config/functions"
 import _queryOSUsers from "@/~sml-os-kit/modules/auth/functions/_queryOSUsers"
 import _queryUsers from "@/~sml-os-kit/~sml-firebase/auth/user-functions/_queryUsers"
-import { mdiMagnify } from "@mdi/js"
+import { mdiChevronDown, mdiMagnify } from "@mdi/js"
 import Icon from "@mdi/react"
 import {
   Avatar,
@@ -39,21 +39,33 @@ export default function OSUsersPage() {
   })
 
   return (
-    <div className="flex flex-col space-y-4 w-full lg:w-8/12 self-center">
+    <div className="flex flex-col space-y-4 w-full h-full lg:w-8/12 self-center p-4">
       <h1 className="font-semibold text-2xl">Manage Users</h1>
       <Table
         fullWidth
+        classNames={{
+          wrapper: "h-full",
+          base: "h-full",
+        }}
         selectionMode="single"
         topContentPlacement="outside"
         topContent={
-          <div className="flex flex-row justify-start space-x-2">
+          <div className="flex flex-wrap justify-start space-y-2 md:space-y-0 space-x-0 md:space-x-2">
             <Input
               variant="bordered"
               placeholder="Search"
-              className="grow w-auto"
+              className="grow w-full md:w-auto"
               startContent={<Icon path={mdiMagnify} className="w-6 text-default-500" />}
             />
-            <Button color="primary">Add Admin User</Button>
+            <div className="flex flex-row space-x-2">
+              <Button
+                variant="bordered"
+                endContent={<Icon path={mdiChevronDown} className="w-5" />}
+              >
+                Filter
+              </Button>
+              <Button color="primary">Add Admin User</Button>
+            </div>
           </div>
         }
       >
