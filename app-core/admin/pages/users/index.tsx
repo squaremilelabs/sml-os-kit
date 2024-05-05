@@ -43,6 +43,7 @@ export default function OSUsersPage() {
       <h1 className="font-semibold text-2xl">Manage Users</h1>
       <Table
         fullWidth
+        selectionMode="single"
         topContentPlacement="outside"
         topContent={
           <div className="flex flex-row justify-start space-x-2">
@@ -65,7 +66,7 @@ export default function OSUsersPage() {
         </TableHeader>
         <TableBody items={usersQuery?.data ?? []} isLoading={usersQuery.isLoading}>
           {(user) => (
-            <TableRow key={user.id} className="hover:bg-default-100 cursor-pointer rounded-2xl">
+            <TableRow key={user.id} className="cursor-pointer">
               {(columnKey) => {
                 const portal = siteConfig.portals?.find(
                   (portal) => portal.id === user.role?.portalId
