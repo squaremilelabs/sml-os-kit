@@ -53,7 +53,7 @@ export default function PortalLayout({ children }: { children?: React.ReactNode 
                   <Icon path={mdiMenu} className="w-6" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="p-4 flex flex-col items-stretch space-y-2 bg-content2 min-w-60">
+              <PopoverContent className="p-4 flex flex-col items-stretch space-y-2 bg-content2 min-w-72">
                 <PortalUser />
                 <ThemeSwitch withLabel />
               </PopoverContent>

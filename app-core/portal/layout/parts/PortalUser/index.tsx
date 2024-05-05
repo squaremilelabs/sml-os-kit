@@ -4,7 +4,15 @@ import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
 import usePortalAgent from "@/~sml-os-kit/modules/portal-agent/usePortalAgent"
 import { mdiChevronDown } from "@mdi/js"
 import Icon from "@mdi/react"
-import { Avatar, Button, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react"
+import {
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@nextui-org/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 
@@ -24,50 +32,26 @@ export default function PortalUser() {
 
   return (
     <>
-      <Popover
-        placement="bottom-end"
-        isOpen={popoverOpen}
-        onOpenChange={(open) => setPopoverOpen(open)}
-        isDismissable
-      >
-        <PopoverTrigger>
+      <Card className="rounded-lg bg-content2">
+        <CardBody>
+          <p className="text-lg font-medium px-1 truncate">{portalUser?.displayName}</p>
+          <p className="text-default-500 px-1 truncate">{portalUser?.email}</p>
           <Button
-            className={"justify-between p-2 space-2 h-fit"}
-            variant="flat"
             size="sm"
-            startContent={
-              portalUser ? (
-                <Avatar
-                  src={portalUser?.photoUrl}
-                  name={portalUser?.displayName}
-                  className="w-6 h-6 text-xs"
-                  showFallback
-                  getInitials={(name) => name[0]}
-                />
-              ) : null
-            }
-            endContent={<Icon path={mdiChevronDown} className="w-4" />}
-            disableRipple
+            variant="light"
+            className="px-1 py-1 h-fit w-fit min-w-0"
+            onPress={() => {
+              if (isAdminAgent) {
+                clearPortalUser()
+              } else {
+                handleLogout()
+              }
+            }}
           >
-            <span className="text-xs text-left grow truncate">
-              {portalUser ? portalUser?.email : "-"}
-            </span>
+            {isAdminAgent ? "Change User" : "Logout"}
           </Button>
-        </PopoverTrigger>
-        <PopoverContent className="p-2 w-52 flex flex-col space-y-2 items-stretch bg-content2">
-          {isAdminAgent ? (
-            <>
-              <Button size="sm" variant="light" onClick={clearPortalUser}>
-                {portalUser ? "Change" : "Select"} User
-              </Button>
-            </>
-          ) : (
-            <Button size="sm" variant="light" onPress={handleLogout}>
-              Logout
-            </Button>
-          )}
-        </PopoverContent>
-      </Popover>
+        </CardBody>
+      </Card>
     </>
   )
 }
