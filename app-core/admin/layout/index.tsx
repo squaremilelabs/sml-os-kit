@@ -47,7 +47,7 @@ export default function AdminLayout({ children }: { children?: React.ReactNode }
         {/* CANVAS */}
         <section className={`${navOpen ? "ml-72 md:-z-50" : "ml-0"} transition-all h-screen`}>
           <div
-            className={`${navOpen ? "pt-4" : "pt-[58px]"} p-4 transition-all h-screen bg-background h-full overflow-auto`}
+            className={`${navOpen ? "pt-4" : "pt-[58px]"} p-4 transition-all h-screen bg-background h-full overflow-auto flex flex-col`}
           >
             {children}
           </div>

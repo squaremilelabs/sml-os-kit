@@ -4,13 +4,13 @@ import { getOSUserHomePagePath } from "@/~sml-os-kit/modules/auth/functions/getO
 import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
 import { Spinner } from "@nextui-org/react"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useLayoutEffect } from "react"
 
 export default function LandingPage() {
   const router = useRouter()
   const auth = useAuthState()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (auth.state === "hasUser") {
       if (auth.user) {
         const homePage = getOSUserHomePagePath(auth.user)

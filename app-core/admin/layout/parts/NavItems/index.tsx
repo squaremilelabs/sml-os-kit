@@ -6,6 +6,7 @@ import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
 import { mdiArrowTopRight } from "@mdi/js"
 import Icon from "@mdi/react"
 import { Accordion, AccordionItem, Button, ScrollShadow, Spacer } from "@nextui-org/react"
+import Link from "next/link"
 
 export default function NavItems() {
   const auth = useAuthState()
@@ -50,7 +51,9 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
         {navItem.items?.map((innerNavItem) => {
           return (
             <Button
+              as={Link}
               key={innerNavItem.href}
+              href={innerNavItem.href}
               className="justify-between rounded-sm h-fit p-1 w-full pl-4 truncate"
               variant="light"
             >
@@ -74,6 +77,8 @@ function NavItem({ navItem }: { navItem: AdminNavItem }) {
   )
   return (
     <Button
+      as={Link}
+      href={navItem.href}
       className="rounded-none gap-0 text-foreground text-sm justify-start h-9 min-h-9 border-b-1 border-default-200 p-1 truncate"
       variant="light"
       startContent={startContent}

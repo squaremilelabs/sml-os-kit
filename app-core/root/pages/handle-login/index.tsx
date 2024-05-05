@@ -6,14 +6,14 @@ import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
 import { Spinner } from "@nextui-org/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useLayoutEffect } from "react"
 
 export default function HandleLoginPage() {
   const router = useRouter()
   const auth = useAuthState()
   const queryClient = useQueryClient()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (auth.state === "hasUser") {
       if (auth.user) {
         const homePage = getOSUserHomePagePath(auth.user)
@@ -24,7 +24,7 @@ export default function HandleLoginPage() {
 
   // Hanlde sign-in link
   const windowDep = typeof window
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       getIdTokenFromSignInLink(window.location.href)
         .then((idToken) => {

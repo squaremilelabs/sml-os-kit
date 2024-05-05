@@ -4,13 +4,13 @@ import LoginForm from "@/~sml-os-kit/modules/auth/components/LoginForm"
 import { getOSUserHomePagePath } from "@/~sml-os-kit/modules/auth/functions/getOSUserHomePagePath"
 import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useLayoutEffect } from "react"
 
 export default function LoginPage() {
   const router = useRouter()
   const auth = useAuthState()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (auth.state === "hasUser") {
       if (auth.user) {
         const homePage = getOSUserHomePagePath(auth.user)

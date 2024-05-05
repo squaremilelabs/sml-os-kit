@@ -1,4 +1,4 @@
-import AdminUser from "@/~sml-os-kit/app-structure/admin/layout/parts/AdminUser"
+import AdminUser from "@/~sml-os-kit/app-core/admin/layout/parts/AdminUser"
 import ThemeSwitch from "@/~sml-os-kit/common/components/ThemeSwitch"
 import TicketButton from "@/~sml-os-kit/modules/tickets/components/TicketButton"
 

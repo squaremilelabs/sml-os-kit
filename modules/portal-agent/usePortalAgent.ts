@@ -18,7 +18,7 @@ export default function usePortalAgent() {
   const portal = siteConfig.portals?.find((portal) => pathname.startsWith(portal.basePath))
   const auth = useAuthState()
   const [portalUser, setPortalUser] = useLocalStorage<OSUser | null>(
-    `portalUser_${portal?.id}`,
+    `portalUser:${portal?.id}`,
     null
   )
 
