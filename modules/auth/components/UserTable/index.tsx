@@ -86,7 +86,7 @@ export default function UserTable({
             onValueChange={setSearch}
           />
           <div className="flex flex-row space-x-2">
-            <Popover>
+            <Popover isDismissable>
               <PopoverTrigger>
                 <Button
                   variant="bordered"

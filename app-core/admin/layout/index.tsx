@@ -18,7 +18,7 @@ export default function AdminLayout({ children }: { children?: React.ReactNode }
       <main>
         {/* NAVIGATION */}
         <section
-          className={`fixed top-0 ${navOpen ? "left-0" : "left-[-768px]"} h-screen w-screen md:w-72 flex flex-col py-4 space-y-4 rounded-r-sm transition-all bg-content2 border-r-1 border-default-200 z-10`}
+          className={`fixed top-0 ${navOpen ? "left-0 opacity-100" : "left-[-768px] opacity-0"} h-screen w-screen md:w-72 flex flex-col py-4 space-y-4 rounded-r-sm transition-all bg-content2 border-r-1 border-default-200 z-10`}
         >
           <div className="flex flex-row items-center justify-between w-full space-x-1 px-4">
             <BrandLogotype />
@@ -45,9 +45,9 @@ export default function AdminLayout({ children }: { children?: React.ReactNode }
           </Button>
         </section>
         {/* CANVAS */}
-        <section className={`${navOpen ? "ml-72 md:-z-50" : "ml-0"} transition-all h-screen`}>
+        <section className={`${navOpen ? "ml-72" : "ml-0"} transition-all h-screen`}>
           <div
-            className={`${navOpen ? "pt-0" : "pt-[50px]"} transition-all h-screen bg-background h-full overflow-auto flex flex-col`}
+            className={`${navOpen ? "pt-0 opacity-0 md:opacity-100" : "pt-[50px]"} transition-all h-screen h-full overflow-auto flex flex-col`}
           >
             {children}
           </div>
