@@ -12,9 +12,9 @@ interface OsAPIInput<M extends APIMethod, E extends EndpointConfig> {
   asUserId?: string // for agent
 }
 
-interface OsAPIInputWithData<M extends APIMethod, E extends EndpointConfig>
+interface OsAPIInputWithPayload<M extends APIMethod, E extends EndpointConfig>
   extends OsAPIInput<M, E> {
-  data: E[M] extends { data: any } ? E[M]["data"] : never
+  payload: E[M] extends { payload: any } ? E[M]["payload"] : never
 }
 
 interface OsAPIResponse<M extends APIMethod, E extends EndpointConfig> {
@@ -22,14 +22,14 @@ interface OsAPIResponse<M extends APIMethod, E extends EndpointConfig> {
   data: E[M] extends { response: object } ? E[M]["response"] : unknown
 }
 
-function isInputWithData<M extends APIMethod, E extends EndpointConfig>(
-  input: OsAPIInput<M, E> | OsAPIInputWithData<M, E>
-): input is OsAPIInputWithData<M, E> {
-  return "data" in input
+function isInputWithPayload<M extends APIMethod, E extends EndpointConfig>(
+  input: OsAPIInput<M, E> | OsAPIInputWithPayload<M, E>
+): input is OsAPIInputWithPayload<M, E> {
+  return "payload" in input
 }
 
 export default async function osAPI<M extends APIMethod, E extends EndpointConfig = never>(
-  input: E[M] extends { data: any } ? OsAPIInputWithData<M, E> : OsAPIInput<M, E>
+  input: E[M] extends { payload: any } ? OsAPIInputWithPayload<M, E> : OsAPIInput<M, E>
 ): Promise<OsAPIResponse<M, E>> {
   try {
     // set up url from dynamic path
@@ -43,7 +43,7 @@ export default async function osAPI<M extends APIMethod, E extends EndpointConfi
     const config: AxiosRequestConfig = {
       method: input.method,
       url: url,
-      data: isInputWithData<M, E>(input) ? input.data : undefined,
+      data: isInputWithPayload<M, E>(input) ? input.payload : undefined,
       params: input.searchParams,
       withCredentials: true,
     }

@@ -14,21 +14,21 @@ export interface EndpointConfig {
   endpoint: string
   endpointParams?: { [key: string]: string } | never
   get?: {
-    searchParams: object | never
+    searchParams?: object | never
     response: object
   }
   put?: {
-    data: object
-    searchParams: object | never
+    payload: object
+    searchParams?: object | never
     response: object
   }
   post?: {
-    data: object
-    searchParams: object | never
+    payload: object
+    searchParams?: object | never
     response: object
   }
   delete?: {
-    searchParams: object | never
+    searchParams?: object | never
     response: object
   }
 }

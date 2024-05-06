@@ -13,5 +13,5 @@ export interface OSRole {
 }
 
 export interface OSUser extends BaseOSUser {
-  role: OSRole
+  role: OSRole | null
 }

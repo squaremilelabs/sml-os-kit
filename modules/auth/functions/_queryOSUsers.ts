@@ -8,7 +8,7 @@ import roles from "@/$sml-os-config/roles"
 export default async function _queryOSUsers(params: FirestoreQueryParams) {
   const baseUsersResult = await _queryUsers<BaseOSUser>(params)
   const usersWithRoles = baseUsersResult.map((user) => {
-    const role = roles.find((role) => role.id === user.roleId)
+    const role = roles.find((role) => role.id === user.roleId) ?? null
     return { ...user, role }
   })
   return usersWithRoles

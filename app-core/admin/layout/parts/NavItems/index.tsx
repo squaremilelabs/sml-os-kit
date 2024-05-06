@@ -9,6 +9,7 @@ import { Accordion, AccordionItem, Button, ScrollShadow, Spacer } from "@nextui-
 import Link from "next/link"
 import useNavState from "../useNavState"
 import useScreenSize from "@/~sml-os-kit/common/hooks/useScreenSize"
+import useDynamicPathname from "@/~sml-os-kit/common/hooks/useDynamicPathname"
 
 export default function NavItems() {
   const auth = useAuthState()
@@ -33,6 +34,7 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
   const { navOpen, setNavOpen } = useNavState()
   const screenSize = useScreenSize()
   const handlePress = navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined
+  const dynamicPathname = useDynamicPathname()
   return (
     <Accordion className="p-0 px-0 py-0">
       <AccordionItem
@@ -49,12 +51,14 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
         isCompact
       >
         {navItem.items?.map((innerNavItem) => {
+          const isActive = dynamicPathname === innerNavItem.href
           return (
             <Button
               as={Link}
               key={innerNavItem.href}
               href={innerNavItem.href}
               className="justify-between rounded-sm h-fit p-1 w-full pl-4 truncate"
+              color={isActive ? "primary" : "default"}
               variant="light"
               onPress={handlePress}
             >
@@ -74,12 +78,15 @@ function NavItem({ navItem }: { navItem: AdminNavItem }) {
   const { navOpen, setNavOpen } = useNavState()
   const screenSize = useScreenSize()
   const handlePress = navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined
+  const dynamicPathname = useDynamicPathname()
+  const isActive = dynamicPathname === navItem.href
 
   return (
     <Button
       as={Link}
       href={navItem.href}
-      className="rounded-none gap-0 text-foreground text-sm justify-start h-9 min-h-9 border-b-1 border-default-200 p-1 truncate"
+      className="rounded-none gap-0 text-sm justify-start h-9 min-h-9 border-b-1 border-default-200 p-1 truncate"
+      color={isActive ? "primary" : "default"}
       variant="light"
       startContent={<Icon path={navItem.iconPath ?? mdiCircleOutline} className="w-4 mr-2" />}
       onPress={handlePress}

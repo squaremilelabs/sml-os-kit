@@ -26,7 +26,7 @@ interface CallbackParams {
   user: OSUser | null | undefined
   agentUser?: OSUser | null | undefined
   authMethod: "accessToken" | "sessionCookie" | "system"
-  data?: any
+  payload?: any
   searchParams?: any
 }
 
@@ -96,8 +96,8 @@ export default async function apiRouteHandler<ExpectedSuccessJson>(
 
       // portal user attempting to hit the wrong endpoint
       const { role } = userResponse.user
-      if (role.userType === "portal") {
-        const portalConfig = siteConfig.portals?.find((portal) => portal.id === role.portalId)
+      if (role?.userType === "portal") {
+        const portalConfig = siteConfig.portals?.find((portal) => portal.id === role?.portalId)
         const invalidPortal = portalConfig && !url.pathname.startsWith(portalConfig.basePath)
         if (!portalConfig || invalidPortal) {
           return _constructNextAPIResponse<"error">(403, {
@@ -135,7 +135,7 @@ export default async function apiRouteHandler<ExpectedSuccessJson>(
     }
 
     // get callback request params
-    const data = await request
+    const payload = await request
       .json()
       .then((json) => json)
       .catch(() => ({}))
@@ -149,7 +149,7 @@ export default async function apiRouteHandler<ExpectedSuccessJson>(
       user,
       agentUser,
       authMethod,
-      data,
+      payload,
       searchParams,
     })
 
@@ -162,7 +162,7 @@ export default async function apiRouteHandler<ExpectedSuccessJson>(
         endpoint: url.pathname,
         status: callbackResponse.status,
         statusType: callbackResponse.type,
-        request: JSON.stringify(data),
+        request: JSON.stringify(payload),
         response: JSON.stringify(callbackResponse.json),
       }
       await prisma.apiLog.create({ data: logData })

@@ -31,12 +31,12 @@ interface Endpoint extends EndpointConfig {
     response: {}
   }
   put: {
-    data: {}
+    payload: {}
     searchParams: {}
     response: {}
   }
   post: {
-    data: {}
+    payload: {}
     searchParams: {}
     response: {}
   }
@@ -86,7 +86,7 @@ export async function PUT(request: NextRequest, nextParams: Endpoint["endpointPa
     try {
       const user = info.user
       const agentUser = info.agentUser
-      const data = info.data as Endpoint["put"]["data"]
+      const payload = info.payload as Endpoint["put"]["payload"]
       const endpointParams = nextParams
       const searchParams = info.searchParams as Endpoint["put"]["searchParams"]
       let response: Endpoint["put"]["response"] = {}
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest, nextParams: Endpoint["endpointP
     try {
       const user = info.user
       const agentUser = info.agentUser
-      const data = info.data as Endpoint["post"]["data"]
+      const payload = info.payload as Endpoint["post"]["payload"]
       const endpointParams = nextParams
       const searchParams = info.searchParams as Endpoint["post"]["searchParams"]
       let response: Endpoint["post"]["response"] = {}
