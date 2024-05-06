@@ -3,51 +3,68 @@ import apiRouteHandler from "@/~sml-os-kit/modules/api/handler"
 import { EndpointConfig } from "@/~sml-os-kit/modules/api/types"
 import { NextRequest } from "next/server"
 
-// replace NamedEndpoint
-// example: `/admin/api/customers/deactivate` => `AdminCustomersDeactivateEndpoint`
+/* 
+  Template Usage Steps:
+
+  1. Replace `NamedEndpoint` with the name of the endpoint
+     > Prefer specifity over brevity
+     > Examples:
+       > `/admin/api/customers` => `AdminCustomersEndpoint`
+       > `/portal/customer/api/update-profile` => `PortalCustomerUpdateProfileEndpoint`
+       > `/admin/api/customers/[customerId]` => `AdminCustomersByCustomerIDEndpoint`
+
+  2. Update the `Endpoint extends EndpointConfig`
+     > Set the `endpoint` to the current route path.
+       > Use NextJS notation for dynamic routes. For example: `/admin/api/customers/[customerId]`
+     > Remove or define `endpointParams` depending on if it is a dynamic route
+     > Remove or define each method (get, put, post, delete)
+       > If removing, make sure to also remove the corresponding function code
+*/
+
 export type NamedEndpoint = Endpoint
 
-interface Endpoint extends Partial<EndpointConfig> {
-  url: "/endpoint" // always replace
-  urlParams: {}
+interface Endpoint extends EndpointConfig {
+  endpoint: "/api"
+  endpointParams: {}
   get: {
-    params: {}
+    searchParams: {}
     response: {}
   }
   put: {
     data: {}
-    params: {}
+    searchParams: {}
     response: {}
   }
   post: {
     data: {}
-    params: {}
+    searchParams: {}
     response: {}
   }
   delete: {
-    params: {}
+    searchParams: {}
     response: {}
   }
 }
 
 /* --------------------- GET ---------------------- */
-export async function GET(request: NextRequest, nextParams: Endpoint["urlParams"]) {
+export async function GET(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return apiRouteHandler<Endpoint["get"]["response"]>({ request, skipLog: true }, async (info) => {
     try {
       const user = info.user
       const agentUser = info.agentUser
-      const params = nextParams
-      const searchParams = info.searchParams as Endpoint["get"]["params"]
-      // -- get logical --
-      //
-      //
-      //
-      //
-      // -- hey, nice logic --
+      const endpointParams = nextParams
+      const searchParams = info.searchParams as Endpoint["get"]["searchParams"]
+      let response: Endpoint["get"]["response"] = {}
+      /* 
+
+        Replace with logic
+        (make sure to set `response`)
+      
+      */
       return {
         type: "success",
         status: 200,
-        json: {},
+        json: response,
       }
     } catch (error: Error & any) {
       return {
@@ -64,24 +81,25 @@ export async function GET(request: NextRequest, nextParams: Endpoint["urlParams"
 }
 
 /* --------------------- PUT ---------------------- */
-export async function PUT(request: NextRequest, nextParams: Endpoint["urlParams"]) {
+export async function PUT(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return apiRouteHandler<Endpoint["put"]["response"]>({ request }, async (info) => {
     try {
       const user = info.user
       const agentUser = info.agentUser
       const data = info.data as Endpoint["put"]["data"]
-      const params = nextParams
-      const searchParams = info.searchParams as Endpoint["put"]["params"]
-      // -- get logical --
-      //
-      //
-      //
-      //
-      // -- hey, nice logic --
+      const endpointParams = nextParams
+      const searchParams = info.searchParams as Endpoint["put"]["searchParams"]
+      let response: Endpoint["put"]["response"] = {}
+      /* 
+
+        Replace with logic
+        (make sure to set `response`)
+      
+      */
       return {
         type: "success",
         status: 200,
-        json: {},
+        json: response,
       }
     } catch (error: Error & any) {
       return {
@@ -98,20 +116,21 @@ export async function PUT(request: NextRequest, nextParams: Endpoint["urlParams"
 }
 
 /* --------------------- POST ---------------------- */
-export async function POST(request: NextRequest, nextParams: Endpoint["urlParams"]) {
+export async function POST(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return apiRouteHandler<Endpoint["post"]["response"]>({ request }, async (info) => {
     try {
       const user = info.user
       const agentUser = info.agentUser
       const data = info.data as Endpoint["post"]["data"]
-      const params = nextParams
-      const searchParams = info.searchParams as Endpoint["post"]["params"]
-      // -- get logical --
-      //
-      //
-      //
-      //
-      // -- hey, nice logic --
+      const endpointParams = nextParams
+      const searchParams = info.searchParams as Endpoint["post"]["searchParams"]
+      let response: Endpoint["post"]["response"] = {}
+      /* 
+
+        Replace with logic
+        (make sure to set `response`)
+      
+      */
       return {
         type: "success",
         status: 200,
@@ -132,19 +151,20 @@ export async function POST(request: NextRequest, nextParams: Endpoint["urlParams
 }
 
 /* --------------------- DELETE ---------------------- */
-export async function DELETE(request: NextRequest, nextParams: Endpoint["urlParams"]) {
+export async function DELETE(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return apiRouteHandler<Endpoint["delete"]["response"]>({ request }, async (info) => {
     try {
       const user = info.user
       const agentUser = info.agentUser
-      const params = nextParams
-      const searchParams = info.searchParams as Endpoint["delete"]["params"]
-      // -- get logical --
-      //
-      //
-      //
-      //
-      // -- hey, nice logic --
+      const endpointParams = nextParams
+      const searchParams = info.searchParams as Endpoint["delete"]["searchParams"]
+      let response: Endpoint["delete"]["response"] = {}
+      /* 
+
+        Replace with logic
+        (make sure to set `response`)
+      
+      */
       return {
         type: "success",
         status: 200,

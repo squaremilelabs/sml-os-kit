@@ -4,9 +4,11 @@ import { getAgentName } from "@/~sml-os-kit/config/functions"
 
 interface OsAPIInput<M extends APIMethod, E extends EndpointConfig> {
   method: M
-  endpoint: E["url"]
-  params?: E["urlParams"] extends { [key: string]: string } ? E["urlParams"] : never
-  searchParams?: string
+  endpoint: E["endpoint"]
+  endpointParams?: E["endpointParams"] extends { [key: string]: string }
+    ? E["endpointParams"]
+    : never
+  searchParams?: E[M] extends { searchParams: object } ? E[M]["searchParams"] : never
   asUserId?: string // for agent
 }
 
@@ -32,8 +34,8 @@ export default async function osAPI<M extends APIMethod, E extends EndpointConfi
   try {
     // set up url from dynamic path
     let url = input.endpoint
-    if (input.params) {
-      Object.entries(input.params).forEach(([key, value]) => {
+    if (input.endpointParams) {
+      Object.entries(input.endpointParams).forEach(([key, value]) => {
         url = url.replace(`[${key}]`, value)
       })
     }

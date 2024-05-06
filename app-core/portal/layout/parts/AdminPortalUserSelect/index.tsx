@@ -6,7 +6,10 @@ import { FormEvent, useEffect, useState } from "react"
 export default function AdminPortalUserInputForm() {
   const { portalConfig, setPortalUserByEmail } = usePortalAgent()
   const [email, setEmail] = useState("")
-  const mutation = useMutation({ mutationFn: async (email: string) => setPortalUserByEmail(email) })
+  const mutation = useMutation({
+    mutationKey: [email],
+    mutationFn: async (email: string) => setPortalUserByEmail(email),
+  })
 
   const handleSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()

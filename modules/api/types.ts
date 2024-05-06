@@ -11,24 +11,24 @@ export type APISuccessStatusCode = 200 | 207
 export type APIMethod = "get" | "put" | "post" | "delete"
 
 export interface EndpointConfig {
-  url: string
-  urlParams?: object | never
+  endpoint: string
+  endpointParams?: { [key: string]: string } | never
   get?: {
-    params: object | never
+    searchParams: object | never
     response: object
   }
   put?: {
     data: object
-    params: object | never
+    searchParams: object | never
     response: object
   }
   post?: {
     data: object
-    params: object | never
+    searchParams: object | never
     response: object
   }
   delete?: {
-    params: object | never
+    searchParams: object | never
     response: object
   }
 }
