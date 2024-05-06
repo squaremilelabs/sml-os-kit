@@ -61,7 +61,7 @@ export default function PortalLayout({ children }: { children?: React.ReactNode 
           </div>
         </section>
         {/* CANVAS */}
-        <section className="pt-[58px] md:pt-0 overflow-auto w-full md:w-8/12 md:ml-[30vw] h-screen">
+        <section className="pt-[50px] md:pt-0 overflow-auto w-full md:w-8/12 md:ml-[30vw] h-screen">
           {portalUser ? (
             children
           ) : (
