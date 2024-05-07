@@ -120,14 +120,7 @@ export default function UserModal({
     },
   })
 
-  const handleCloseAndReset = () => {
-    formik.handleReset(null)
-    uploadPhotoMutation.reset()
-    changeStatusMutation.reset()
-    saveMutation.reset()
-    onClose()
-  }
-
+  // ROLES LOGIC
   const [roleSelectionType, setRoleSelectionType] = useState<"admin" | "portal">("admin")
 
   const adminRoles = roles.filter((role) => role.userType === "admin")
@@ -157,8 +150,22 @@ export default function UserModal({
           ? "Update User"
           : "User"
 
+  const handleCloseAndReset = () => {
+    formik.handleReset(null)
+    uploadPhotoMutation.reset()
+    changeStatusMutation.reset()
+    saveMutation.reset()
+    onClose()
+  }
+
   return (
-    <Modal isOpen={isOpen} onClose={handleCloseAndReset} isDismissable={false}>
+    <Modal
+      isOpen={isOpen}
+      onClose={handleCloseAndReset}
+      isDismissable={false}
+      scrollBehavior="outside"
+      placement="top-center"
+    >
       <ModalContent>
         {() => (
           <>
