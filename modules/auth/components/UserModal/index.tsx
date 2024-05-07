@@ -28,7 +28,7 @@ import uploadFile from "@/~sml-os-kit/~sml-firebase/storage/functions/uploadFile
 import UserAvatar from "../UserAvatar"
 import FileUploadButton from "@/~sml-os-kit/common/components/FileUploadButton"
 import Icon from "@mdi/react"
-import { mdiAlertCircleOutline } from "@mdi/js"
+import { mdiAlertCircleOutline, mdiLockOutline } from "@mdi/js"
 import { Key, useEffect, useLayoutEffect, useState } from "react"
 import roles from "@/$sml-os-config/roles"
 import * as Yup from "yup"
@@ -136,6 +136,8 @@ export default function UserModal({
     }
   }, [user, enforcedRoleId])
 
+  const isNameDisabled = mode === "viewOnly"
+  const isEmailDisabled = mode === "viewOnly" || mode === "updateSelf"
   const isRoleSelectionDisabled =
     mode === "viewOnly" || mode === "updateSelf" || !!user?.role?.portalId || enforcedRoleId
 
@@ -237,17 +239,20 @@ export default function UserModal({
                     name="displayName"
                     value={formik.values.displayName}
                     onChange={formik.handleChange}
-                    isReadOnly={mode === "viewOnly"}
+                    isReadOnly={isNameDisabled}
+                    classNames={{
+                      input: isNameDisabled ? "cursor-not-allowed" : undefined,
+                    }}
                   />
                   <Input
                     label="Email"
                     name="email"
                     value={formik.values.email}
                     onChange={formik.handleChange}
-                    isReadOnly={mode === "viewOnly" || mode === "updateSelf"}
-                    description={
-                      mode === "updateSelf" ? "Please ask an admin to update your email" : undefined
-                    }
+                    isReadOnly={isEmailDisabled}
+                    classNames={{
+                      input: isEmailDisabled ? "cursor-not-allowed" : undefined,
+                    }}
                   />
                   <Select
                     name="roleId"
@@ -255,10 +260,18 @@ export default function UserModal({
                     selectionMode="single"
                     selectedKeys={[formik.values.roleId as Key]}
                     onChange={formik.handleChange}
+                    selectorIcon={isRoleSelectionDisabled ? <div /> : undefined}
                     classNames={{
                       trigger: isRoleSelectionDisabled ? "cursor-not-allowed" : undefined,
                     }}
                     isOpen={isRoleSelectionDisabled ? false : undefined} // used to disable the selection without the isDisabled faded style
+                    description={
+                      mode === "update" && isRoleSelectionDisabled
+                        ? "You cannot change an existing portal user's role from here."
+                        : mode === "updateSelf"
+                          ? `For security purposes, your login email & role can only be updated from the "Manage Users" page by an Admin.`
+                          : undefined
+                    }
                   >
                     {selectableRoles.map((role) => {
                       return (

@@ -17,6 +17,7 @@ import {
   Select,
   SelectItem,
   useDisclosure,
+  Checkbox,
 } from "@nextui-org/react"
 import UserAvatar from "../UserAvatar"
 import { useQuery } from "@tanstack/react-query"
@@ -39,19 +40,23 @@ export default function UserTable({
 }) {
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState({
-    roleIds: new Set<Key>([]),
-    statuses: new Set<Key>(["active"]),
+    includePortalUsers: false,
+    includeDeactivated: false,
   })
 
   const usersQuery = useQuery({
-    queryKey: ["users", Array.from(filter.roleIds), Array.from(filter.statuses)],
+    queryKey: ["users", filter],
     queryFn: async () => {
       return _queryOSUsers({
         where: [
-          filter.roleIds.size ? ["roleId", "in", Array.from(filter.roleIds)] : null,
-          filter.statuses.size === 1
-            ? ["isDeactivated", "==", filter.statuses.has("active") ? false : true]
-            : null,
+          filter.includePortalUsers
+            ? null
+            : [
+                "roleId",
+                "in",
+                roles.filter((role) => role.userType === "admin").map((role) => role.id),
+              ],
+          filter.includeDeactivated ? null : ["isDeactivated", "==", false],
         ],
         orderBy: [["displayName", "asc"]],
       })
@@ -115,46 +120,25 @@ export default function UserTable({
                     Filter
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="p-4 space-y-4">
-                  <Select
-                    label="Role"
-                    selectionMode="multiple"
-                    className="min-w-60"
-                    placeholder="All Roles"
-                    selectedKeys={filter.roleIds}
-                    onSelectionChange={(roleIds) => {
-                      if (typeof roleIds !== "string") {
-                        setFilter((prev) => ({ ...prev, roleIds }))
+                <PopoverContent>
+                  <div className="flex flex-col items-start justify-center space-y-2 p-4">
+                    <Checkbox
+                      isSelected={filter.includePortalUsers}
+                      onValueChange={(isSelected) =>
+                        setFilter((prev) => ({ ...prev, includePortalUsers: isSelected }))
                       }
-                    }}
-                  >
-                    {roles.map((role) => {
-                      return (
-                        <SelectItem key={role.id} value={role.id}>
-                          {role.label}
-                        </SelectItem>
-                      )
-                    })}
-                  </Select>
-                  <Select
-                    label="Status"
-                    selectionMode="multiple"
-                    className="min-w-60"
-                    placeholder="All Statuses"
-                    selectedKeys={filter.statuses}
-                    onSelectionChange={(statuses) => {
-                      if (typeof statuses !== "string") {
-                        setFilter((prev) => ({ ...prev, statuses }))
+                    >
+                      Include Portal Users
+                    </Checkbox>
+                    <Checkbox
+                      isSelected={filter.includeDeactivated}
+                      onValueChange={(isSelected) =>
+                        setFilter((prev) => ({ ...prev, includeDeactivated: isSelected }))
                       }
-                    }}
-                  >
-                    <SelectItem key="active" value="active">
-                      Active
-                    </SelectItem>
-                    <SelectItem key="deactivated" value="deactivated">
-                      Deactivated
-                    </SelectItem>
-                  </Select>
+                    >
+                      Include Deactivated
+                    </Checkbox>
+                  </div>
                 </PopoverContent>
               </Popover>
               <Button color="primary" onPress={() => modalOnOpen()}>
