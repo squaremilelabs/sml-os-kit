@@ -23,6 +23,7 @@ import { BaseOSUser } from "@/~sml-os-kit/modules/auth/types"
 import signOut from "@/~sml-os-kit/~sml-firebase/auth/auth-functions/signOut"
 import uploadFile from "@/~sml-os-kit/~sml-firebase/storage/functions/uploadFile"
 import FileUploadButton from "@/~sml-os-kit/common/components/FileUploadButton"
+import UserModal from "@/~sml-os-kit/modules/auth/components/UserModal"
 
 export default function AdminUser() {
   const { user } = useAuthState()
@@ -82,7 +83,7 @@ export default function AdminUser() {
           </Button>
         </PopoverContent>
       </Popover>
-      <AdminUserModal {...modalProps} />
+      <UserModal mode="updateSelf" isOpen={modalProps.isOpen} onClose={modalProps.onClose} />
     </>
   )
 }

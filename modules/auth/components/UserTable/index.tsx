@@ -19,12 +19,11 @@ import {
   useDisclosure,
 } from "@nextui-org/react"
 import UserAvatar from "../UserAvatar"
-import { getSiteConfig } from "@/~sml-os-kit/config/functions"
 import { useQuery } from "@tanstack/react-query"
 import _queryOSUsers from "../../functions/_queryOSUsers"
 import { Key, useMemo, useState } from "react"
 import roles from "@/$sml-os-config/roles"
-import UserModal from "./parts/UserModal"
+import UserModal from "../UserModal"
 
 const columns = [
   { key: "name", label: "Name" },
@@ -70,7 +69,7 @@ export default function UserTable({
     [search, usersQuery]
   )
 
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
+  const [selectedUserId, setSelectedUserId] = useState<string | undefined>(undefined)
   const { isOpen: isModalOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure()
 
   const handleUserSelect = (userId: string) => {
@@ -79,13 +78,14 @@ export default function UserTable({
   }
 
   const handleModalClose = () => {
-    setSelectedUserId(null)
+    setSelectedUserId(undefined)
     modalOnClose()
   }
 
   return (
     <>
       <Table
+        aria-label="Users table"
         fullWidth
         classNames={tableClassNames}
         selectionMode="single"
@@ -201,7 +201,12 @@ export default function UserTable({
           )}
         </TableBody>
       </Table>
-      <UserModal isOpen={isModalOpen} onClose={handleModalClose} userId={selectedUserId} />
+      <UserModal
+        mode={selectedUserId ? "update" : "create"}
+        userId={selectedUserId}
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+      />
     </>
   )
 }

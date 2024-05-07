@@ -8,12 +8,18 @@ export default function UserAvatar({
   user,
   tooltipPlacement = "left",
   disableTooltip,
+  size = "sm",
   ...avatarProps
 }: {
-  user: OSUser | undefined | null
+  user: Partial<OSUser> | undefined | null
   tooltipPlacement?: TooltipProps["placement"]
   disableTooltip?: boolean
-} & Omit<AvatarProps, "name" | "src" | "getInitials">) {
+  size?: "xs" | "sm" | "md" | "lg" | "xl"
+} & Omit<AvatarProps, "name" | "src" | "getInitials" | "fallback" | "size">) {
+  const isNativeSize = ["sm", "md", "lg"].includes(size)
+  const xsClassName = "w-6 h-6 text-tiny"
+  const xlClassName = "w-20 h-20 text-xl"
+
   return (
     <Tooltip
       content={user?.email ?? "Unknown user"}
@@ -23,7 +29,23 @@ export default function UserAvatar({
       <Avatar
         name={user?.displayName}
         src={user?.photoUrl}
-        getInitials={(val) => val[0]}
+        size={isNativeSize ? (size as AvatarProps["size"]) : undefined}
+        className={
+          !isNativeSize
+            ? size === "xs"
+              ? xsClassName
+              : size === "xl"
+                ? xlClassName
+                : undefined
+            : undefined
+        }
+        fallback={
+          user?.displayName ? (
+            user.displayName[0]
+          ) : (
+            <Icon path={mdiAccountOutline} className="w-full h-full" />
+          )
+        }
         {...avatarProps}
       />
     </Tooltip>
