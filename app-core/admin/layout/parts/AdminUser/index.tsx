@@ -138,7 +138,13 @@ function AdminUserModal({ isOpen, onOpenChange }: ReturnType<typeof useDisclosur
   }
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur" placement="top-center">
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      backdrop="blur"
+      placement="top-center"
+      scrollBehavior="outside"
+    >
       <ModalContent>
         {(onClose) => (
           <>

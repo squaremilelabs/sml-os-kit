@@ -124,7 +124,7 @@ export default function UserModal({
   const isSaveDisabled = !!hasMissingValues || (!!user && !hasChanges)
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} placement="center">
+    <Modal isOpen={isOpen} onClose={onClose} placement="top-center" scrollBehavior="outside">
       <ModalContent className={userQuery.isLoading ? `blur-sm` : undefined}>
         {() => (
           <>
