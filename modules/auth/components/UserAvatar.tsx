@@ -1,6 +1,8 @@
 import { Avatar, AvatarProps } from "@nextui-org/avatar"
 import { Tooltip, TooltipProps } from "@nextui-org/tooltip"
 import { OSUser } from "../types"
+import Icon from "@mdi/react"
+import { mdiAccountOutline } from "@mdi/js"
 
 export default function UserAvatar({
   user,
@@ -22,7 +24,6 @@ export default function UserAvatar({
         name={user?.displayName}
         src={user?.photoUrl}
         getInitials={(val) => val[0]}
-        showFallback
         {...avatarProps}
       />
     </Tooltip>

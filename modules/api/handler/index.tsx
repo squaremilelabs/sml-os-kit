@@ -12,7 +12,7 @@ import _getOSUserFromAccessToken from "../../auth/functions/_getOSUserFromAccess
 import _getOSUserFromSessionCookie from "../../auth/functions/_getOSUserFromSessionCookie"
 import jsonifyError from "@/~sml-os-kit/common/functions/jsonifyError"
 import _getOSUser from "../../auth/functions/_getOSUser"
-import prisma from "@/prisma/client"
+import prisma from "@/lib/prisma/client"
 
 // provided to API handler
 interface HandlerParams {

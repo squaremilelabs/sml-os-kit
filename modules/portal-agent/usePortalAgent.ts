@@ -46,6 +46,7 @@ export default function usePortalAgent() {
         where: [
           ["email", "==", email],
           ["roleId", "==", portalRole?.id],
+          ["isDeactivated", "!=", true],
         ],
       })
       const baseUser = usersResult[0]
