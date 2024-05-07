@@ -68,7 +68,7 @@ export default function UserModal({
     validationSchema: Yup.object({
       displayName: Yup.string().required("Required"),
       email: Yup.string().email("Invalid email").required("Required"),
-      photoUrl: Yup.string().url("Invalid photo"),
+      photoUrl: Yup.string().optional(),
       roleId: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
@@ -213,7 +213,12 @@ export default function UserModal({
                           {formik.values.photoUrl ? "Change Photo" : "Upload Photo"}
                         </FileUploadButton>
                         {formik.values.photoUrl ? (
-                          <Button onPress={() => formik.setFieldValue("photoUrl", null)}>
+                          <Button
+                            onPress={() => {
+                              formik.setFieldValue("photoUrl", null)
+                              formik.setFieldTouched("photoUrl")
+                            }}
+                          >
                             Remove Photo
                           </Button>
                         ) : null}
