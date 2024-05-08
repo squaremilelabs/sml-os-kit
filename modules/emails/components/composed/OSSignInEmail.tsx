@@ -25,6 +25,11 @@ export default function OSSignInEmail({
           link can sign into {brandConfig.appName} as you. This link will expire after 1 use, or
           after 6 hours.
         </Text>
+        <Text className="leading-snug">
+          <strong>Signing in from a mobile device?</strong> Some devices display a preview when you
+          press down on a link, or opens the page in a temporary browser. To ensure you stay logged
+          in on this device, you should copy and paste the link into your mobile browser.
+        </Text>
       </Section>
     </OSEmailLayout>
   )
