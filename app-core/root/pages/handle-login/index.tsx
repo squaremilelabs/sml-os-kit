@@ -36,6 +36,7 @@ export default function HandleLoginPage() {
         })
         .catch((error) => {
           console.error(error)
+          queryClient.invalidateQueries({ queryKey: ["auth"] })
         })
     }
   }, [windowDep, queryClient])

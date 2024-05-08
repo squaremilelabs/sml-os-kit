@@ -25,6 +25,7 @@ import _queryOSUsers from "../../functions/_queryOSUsers"
 import { Key, useMemo, useState } from "react"
 import roles from "@/$sml-os-config/roles"
 import UserModal from "../UserModal"
+import RowsSkeleton from "@/~sml-os-kit/common/components/RowsSkeleton"
 
 const columns = [
   { key: "name", label: "Name" },
@@ -155,7 +156,11 @@ export default function UserTable({
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={displayedUsers} isLoading={usersQuery.isLoading}>
+        <TableBody
+          items={displayedUsers}
+          isLoading={usersQuery.isLoading}
+          loadingContent={<RowsSkeleton />}
+        >
           {(user) => (
             <TableRow key={user.id} className="cursor-pointer">
               {(columnKey) => {

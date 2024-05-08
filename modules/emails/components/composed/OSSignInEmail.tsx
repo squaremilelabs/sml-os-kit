@@ -13,14 +13,17 @@ export default function OSSignInEmail({
     <OSEmailLayout previewText={`Use this link to sign into ${brandConfig.appName}`}>
       <Section className="px-[24px]">
         <Text>Hi {displayName},</Text>
-        <Text className="mb-0">
-          <strong>Here is your sign-in link to {brandConfig.appName}</strong>
+        <Text className="mb-[8px]">
+          Here is your sign-in link to{" "}
+          <strong className="text-primary">{brandConfig.appName}</strong>
         </Text>
-        <Link href={signInLink} className="text-zinc-600 underline text-sm mt-0">
+        <Link href={signInLink} className="text-zinc-600 underline text-sm">
           {signInLink}
         </Link>
-        <Text>
-          Note that this link will only work one time on one device, and will expire in 1 hour.
+        <Text className="leading-snug">
+          Please keep this secure and <strong>do not forward this email</strong>. Anyone with this
+          link can sign into {brandConfig.appName} as you. This link will expire after 1 use, or
+          after 6 hours.
         </Text>
       </Section>
     </OSEmailLayout>

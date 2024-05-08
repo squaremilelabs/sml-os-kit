@@ -6,6 +6,7 @@ import _sendEmail from "../../emails/functions/sendEmail"
 import OSSignInEmail from "../../emails/components/composed/OSSignInEmail"
 import _FirebaseAdmin from "@/~sml-os-kit/~sml-firebase/firebase/_FirebaseAdmin"
 import brandConfig from "@/$sml-os-config/brand"
+import { DateTime } from "luxon"
 
 export default async function _sendSignInLink(email: string) {
   const { auth } = new _FirebaseAdmin()
@@ -13,8 +14,9 @@ export default async function _sendSignInLink(email: string) {
   const hostUrl = headers().get("origin")
   const redirectUrl = hostUrl + "/handle-login"
   const signInLink = await _generateSignInlink(redirectUrl, email)
+  const now = DateTime.now()
   return _sendEmail(OSSignInEmail({ displayName: user.displayName as string, signInLink }), {
     to: email,
-    subject: `Sign-in Link to ${brandConfig.appName}`,
+    subject: `Sign-in to ${brandConfig.appName} [Requested: ${now.toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS)}]`,
   })
 }
