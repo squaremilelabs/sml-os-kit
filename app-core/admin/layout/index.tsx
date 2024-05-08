@@ -9,6 +9,14 @@ import Icon from "@mdi/react"
 import { mdiMenu, mdiMenuClose } from "@mdi/js"
 import { usePathname } from "next/navigation"
 import AuthWrapper from "@/~sml-os-kit/modules/auth/wrapper"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: {
+    default: "Admin",
+    template: `%s | Admin`,
+  },
+}
 
 export default function AdminLayout({ children }: { children?: React.ReactNode }) {
   const { navOpen, setNavOpen } = useNavState()

@@ -1,25 +1,12 @@
 import signOut from "@/~sml-os-kit/~sml-firebase/auth/auth-functions/signOut"
 import _clearSessionCookie from "@/~sml-os-kit/modules/auth/functions/_clearSessionCookie"
-import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
 import usePortalAgent from "@/~sml-os-kit/modules/portal-agent/usePortalAgent"
-import { mdiChevronDown } from "@mdi/js"
-import Icon from "@mdi/react"
-import {
-  Avatar,
-  Button,
-  Card,
-  CardBody,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@nextui-org/react"
+import { Button, Card, CardBody } from "@nextui-org/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 
 export default function PortalUser() {
   const { isAdminAgent, portalUser, clearPortalUser } = usePortalAgent()
-
-  const [popoverOpen, setPopoverOpen] = useState(false)
 
   const queryClient = useQueryClient()
   const handleLogout = async () => {

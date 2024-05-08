@@ -2,7 +2,7 @@
 
 import _generateSignInlink from "@/~sml-os-kit/~sml-firebase/auth/auth-functions/_generateSignInLink"
 import { headers } from "next/headers"
-import _sendEmail from "../../emails/functions/sendEmail"
+import _sendEmail from "../../emails/functions/_sendEmail"
 import OSSignInEmail from "../../emails/components/composed/OSSignInEmail"
 import _FirebaseAdmin from "@/~sml-os-kit/~sml-firebase/firebase/_FirebaseAdmin"
 import brandConfig from "@/$sml-os-config/brand"

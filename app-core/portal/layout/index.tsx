@@ -14,7 +14,7 @@ import usePortalAgent from "@/~sml-os-kit/modules/portal-agent/usePortalAgent"
 import AdminPortalUserSelect from "./parts/AdminPortalUserSelect"
 
 export default function PortalLayout({ children }: { children?: React.ReactNode }) {
-  const { isAdminAgent, portalUser } = usePortalAgent()
+  const { isAdminAgent, portalUser } = usePortalAgent({ initializeListeners: true })
   const [title, setTitle] = useState("")
   const pathname = usePathname()
 

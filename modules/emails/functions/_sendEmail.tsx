@@ -1,4 +1,5 @@
 "use server"
+
 import formData from "form-data"
 import Mailgun from "mailgun.js"
 import { renderAsync } from "@react-email/render"
