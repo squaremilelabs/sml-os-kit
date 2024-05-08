@@ -38,7 +38,7 @@ export default function LoginForm() {
             Resend
           </Button>
           {/* TODO: remove demo flow */}
-          {mutation.data ? (
+          {/* {mutation.data ? (
             <Button
               as={Link}
               href={mutation.data}
@@ -48,7 +48,7 @@ export default function LoginForm() {
             >
               Proceed with Demo
             </Button>
-          ) : null}
+          ) : null} */}
         </>
       ) : (
         <>

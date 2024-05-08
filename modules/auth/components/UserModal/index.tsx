@@ -167,6 +167,7 @@ export default function UserModal({
       isDismissable={false}
       scrollBehavior="outside"
       placement="top-center"
+      backdrop="blur"
     >
       <ModalContent>
         {() => (
