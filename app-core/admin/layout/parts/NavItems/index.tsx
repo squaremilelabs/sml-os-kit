@@ -10,6 +10,7 @@ import Link from "next/link"
 import useNavState from "../useNavState"
 import useScreenSize from "@/~sml-os-kit/common/hooks/useScreenSize"
 import useDynamicPathname from "@/~sml-os-kit/common/hooks/useDynamicPathname"
+import { twMerge } from "tailwind-merge"
 
 export default function NavItems() {
   const auth = useAuthState()
@@ -57,8 +58,10 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
               as={Link}
               key={innerNavItem.href}
               href={innerNavItem.href}
-              className="justify-between rounded-sm h-fit p-1 w-full pl-4 truncate"
-              color={isActive ? "primary" : "default"}
+              className={twMerge(
+                "justify-between rounded-sm h-fit p-1 w-full pl-4 truncate",
+                isActive ? "font-semibold text-primary" : null
+              )}
               variant="light"
               onPress={handlePress}
             >
@@ -85,8 +88,10 @@ function NavItem({ navItem }: { navItem: AdminNavItem }) {
     <Button
       as={Link}
       href={navItem.href}
-      className="rounded-none gap-0 text-sm justify-start h-9 min-h-9 border-b-1 border-default-200 p-1 truncate"
-      color={isActive ? "primary" : "default"}
+      className={twMerge(
+        "rounded-none gap-0 text-sm justify-start h-9 min-h-9 border-b-1 border-default-200 p-1 truncate",
+        isActive ? "font-semibold text-primary" : null
+      )}
       variant="light"
       startContent={<Icon path={navItem.iconPath ?? mdiCircleOutline} className="w-4 mr-2" />}
       onPress={handlePress}

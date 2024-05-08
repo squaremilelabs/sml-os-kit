@@ -25,7 +25,7 @@ export default function TicketButton({ className }: { className?: string }) {
         endContent={<Icon path={mdiArrowTopRight} className="w-4 text-default-500" />}
         onPress={onOpen}
       >
-        <span className="grow text-left">SML Tickets</span>
+        <span className="grow text-left">Roadmap</span>
       </Button>
       <TicketModal isOpen={isOpen} onClose={onClose} />
     </>
