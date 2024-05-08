@@ -57,7 +57,13 @@ export default function UserModal({
   })
   const user = userQuery.data
 
+  // Check out the formik tutorial: https://formik.org/docs/tutorial
   const formik = useFormik<CreateUserInput | UpdateUserInput>({
+    /* 
+      Instead of setting up a useState + useEffect for the form fields,
+      we can pass the data directly to `initialValues`, and set
+      `enableReinitialize` to `true` which handles this for us.
+    */
     initialValues: {
       displayName: user?.displayName ?? "",
       email: user?.email ?? "",
@@ -65,6 +71,11 @@ export default function UserModal({
       roleId: user?.roleId ?? enforcedRoleId ?? undefined,
     },
     enableReinitialize: true,
+    /* 
+      Use `validationSchema` + `yup` for basic validations.
+      Can also use `validate` which takes a handler, for more complex business-logic validations
+      https://formik.org/docs/tutorial#validation
+    */
     validationSchema: Yup.object({
       displayName: Yup.string().required("Required"),
       email: Yup.string().email("Invalid email").required("Required"),
@@ -121,12 +132,12 @@ export default function UserModal({
   })
 
   // ROLES LOGIC
+  /* 
+    Use-case for when there are elements that control the UI state 
+    of the form, but is not part of the actual form data (so shouldn't
+    be comingled with formik).
+  */
   const [roleSelectionType, setRoleSelectionType] = useState<"admin" | "portal">("admin")
-
-  const adminRoles = roles.filter((role) => role.userType === "admin")
-  const portalRoles = roles.filter((role) => role.userType === "portal")
-  const selectableRoles = roleSelectionType === "admin" ? adminRoles : portalRoles
-
   useLayoutEffect(() => {
     if (user) {
       setRoleSelectionType(user.role?.userType as typeof roleSelectionType)
@@ -136,6 +147,11 @@ export default function UserModal({
     }
   }, [user, enforcedRoleId])
 
+  const adminRoles = roles.filter((role) => role.userType === "admin")
+  const portalRoles = roles.filter((role) => role.userType === "portal")
+  const selectableRoles = roleSelectionType === "admin" ? adminRoles : portalRoles
+
+  // Various helpers for UI
   const isNameDisabled = mode === "viewOnly"
   const isEmailDisabled = mode === "viewOnly" || mode === "updateSelf"
   const isRoleSelectionDisabled =
@@ -159,6 +175,8 @@ export default function UserModal({
     saveMutation.reset()
     onClose()
   }
+
+  console.log(formik)
 
   return (
     <Modal
@@ -237,9 +255,15 @@ export default function UserModal({
                   </div>
                   <Input
                     label="Display Name"
+                    id="displayName"
                     name="displayName"
                     value={formik.values.displayName}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={!!formik.errors.displayName && !!formik.touched.displayName} //only show as invalid if touched
+                    errorMessage={
+                      formik.touched.displayName ? formik.errors.displayName : undefined
+                    }
                     isReadOnly={isNameDisabled}
                     classNames={{
                       input: isNameDisabled ? "cursor-not-allowed" : undefined,
@@ -247,20 +271,28 @@ export default function UserModal({
                   />
                   <Input
                     label="Email"
+                    id="email"
                     name="email"
                     value={formik.values.email}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={!!formik.errors.email && !!formik.touched.email} //only show as invalid if touched
+                    errorMessage={formik.touched.email ? formik.errors.email : undefined}
                     isReadOnly={isEmailDisabled}
                     classNames={{
                       input: isEmailDisabled ? "cursor-not-allowed" : undefined,
                     }}
                   />
                   <Select
-                    name="roleId"
                     label={roleSelectionType === "admin" ? "Admin Role" : "Portal Role"}
+                    id="roleId"
+                    name="roleId"
                     selectionMode="single"
-                    selectedKeys={[formik.values.roleId as Key]}
+                    selectedKeys={[(formik.values.roleId as Key) ?? ""]}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={!!formik.errors.roleId && !!formik.touched.roleId}
+                    errorMessage={formik.touched.roleId ? formik.errors.roleId : undefined}
                     selectorIcon={isRoleSelectionDisabled ? <div /> : undefined}
                     classNames={{
                       trigger: isRoleSelectionDisabled ? "cursor-not-allowed" : undefined,
