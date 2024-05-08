@@ -3,7 +3,6 @@ import {
   Button,
   ButtonGroup,
   Checkbox,
-  CheckboxGroup,
   Chip,
   Divider,
   Input,
@@ -28,8 +27,8 @@ import uploadFile from "@/~sml-os-kit/~sml-firebase/storage/functions/uploadFile
 import UserAvatar from "../UserAvatar"
 import FileUploadButton from "@/~sml-os-kit/common/components/FileUploadButton"
 import Icon from "@mdi/react"
-import { mdiAlertCircleOutline, mdiLockOutline } from "@mdi/js"
-import { Key, useEffect, useLayoutEffect, useState } from "react"
+import { mdiAlertCircleOutline } from "@mdi/js"
+import { Key, useLayoutEffect, useState } from "react"
 import roles from "@/$sml-os-config/roles"
 import * as Yup from "yup"
 
@@ -87,6 +86,13 @@ export default function UserModal({
     },
   })
 
+  /* 
+    Tanstack Mutations make it so that we don't need to set up
+    states for loading, errors, etc.
+  */
+
+  // In this component we use a pattern of invalidating queries
+  // after each mutation, which can be expensive for other use cases.
   const queryClient = useQueryClient()
 
   const uploadPhotoMutation = useMutation({
@@ -135,9 +141,12 @@ export default function UserModal({
   /* 
     Use-case for when there are elements that control the UI state 
     of the form, but is not part of the actual form data (so shouldn't
-    be comingled with formik).
+    be comingled with formik - and React state + effects are acceptable)
   */
   const [roleSelectionType, setRoleSelectionType] = useState<"admin" | "portal">("admin")
+
+  // Reminder that useLayoutEffect is like useEffect, but only runs
+  // after the component is painted. This helps avoid UI flashing.
   useLayoutEffect(() => {
     if (user) {
       setRoleSelectionType(user.role?.userType as typeof roleSelectionType)
@@ -175,8 +184,6 @@ export default function UserModal({
     saveMutation.reset()
     onClose()
   }
-
-  console.log(formik)
 
   return (
     <Modal
