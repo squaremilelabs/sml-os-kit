@@ -7,11 +7,6 @@ import { Spinner } from "@nextui-org/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useLayoutEffect } from "react"
-import { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Logging in",
-}
 
 export default function HandleLoginPage() {
   const router = useRouter()

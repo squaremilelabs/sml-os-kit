@@ -1,11 +1,6 @@
 "use client"
 
 import UserTable from "@/~sml-os-kit/modules/auth/components/UserTable"
-import { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Users",
-}
 
 export default function OSUsersPage() {
   return (

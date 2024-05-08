@@ -3,13 +3,8 @@ import Applogotype from "@/~sml-os-kit/common/components/AppLogotype"
 import LoginForm from "@/~sml-os-kit/modules/auth/components/LoginForm"
 import { getOSUserHomePagePath } from "@/~sml-os-kit/modules/auth/functions/getOSUserHomePagePath"
 import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
-import { Metadata } from "next"
 import { useRouter } from "next/navigation"
 import { useLayoutEffect } from "react"
-
-export const metadata: Metadata = {
-  title: "Login",
-}
 
 export default function LoginPage() {
   const router = useRouter()
