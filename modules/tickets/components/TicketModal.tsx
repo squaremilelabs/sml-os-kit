@@ -6,7 +6,7 @@ export default function TicketModal({ isOpen, onClose }: { isOpen: boolean; onCl
     <Modal isOpen={isOpen} onClose={onClose} size="5xl">
       <ModalContent>
         <ModalBody>
-          <div className="h-[90vh]">
+          <div className="h-[70vh]">
             <WorkInProcess />
           </div>
         </ModalBody>
