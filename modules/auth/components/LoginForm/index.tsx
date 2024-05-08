@@ -59,7 +59,7 @@ export default function LoginForm() {
             value={email}
             onValueChange={(value) => setEmail(value)}
             isInvalid={mutation.isError}
-            errorMessage={mutation.error ? "Email not recognized" : null}
+            errorMessage={mutation.error ? "Email not recognized or account is not active" : null}
           />
           <Button
             color="primary"
