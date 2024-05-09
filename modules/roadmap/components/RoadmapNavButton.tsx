@@ -1,6 +1,18 @@
 import { Button, Image, useDisclosure } from "@nextui-org/react"
+import fetchTickets from "../functions/_fetchTickets"
+import createTicket from "../functions/_createTicket"
 
 export default function RoadmapNavButton() {
+  const onClick = async () => {
+    const test = await createTicket({
+      title: "Test",
+      description: "Testing",
+      urgent: false,
+      creatorEmail: "david@squaremilelabs.com",
+    })
+    console.log(test)
+  }
+
   return (
     <Button
       size="sm"
@@ -15,6 +27,7 @@ export default function RoadmapNavButton() {
           radius="none"
         />
       }
+      onClick={onClick}
     >
       <span className="grow text-left">Roadmap</span>
     </Button>

@@ -19,6 +19,7 @@ export function getSiteConfig(): SiteConfig {
       ],
     },
     portals: siteConfig.portals,
+    roadmap: siteConfig.roadmap,
   }
 }
 

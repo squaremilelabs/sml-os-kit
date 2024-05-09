@@ -21,6 +21,11 @@ export interface SiteConfig {
   }
   admin: AdminConfig
   portals?: PortalConfig[]
+  roadmap: RoadmapConfig
+}
+
+export interface RoadmapConfig {
+  notionDatabasePageId: string
 }
 
 export interface AdminConfig {
