@@ -67,7 +67,7 @@ export default function DemoTable({
       onSortChange={console.log}
       classNames={{
         base: "grid grid-rows-[auto_minmax(0,1fr)_auto] max-h-full",
-        wrapper: "h-full",
+        wrapper: "h-full p-0 rounded-lg",
       }}
       isHeaderSticky
       topContentPlacement="outside"
