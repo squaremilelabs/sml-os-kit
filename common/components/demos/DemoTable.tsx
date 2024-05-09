@@ -107,8 +107,9 @@ export default function DemoTable({
         hideBottomContent ? (
           <div />
         ) : (
-          <div className="flex w-full justify-between items-center space-x-2">
+          <div className="flex w-full justify-center md:justify-between items-center">
             <Button
+              className="hidden md:flex"
               variant="flat"
               endContent={<Icon path={mdiTrayArrowDown} className="w-6 text-default-500" />}
             >
