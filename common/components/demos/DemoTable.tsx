@@ -1,4 +1,11 @@
-import { mdiFilterVariant, mdiMagnify, mdiPlus, mdiTableCog } from "@mdi/js"
+import {
+  mdiDownloadOutline,
+  mdiFilterVariant,
+  mdiMagnify,
+  mdiPlus,
+  mdiTableCog,
+  mdiTrayArrowDown,
+} from "@mdi/js"
 import Icon from "@mdi/react"
 import {
   Button,
@@ -100,7 +107,13 @@ export default function DemoTable({
         hideBottomContent ? (
           <div />
         ) : (
-          <div className="flex w-full justify-center">
+          <div className="flex w-full justify-between">
+            <Button
+              variant="flat"
+              endContent={<Icon path={mdiTrayArrowDown} className="w-6 text-default-500" />}
+            >
+              Export
+            </Button>
             <Pagination isCompact showControls color="primary" page={1} total={5} />
           </div>
         )
