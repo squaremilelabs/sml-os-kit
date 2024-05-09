@@ -51,13 +51,15 @@ export default function UserTable({
       return _queryOSUsers({
         where: [
           filter.includePortalUsers
-            ? null
+            ? ["roleId", "!=", null]
             : [
                 "roleId",
                 "in",
                 roles.filter((role) => role.userType === "admin").map((role) => role.id),
               ],
-          filter.includeDeactivated ? null : ["isDeactivated", "==", false],
+          filter.includeDeactivated
+            ? ["isDeactivated", "!=", null]
+            : ["isDeactivated", "==", false],
         ],
         orderBy: [["displayName", "asc"]],
       })
@@ -93,7 +95,11 @@ export default function UserTable({
       <Table
         aria-label="Users table"
         fullWidth
-        classNames={tableClassNames}
+        classNames={{
+          wrapper: "h-full",
+          base: "grid grid-rows-[auto_minmax(0,1fr)] max-h-full",
+        }}
+        isHeaderSticky
         selectionMode="single"
         onRowAction={(userId) => {
           if (typeof userId === "string") {
