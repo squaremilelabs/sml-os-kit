@@ -107,14 +107,14 @@ export default function DemoTable({
         hideBottomContent ? (
           <div />
         ) : (
-          <div className="flex w-full justify-between">
+          <div className="flex w-full justify-between items-center space-x-2">
             <Button
               variant="flat"
               endContent={<Icon path={mdiTrayArrowDown} className="w-6 text-default-500" />}
             >
               Export
             </Button>
-            <Pagination isCompact showControls color="primary" page={1} total={5} />
+            <Pagination isCompact showControls color="primary" page={1} total={3} />
           </div>
         )
       }
