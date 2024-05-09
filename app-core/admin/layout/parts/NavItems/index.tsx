@@ -9,8 +9,8 @@ import { Accordion, AccordionItem, Button, ScrollShadow, Spacer } from "@nextui-
 import Link from "next/link"
 import useNavState from "../useNavState"
 import useScreenSize from "@/~sml-os-kit/common/hooks/useScreenSize"
-import useDynamicPathname from "@/~sml-os-kit/common/hooks/useDynamicPathname"
 import { twMerge } from "tailwind-merge"
+import { usePathname } from "next/navigation"
 
 export default function NavItems() {
   const auth = useAuthState()
@@ -35,7 +35,7 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
   const { navOpen, setNavOpen } = useNavState()
   const screenSize = useScreenSize()
   const handlePress = navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined
-  const dynamicPathname = useDynamicPathname()
+  const pathname = usePathname()
   return (
     <Accordion className="p-0 px-0 py-0">
       <AccordionItem
@@ -52,7 +52,7 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
         isCompact
       >
         {navItem.items?.map((innerNavItem) => {
-          const isActive = dynamicPathname === innerNavItem.href
+          const isActive = pathname === innerNavItem.href
           return (
             <Button
               as={Link}
@@ -81,8 +81,8 @@ function NavItem({ navItem }: { navItem: AdminNavItem }) {
   const { navOpen, setNavOpen } = useNavState()
   const screenSize = useScreenSize()
   const handlePress = navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined
-  const dynamicPathname = useDynamicPathname()
-  const isActive = dynamicPathname === navItem.href
+  const pathname = usePathname()
+  const isActive = pathname === navItem.href
 
   return (
     <Button

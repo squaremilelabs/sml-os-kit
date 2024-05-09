@@ -17,7 +17,7 @@ export const coreSiteConfig: Partial<SiteConfig> = {
           {
             type: "page",
             label: "View API Logs",
-            href: "/admin/os/logs",
+            href: "/admin/os/api-logs",
           },
         ],
       },
