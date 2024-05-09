@@ -1,6 +1,6 @@
 "use server"
 import { getSiteConfig } from "../../../config/functions"
-import notion, { isFullBlock } from "./parts/_notionAPI"
+import notion, { isFullBlock } from "./parts/notionAPI"
 
 export interface CreateTicketInput {
   title: string
@@ -8,8 +8,6 @@ export interface CreateTicketInput {
   urgent: boolean
   creatorEmail: string
 }
-
-const defaultStatus = "Triage"
 
 export default async function createTicket({
   title,
@@ -49,7 +47,6 @@ export default async function createTicket({
       ],
     },
     "Creator Email": { email: creatorEmail },
-    "Status": { status: { name: defaultStatus } },
   } as Record<string, any>
 
   if (urgent) {
