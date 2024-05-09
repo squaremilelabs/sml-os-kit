@@ -1,14 +1,6 @@
 import { Button, Image, useDisclosure } from "@nextui-org/react"
-import fetchTickets from "../functions/_fetchTickets"
-import fetchPatches from "../functions/_fetchPatches"
-import createTicket from "../functions/_createTicket"
 
 export default function RoadmapNavButton() {
-  const onClick = async () => {
-    const test = await fetchTickets()
-    console.log(test)
-  }
-
   return (
     <Button
       size="sm"
