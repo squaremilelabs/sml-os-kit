@@ -59,7 +59,6 @@ export default function AdminUser() {
               />
             }
             endContent={<Icon path={mdiChevronDown} className="w-4" />}
-            disableRipple
           >
             <span className="text-xs text-left grow truncate">{user?.email}</span>
           </Button>
