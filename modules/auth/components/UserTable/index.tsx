@@ -10,19 +10,16 @@ import {
   TableRow,
   TableCell,
   Chip,
-  TableProps,
   Popover,
   PopoverTrigger,
   PopoverContent,
-  Select,
-  SelectItem,
   useDisclosure,
   Checkbox,
 } from "@nextui-org/react"
 import UserAvatar from "../UserAvatar"
 import { useQuery } from "@tanstack/react-query"
 import _queryOSUsers from "../../functions/_queryOSUsers"
-import { Key, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import roles from "@/$sml-os-config/roles"
 import UserModal from "../UserModal"
 import RowsSkeleton from "@/~sml-os-kit/common/components/RowsSkeleton"
@@ -34,11 +31,7 @@ const columns = [
   { key: "status", label: "Status" },
 ]
 
-export default function UserTable({
-  tableClassNames,
-}: {
-  tableClassNames?: TableProps["classNames"]
-}) {
+export default function UserTable() {
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState({
     includePortalUsers: false,
