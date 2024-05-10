@@ -8,6 +8,7 @@ import notion, {
   NotionPropertyConfig,
 } from "./parts/notionAPI"
 import fetchDatabaseByTitle from "./parts/_fetchDatabaseByTitle"
+import getDatabaseStatusIdToGroupMap from "./parts/getDatabaseStatusIdToGroupMap"
 
 type NotionPatchesDatabase = NotionDatabase & {
   properties: {
@@ -32,34 +33,25 @@ export default async function fetchPatches() {
   const queryResponse = await notion.databases.query({
     database_id: patchesDatabase.id,
   })
-
-  const patches = extractPatches(patchesDatabase, queryResponse)
+  const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(patchesDatabase)
+  const patches = extractPatches(queryResponse, statusIdToGroupMap)
   return patches
 }
 
 function extractPatches(
-  database: NotionPatchesDatabase,
-  response: NotionDBQueryResponse
+  response: NotionDBQueryResponse,
+  statusIdToGroupMap: Record<string, StatusGroup>
 ): RoadmapPatch[] {
-  const statusGroupMap = database.properties["Status"].status?.groups.reduce(
-    (final, each) => {
-      each.option_ids.map((id) => {
-        final[id] = each.name as StatusGroup
-      })
-      return final
-    },
-    {} as Record<string, StatusGroup>
-  )
   const patches: NotionPatch[] = response.results.map((patch) => patch as NotionPatch)
 
   return patches.map((patch) => ({
     id: patch.id,
     url: patch.url,
     title: patch.properties["Title"].title[0].plain_text,
-    description: patch.properties["Description"].rich_text[0].plain_text,
+    description: patch.properties["Description"].rich_text[0]?.plain_text,
     createdTime: new Date(patch.properties["Created Date"].created_time),
     status: patch.properties["Status"].status!.name,
-    statusGroup: statusGroupMap[patch.properties["Status"].status!.id],
+    statusGroup: statusIdToGroupMap[patch.properties["Status"].status!.id],
     urgent: patch.properties["Urgent"].select?.name === "Urgent",
     size: patch.properties["Size"].select?.name,
     tickets: patch.properties["Tickets"].relation.map((ticket) => ticket.id),

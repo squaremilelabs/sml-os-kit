@@ -1,10 +1,10 @@
-export type StatusGroup = "To-do" | "In progress" | "Complete"
+export type StatusGroup = "Open" | "Active" | "Closed"
 
 export interface RoadmapTicket {
   id: string
   url: string
   title: string
-  description: string
+  description?: string
   createdTime: Date
   urgent: boolean
   status: string
@@ -17,7 +17,7 @@ export interface RoadmapPatch {
   id: string
   url: string
   title: string
-  description: string
+  description?: string
   createdTime: Date
   urgent: boolean
   status: string
@@ -30,7 +30,7 @@ export interface RoadmapFeature {
   id: string
   url: string
   title: string
-  description: string
+  description?: string
   createdTime: Date
   status: string
   statusGroup: StatusGroup

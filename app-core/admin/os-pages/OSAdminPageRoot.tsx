@@ -1,4 +1,5 @@
 import APILogsPage from "./parts/APILogsPage"
+import RoadmapPage from "./parts/RoadmapPage"
 import UsersPage from "./parts/UsersPage"
 
 type OSAdminPageProps = {
@@ -12,6 +13,9 @@ export async function osAdminPageGenerateMetadata({ params }: OSAdminPageProps) 
   if (params.slug === "api-logs") {
     return { title: "API Logs" }
   }
+  if (params.slug === "roadmap") {
+    return { title: "Roadmap" }
+  }
 }
 
 export default function OSAdminPageRoot({ params }: OSAdminPageProps) {
@@ -20,6 +24,9 @@ export default function OSAdminPageRoot({ params }: OSAdminPageProps) {
   }
   if (params.slug === "api-logs") {
     return <APILogsPage />
+  }
+  if (params.slug === "roadmap") {
+    return <RoadmapPage />
   }
   return null
 }

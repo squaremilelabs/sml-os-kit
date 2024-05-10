@@ -25,6 +25,7 @@ type Property = PropertyMap[keyof PropertyMap]
 type PropertyType = Property["type"]
 type NotionProperty<T extends PropertyType> = Extract<Property, { type: T }>
 
+export type NotionStatusGroup = "To-do" | "In progress" | "Complete"
 export type {
   NotionPage,
   NotionDatabase,

@@ -8,6 +8,7 @@ import notion, {
 } from "./parts/notionAPI"
 import { RoadmapTicket, StatusGroup } from "../types"
 import fetchDatabaseByTitle from "./parts/_fetchDatabaseByTitle"
+import getDatabaseStatusIdToGroupMap from "./parts/getDatabaseStatusIdToGroupMap"
 
 type NotionTicketsDatabase = NotionDatabase & {
   properties: {
@@ -33,23 +34,15 @@ export default async function fetchTickets() {
     database_id: ticketsDatabase.id,
     //TODO - filter "completed" status to be within last 30 days
   })
-  const tickets = extractTickets(ticketsDatabase, queryResponse)
+  const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(ticketsDatabase)
+  const tickets = extractTickets(queryResponse, statusIdToGroupMap)
   return tickets
 }
 
 function extractTickets(
-  database: NotionTicketsDatabase,
-  response: NotionDBQueryResponse
+  response: NotionDBQueryResponse,
+  statusIdToGroupMap: Record<string, StatusGroup>
 ): RoadmapTicket[] {
-  const statusGroupMap = database.properties["Status"].status?.groups.reduce(
-    (final, each) => {
-      each.option_ids.map((id) => {
-        final[id] = each.name as StatusGroup
-      })
-      return final
-    },
-    {} as Record<string, StatusGroup>
-  )
   const tickets: NotionTicket[] = response.results.map((ticket) => ticket as NotionTicket)
 
   return tickets.map((ticket) => ({
@@ -60,7 +53,7 @@ function extractTickets(
     createdTime: new Date(ticket.properties["Created Date"].created_time),
     creatorEmail: ticket.properties["Creator Email"]?.email,
     status: ticket.properties["Status"].status!.name,
-    statusGroup: statusGroupMap?.[ticket.properties["Status"].status!.id],
+    statusGroup: statusIdToGroupMap?.[ticket.properties["Status"].status!.id],
     urgent: ticket.properties["Urgent"].select?.name === "Urgent",
     closedDate: ticket.properties["Closed Date"].date?.start,
   }))

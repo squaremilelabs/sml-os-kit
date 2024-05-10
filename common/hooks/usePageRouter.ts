@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useLayoutEffect, useState } from "react"
 
 type QueryParams = { [key: string]: string | null }
 
@@ -12,7 +12,7 @@ export default function usePageRouter() {
 
   const [query, setQuery] = useState<QueryParams>({})
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const current: QueryParams = {}
     searchParams.forEach((value, key) => {
       current[key] = value

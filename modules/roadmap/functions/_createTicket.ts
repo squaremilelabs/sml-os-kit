@@ -1,20 +1,11 @@
 "use server"
+import { RoadmapTicket } from "@/~sml-os-kit/modules/roadmap/types"
 import { getSiteConfig } from "../../../config/functions"
 import notion, { isFullBlock } from "./parts/notionAPI"
 
-export interface CreateTicketInput {
-  title: string
-  description: string
-  urgent: boolean
-  creatorEmail: string
-}
-
-export default async function createTicket({
-  title,
-  description,
-  urgent,
-  creatorEmail,
-}: CreateTicketInput) {
+export default async function _createTicket(
+  input: Pick<RoadmapTicket, "title" | "description" | "urgent" | "creatorEmail">
+) {
   const siteConfig = getSiteConfig()
   const blocks = await notion.blocks.children.list({
     block_id: siteConfig.roadmap.notionDatabasePageId,
@@ -32,7 +23,7 @@ export default async function createTicket({
       title: [
         {
           text: {
-            content: title,
+            content: input.title,
           },
         },
       ],
@@ -41,15 +32,15 @@ export default async function createTicket({
       rich_text: [
         {
           text: {
-            content: description,
+            content: input.description,
           },
         },
       ],
     },
-    "Creator Email": { email: creatorEmail },
+    "Creator Email": { email: input.creatorEmail },
   } as Record<string, any>
 
-  if (urgent) {
+  if (input.urgent) {
     properties["Urgent"] = { select: { name: "Urgent" } }
   }
 

@@ -1,6 +1,7 @@
 "use server"
 import { RoadmapFeature, StatusGroup } from "../types"
 import fetchDatabaseByTitle from "./parts/_fetchDatabaseByTitle"
+import getDatabaseStatusIdToGroupMap from "./parts/getDatabaseStatusIdToGroupMap"
 import notion, {
   NotionDBQueryResponse,
   NotionProperty,
@@ -31,33 +32,25 @@ export default async function fetchFeatures() {
   const queryResponse = await notion.databases.query({
     database_id: featuresDatabase.id,
   })
-  const features = extractFeatures(featuresDatabase, queryResponse)
+  const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(featuresDatabase)
+  const features = extractFeatures(queryResponse, statusIdToGroupMap)
   return features
 }
 
 function extractFeatures(
-  database: NotionFeaturesDatabase,
-  response: NotionDBQueryResponse
+  response: NotionDBQueryResponse,
+  statusIdToGroupMap: Record<string, StatusGroup>
 ): RoadmapFeature[] {
-  const statusGroupMap = database.properties["Status"].status?.groups.reduce(
-    (final, each) => {
-      each.option_ids.map((id) => {
-        final[id] = each.name as StatusGroup
-      })
-      return final
-    },
-    {} as Record<string, StatusGroup>
-  )
   const features: NotionFeature[] = response.results.map((feature) => feature as NotionFeature)
 
   return features.map((feature) => ({
     id: feature.id,
     url: feature.url,
     title: feature.properties["Title"].title[0].plain_text,
-    description: feature.properties["Description"].rich_text[0].plain_text,
+    description: feature.properties["Description"].rich_text[0]?.plain_text,
     createdTime: new Date(feature.properties["Created Date"].created_time),
     status: feature.properties["Status"].status!.name,
-    statusGroup: statusGroupMap[feature.properties["Status"].status!.id],
+    statusGroup: statusIdToGroupMap[feature.properties["Status"].status!.id],
     size: feature.properties["Size"].select?.name,
     tickets: feature.properties["Tickets"].relation.map((ticket) => ticket.id),
   }))
