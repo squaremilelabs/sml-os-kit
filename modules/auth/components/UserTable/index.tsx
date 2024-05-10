@@ -89,7 +89,7 @@ export default function UserTable() {
         aria-label="Users table"
         fullWidth
         classNames={{
-          wrapper: "h-full p-0",
+          wrapper: "h-full p-0 rounded-lg",
           base: "grid grid-rows-[auto_minmax(0,1fr)] max-h-full",
         }}
         isHeaderSticky
