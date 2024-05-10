@@ -6,7 +6,7 @@ import { usersFirestoreCollectionPath } from "../constants"
 
 export default async function _updateUser<ExtUser extends User>(
   userId: string,
-  input: Partial<Omit<ExtUser, "id" | "isDeactivated" | "createdAt" | "hasSignedIn">>
+  input: Partial<Omit<ExtUser, "id" | "isDeactivated" | "createdAt">>
 ): Promise<ExtUser> {
   const { auth, sysFirestore } = new _FirebaseAdmin()
 

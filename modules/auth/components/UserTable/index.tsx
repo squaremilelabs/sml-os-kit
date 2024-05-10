@@ -44,15 +44,13 @@ export default function UserTable() {
       return _queryOSUsers({
         where: [
           filter.includePortalUsers
-            ? ["roleId", "!=", null]
+            ? null
             : [
                 "roleId",
                 "in",
                 roles.filter((role) => role.userType === "admin").map((role) => role.id),
               ],
-          filter.includeDeactivated
-            ? ["isDeactivated", "!=", null]
-            : ["isDeactivated", "==", false],
+          filter.includeDeactivated ? null : ["isDeactivated", "==", false],
         ],
         orderBy: [["displayName", "asc"]],
       })

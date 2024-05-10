@@ -164,7 +164,7 @@ export default function UserModal({
   const isNameDisabled = mode === "viewOnly"
   const isEmailDisabled = mode === "viewOnly" || mode === "updateSelf"
   const isRoleSelectionDisabled =
-    mode === "viewOnly" || mode === "updateSelf" || !!user?.role?.portalId || enforcedRoleId
+    mode === "viewOnly" || mode === "updateSelf" || enforcedRoleId || user?.isSML
 
   const isSaveEnabled = (mode === "create" && formik.isValid) || (formik.dirty && formik.isValid)
 
@@ -306,11 +306,9 @@ export default function UserModal({
                     }}
                     isOpen={isRoleSelectionDisabled ? false : undefined} // used to disable the selection without the isDisabled faded style
                     description={
-                      mode === "update" && isRoleSelectionDisabled
-                        ? "You cannot change an existing portal user's role from here."
-                        : mode === "updateSelf"
-                          ? `For security purposes, your login email & role can only be updated from the "Manage Users" page by an Admin.`
-                          : undefined
+                      mode === "updateSelf"
+                        ? `For security purposes, your login email & role can only be updated from the "Manage Users" page by an Admin.`
+                        : undefined
                     }
                   >
                     {selectableRoles.map((role) => {

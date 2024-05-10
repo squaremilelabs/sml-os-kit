@@ -4,7 +4,6 @@ export interface User {
   email: string
   isDeactivated: boolean
   createdAt: number
-  hasSignedIn: boolean
   photoUrl?: string
 }
 

@@ -6,7 +6,7 @@ import { createId } from "@paralleldrive/cuid2"
 import { usersFirestoreCollectionPath } from "../constants"
 
 export default async function _createUser<ExtUser extends User>(
-  input: Omit<ExtUser, "id" | "createdAt" | "isDeactivated" | "hasSignedIn">
+  input: Omit<ExtUser, "id" | "createdAt" | "isDeactivated">
 ): Promise<ExtUser> {
   const { auth, sysFirestore } = new _FirebaseAdmin()
 
@@ -20,7 +20,6 @@ export default async function _createUser<ExtUser extends User>(
     ...input,
     id: authUser.uid,
     createdAt: Date.now(),
-    hasSignedIn: false,
     isDeactivated: false,
   }
 

@@ -2,6 +2,7 @@ import { User } from "@/~sml-os-kit/~sml-firebase/auth/types"
 
 export interface BaseOSUser extends User {
   roleId: string
+  isSML?: boolean
 }
 
 export interface OSRole {
