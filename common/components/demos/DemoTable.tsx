@@ -68,6 +68,8 @@ export default function DemoTable({
       classNames={{
         base: "grid grid-rows-[auto_minmax(0,1fr)_auto] max-h-full",
         wrapper: "h-full p-0 rounded-lg",
+        thead: "[&>tr]:!rounded-none",
+        th: "!rounded-none",
       }}
       isHeaderSticky
       topContentPlacement="outside"

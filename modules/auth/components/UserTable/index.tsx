@@ -91,6 +91,8 @@ export default function UserTable() {
         classNames={{
           wrapper: "h-full p-0 rounded-lg",
           base: "grid grid-rows-[auto_minmax(0,1fr)] max-h-full",
+          thead: "[&>tr]:!rounded-none",
+          th: "!rounded-none",
         }}
         isHeaderSticky
         selectionMode="single"
