@@ -1,3 +1,5 @@
+"use client"
+
 import usePageRouter from "@/~sml-os-kit/common/hooks/usePageRouter"
 import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
 import _createTicket from "@/~sml-os-kit/modules/roadmap/functions/_createTicket"
@@ -8,7 +10,7 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 
 type CreateTicketInput = Parameters<typeof createTicket>[0]
-export default function NewTicketView() {
+export default function NewTicketForm() {
   const queryClient = useQueryClient()
   const { user } = useAuthState()
   const formik = useFormik<CreateTicketInput>({
@@ -39,14 +41,14 @@ export default function NewTicketView() {
   const saveMutation = useMutation({
     mutationFn: async (input: CreateTicketInput) => {
       await _createTicket(input)
-      await queryClient.invalidateQueries({ queryKey: ["roadmap", "tickets"] })
+      await queryClient.refetchQueries({ queryKey: ["tickets"] })
       handleResetAndClose()
     },
   })
   const isSaveEnabled = formik.isValid
   return (
     <form onSubmit={isSaveEnabled ? formik.handleSubmit : undefined}>
-      <div className="grid grid-rows-4 gap-4">
+      <div className="grid grid-rows-3 gap-4">
         <Input
           label="Title"
           id="title"
@@ -67,23 +69,25 @@ export default function NewTicketView() {
           isInvalid={formik.touched.description && !!formik.errors.description}
           errorMessage={formik.touched.description ? formik.errors.description : undefined}
         />
-        <Checkbox
-          isSelected={formik.values.urgent}
-          onClick={() => {
-            formik.setFieldValue("urgent", !formik.values.urgent)
-          }}
-          name="urgent"
-        >
-          Urgent
-        </Checkbox>
-        <Button
-          color="primary"
-          type="submit"
-          isLoading={saveMutation.isPending}
-          isDisabled={!isSaveEnabled}
-        >
-          Submit
-        </Button>
+        <div className="flex flex-row justify-between items-center">
+          <Checkbox
+            isSelected={formik.values.urgent}
+            onClick={() => {
+              formik.setFieldValue("urgent", !formik.values.urgent)
+            }}
+            name="urgent"
+          >
+            Urgent
+          </Checkbox>
+          <Button
+            color="primary"
+            type="submit"
+            isLoading={saveMutation.isPending}
+            isDisabled={!isSaveEnabled}
+          >
+            Submit
+          </Button>
+        </div>
       </div>
     </form>
   )

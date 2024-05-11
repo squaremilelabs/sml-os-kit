@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
-import fetchPatches from "../functions/_fetchPatches"
+import _fetchPatches from "../functions/_fetchPatches"
 
 export default function usePatchesQuery() {
   return useQuery({
-    queryKey: ["roadmap", "patches"],
+    queryKey: ["patches"],
     queryFn: async () => {
-      const patches = await fetchPatches()
+      const patches = await _fetchPatches()
       return patches
     },
   })

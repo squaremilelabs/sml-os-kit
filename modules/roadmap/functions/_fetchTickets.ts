@@ -1,4 +1,5 @@
 "use server"
+
 import notion, {
   NotionDBQueryResponse,
   NotionProperty,
@@ -29,14 +30,34 @@ type NotionTicket = NotionPage & {
 }
 
 export default async function fetchTickets() {
-  const ticketsDatabase = (await fetchDatabaseByTitle("Tickets")) as NotionTicketsDatabase
-  const queryResponse = await notion.databases.query({
-    database_id: ticketsDatabase.id,
-    //TODO - filter "completed" status to be within last 30 days
-  })
-  const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(ticketsDatabase)
-  const tickets = extractTickets(queryResponse, statusIdToGroupMap)
-  return tickets
+  try {
+    const ticketsDatabase = (await fetchDatabaseByTitle("Tickets")) as NotionTicketsDatabase
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+    const queryResponse = await notion.databases.query({
+      database_id: ticketsDatabase.id,
+      filter: {
+        or: [
+          {
+            property: "Closed Date",
+            date: { is_empty: true },
+          },
+          {
+            property: "Closed Date",
+            date: { on_or_after: thirtyDaysAgo.toISOString() },
+          },
+        ],
+      },
+    })
+    const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(ticketsDatabase)
+    const tickets = extractTickets(queryResponse, statusIdToGroupMap)
+    const filtered = filterTickets(tickets)
+    const sorted = sortTickets(filtered)
+    return sorted
+  } catch (error) {
+    console.error(error)
+    return []
+  }
 }
 
 function extractTickets(
@@ -57,4 +78,46 @@ function extractTickets(
     urgent: ticket.properties["Urgent"].select?.name === "Urgent",
     closedDate: ticket.properties["Closed Date"].date?.start,
   }))
+}
+
+function filterTickets(tickets: RoadmapTicket[]) {
+  // Filter out tickets that have closedDate > 30 days ago
+  const thirtyDaysAgo = new Date()
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
+  const filteredTickets = tickets.filter((ticket) => {
+    return !ticket.closedDate || new Date(ticket.closedDate) > thirtyDaysAgo
+  })
+
+  return filteredTickets
+}
+function sortTickets(tickets: RoadmapTicket[]) {
+  //Sort tickets by urgent first, then status (desc), then createdTime (desc)
+  return tickets.sort((a, b) => {
+    // Sort by urgent first
+    if (a.urgent && !b.urgent) {
+      return -1
+    }
+    if (!a.urgent && b.urgent) {
+      return 1
+    }
+
+    // TODO - how should status sort work
+    if (a.status > b.status) {
+      return -1
+    }
+    if (a.status < b.status) {
+      return 1
+    }
+
+    // Sort by createdTime (desc)
+    if (a.createdTime > b.createdTime) {
+      return -1
+    }
+    if (a.createdTime < b.createdTime) {
+      return 1
+    }
+
+    return 0
+  })
 }

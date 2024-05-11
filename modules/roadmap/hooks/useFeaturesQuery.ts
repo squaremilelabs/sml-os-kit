@@ -3,7 +3,7 @@ import fetchFeatures from "../functions/_fetchFeatures"
 
 export default function useFeaturesQuery() {
   return useQuery({
-    queryKey: ["roadmap", "features"],
+    queryKey: ["features"],
     queryFn: async () => {
       const features = await fetchFeatures()
       return features

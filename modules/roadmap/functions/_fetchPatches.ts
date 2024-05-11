@@ -28,10 +28,25 @@ type NotionPatch = NotionPage & {
   }
 }
 
-export default async function fetchPatches() {
+export default async function _fetchPatches() {
   const patchesDatabase = (await fetchDatabaseByTitle("Patches")) as NotionPatchesDatabase
+  const thirtyDaysAgo = new Date()
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
   const queryResponse = await notion.databases.query({
     database_id: patchesDatabase.id,
+    filter: {
+      or: [
+        {
+          property: "Closed Date",
+          date: { is_empty: true },
+        },
+        {
+          property: "Closed Date",
+          date: { on_or_after: thirtyDaysAgo.toISOString() },
+        },
+      ],
+    },
   })
   const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(patchesDatabase)
   const patches = extractPatches(queryResponse, statusIdToGroupMap)

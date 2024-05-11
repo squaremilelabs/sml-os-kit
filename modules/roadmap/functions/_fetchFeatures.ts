@@ -29,8 +29,23 @@ type NotionFeature = NotionPage & {
 
 export default async function fetchFeatures() {
   const featuresDatabase = (await fetchDatabaseByTitle("Features")) as NotionFeaturesDatabase
+  const thirtyDaysAgo = new Date()
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
   const queryResponse = await notion.databases.query({
     database_id: featuresDatabase.id,
+    filter: {
+      or: [
+        {
+          property: "Closed Date",
+          date: { is_empty: true },
+        },
+        {
+          property: "Closed Date",
+          date: { on_or_after: thirtyDaysAgo.toISOString() },
+        },
+      ],
+    },
   })
   const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(featuresDatabase)
   const features = extractFeatures(queryResponse, statusIdToGroupMap)
