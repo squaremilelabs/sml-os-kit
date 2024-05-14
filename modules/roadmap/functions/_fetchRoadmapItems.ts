@@ -2,11 +2,7 @@
 
 import { getSiteConfig } from "@/~sml-os-kit/config/functions"
 import { roadmapStatusGroupNameMap } from "@/~sml-os-kit/modules/roadmap/constants"
-import {
-  RoadmapItem,
-  RoadmapItemType,
-  RoadmapStatusGroupName,
-} from "@/~sml-os-kit/modules/roadmap/types"
+import { RoadmapItem, RoadmapItemType } from "@/~sml-os-kit/modules/roadmap/types"
 import { Client } from "@notionhq/client"
 import {
   GetDatabaseResponse,
