@@ -67,14 +67,14 @@ export default function NewTicketModal({
               <Input
                 label="Title"
                 {...formik.getFieldProps("title")}
-                isInvalid={!!formik.errors.title}
+                isInvalid={!!formik.errors.title && formik.touched.title}
                 errorMessage={formik.errors.title}
                 isRequired
               />
               <Textarea
                 label="Description"
                 {...formik.getFieldProps("description")}
-                isInvalid={!!formik.errors.description}
+                isInvalid={!!formik.errors.description && formik.touched.description}
                 errorMessage={formik.errors.description}
               />
               <Checkbox
