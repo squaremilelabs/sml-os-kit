@@ -49,7 +49,17 @@ export default function RoadmapView({
         onSelectionChange={(key) => onSelectType(key as RoadmapItemType)}
       >
         {Array.from(roadmapTypeInfoMap.entries()).map(([type, info]) => {
-          return <Tab key={type} title={info.title} />
+          return (
+            <Tab
+              key={type}
+              title={
+                <div className="flex items-center space-x-2">
+                  <Icon path={info.iconPath} className="w-4" />
+                  <h2>{info.title}</h2>
+                </div>
+              }
+            />
+          )
         })}
       </Tabs>
       <RoadmapItems type={selectedType} />

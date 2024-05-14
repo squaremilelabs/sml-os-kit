@@ -104,7 +104,7 @@ export default function NewTicketModal({
                 isLoading={saveMutation.isPending}
                 isDisabled={!formik.dirty || !formik.isValid || formik.isSubmitting}
               >
-                Add to Triage
+                Add Ticket
               </Button>
             </ModalFooter>
           </form>
