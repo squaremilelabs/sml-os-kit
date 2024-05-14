@@ -26,6 +26,7 @@ export default function RoadmapView({
         size="lg"
         radius="sm"
         classNames={{
+          base: "max-w-full overflow-x-auto",
           tabList: "w-full border border-default-200",
         }}
         selectedKey={selectedType}
