@@ -31,13 +31,16 @@ const groups: {
   },
 ]
 
+type KanbanItem = RoadmapTicket | RoadmapFeature | RoadmapPatch
+
 export default function RoadmapKanban({
   items,
   isLoading,
 }: {
-  items: RoadmapTicket[] | RoadmapFeature[] | RoadmapPatch[] | undefined
+  items: KanbanItem[]
   isLoading: boolean
 }) {
+  const showItems = !isLoading && Array.isArray(items)
   return (
     <div className=" w-full grid grid-cols-3 space-x-4">
       {groups.map((group) => (
@@ -59,12 +62,12 @@ export default function RoadmapKanban({
             size={100}
             className="h-full overflow-auto flex flex-col space-y-4 w-full "
           >
-            {isLoading
+            {showItems
               ? Array.from({ length: Math.ceil(Math.random() * 3) }).map((_, i) => (
                   <SkeletonCard key={i} />
                 ))
               : items
-                  ?.filter((item) => item.statusGroup === group.label)
+                  .filter((item: KanbanItem) => item.statusGroup === group.label)
                   .map((item) => <ItemCard key={item.id} item={item} />)}
           </ScrollShadow>
         </div>
@@ -80,7 +83,7 @@ function SkeletonCard() {
     </Skeleton>
   )
 }
-export function ItemCard({ item }: { item: RoadmapTicket | RoadmapFeature | RoadmapPatch }) {
+export function ItemCard({ item }: { item: KanbanItem }) {
   return (
     <Card key={item.id} className="flex flex-col space-y-2 p-4" shadow="none" radius="md" fullWidth>
       <div className="flex justify-between">

@@ -75,7 +75,7 @@ function FeaturesView() {
         <h1 className="font-semibold text-2xl">Features</h1>
         <p> New features</p>
       </div>
-      <RoadmapKanban items={features} isLoading={isLoading} />
+      <RoadmapKanban items={features || []} isLoading={isLoading} />
     </div>
   )
 }
@@ -89,7 +89,7 @@ function PatchesView() {
         <h1 className="font-semibold text-2xl">Patches</h1>
         <p> Fixes and updates to existing features</p>
       </div>
-      <RoadmapKanban items={patches} isLoading={isLoading} />
+      <RoadmapKanban items={patches || []} isLoading={isLoading} />
     </div>
   )
 }
