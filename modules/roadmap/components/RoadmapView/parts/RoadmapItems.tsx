@@ -28,7 +28,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
   }, [itemsQuery.data])
 
   return (
-    <div className="flex h-full w-full grid grid-cols-[repeat(3,minmax(300px,1fr))] overflow-auto rounded-xl border border-default-200">
+    <div className="flex h-full w-full grid grid-cols-[repeat(3,minmax(300px,1fr))] overflow-x-auto rounded-xl border border-default-200">
       {itemsQuery.isError ? (
         <>
           <div />
@@ -66,7 +66,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                     })
                 : groupItems.map((item) => {
                     return (
-                      <Card key={item.id} className="shrink-0 min-h-24 z-10">
+                      <Card key={item.id} className="shrink-0 min-h-24 z-10 dark:bg-content2">
                         <CardBody className="p-4 space-y-2">
                           {item.urgent ? <Chip color="danger">Urgent</Chip> : null}
                           <p className="font-semibold">{item.title}</p>
