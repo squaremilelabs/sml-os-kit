@@ -6,6 +6,7 @@ import { NextUIPluginConfig } from "@nextui-org/react"
 
 export function getSiteConfig(): SiteConfig {
   return {
+    ...siteConfig,
     public: {
       pathnames: [
         ...(coreSiteConfig.public?.pathnames ?? []),
@@ -78,6 +79,7 @@ export function getNextUIPluginConfig(): NextUIPluginConfig {
   }
 
   return {
+    addCommonColors: true,
     themes: {
       light: {
         colors: {
