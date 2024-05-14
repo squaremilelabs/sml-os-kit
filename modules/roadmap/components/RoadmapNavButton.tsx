@@ -1,11 +1,18 @@
-import { Button, Image, useDisclosure } from "@nextui-org/react"
+import { Button, Image } from "@nextui-org/react"
 import Link from "next/link"
 
-export default function RoadmapNavButton() {
+export default function RoadmapNavButton({
+  onPress,
+  href,
+}: {
+  onPress?: () => any
+  href?: string
+}) {
   return (
     <Button
-      as={Link}
-      href="/admin/os/roadmap"
+      as={href ? Link : "button"}
+      href={href}
+      onPress={onPress}
       size="sm"
       radius="sm"
       variant="flat"
