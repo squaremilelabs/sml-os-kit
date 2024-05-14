@@ -49,7 +49,7 @@ export default async function _fetchFeatures() {
   })
   const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(featuresDatabase)
   const features = extractFeatures(queryResponse, statusIdToGroupMap)
-  console.log(features)
+  console.log(`Features fetched: ${features.length}`)
   return features
 }
 

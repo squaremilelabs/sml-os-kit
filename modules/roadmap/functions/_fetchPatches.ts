@@ -50,6 +50,7 @@ export default async function _fetchPatches() {
   })
   const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(patchesDatabase)
   const patches = extractPatches(queryResponse, statusIdToGroupMap)
+  console.log(`Patches fetched: ${patches.length}`)
   return patches
 }
 

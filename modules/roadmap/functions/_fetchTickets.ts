@@ -53,7 +53,7 @@ export default async function _fetchTickets() {
     const tickets = extractTickets(queryResponse, statusIdToGroupMap)
     const filtered = filterTickets(tickets)
     const sorted = sortTickets(filtered)
-    console.log(sorted)
+    console.log(`Tickets fetched: ${sorted.length}`)
     return sorted
   } catch (error) {
     console.error(error)
