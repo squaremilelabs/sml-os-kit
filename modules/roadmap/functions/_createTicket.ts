@@ -1,6 +1,6 @@
 "use server"
 import { RoadmapItem } from "@/~sml-os-kit/modules/roadmap/types"
-import { getSiteConfig } from "../../../config/functions"
+import { getSiteConfig } from "@/~sml-os-kit/config/functions"
 import { Client } from "@notionhq/client"
 
 export default async function _createTicket(
@@ -9,6 +9,7 @@ export default async function _createTicket(
   const notion = new Client({ auth: process.env.NOTION_TOKEN })
   const ticketsDatabaseId = getSiteConfig().integrations.notion.ticketsDatabaseId
   if (!ticketsDatabaseId) throw new Error("Tickets database not found")
+  if (!input.title) throw new Error("Title is required")
 
   const properties = {
     "Title": {
