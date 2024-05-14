@@ -117,6 +117,7 @@ function TriageView() {
   const selectTab = (key: Key) => {
     push(null, { ...query, filter: key.toString() })
   }
+  console.log(ticketsQuery.data)
 
   return (
     <div className="h-full overflow-hidden grid grid-rows-[auto,auto,1fr] space-y-4">

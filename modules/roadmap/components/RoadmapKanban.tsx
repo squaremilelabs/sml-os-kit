@@ -40,15 +40,11 @@ export default function RoadmapKanban({
   items: KanbanItem[]
   isLoading: boolean
 }) {
-  const showItems = !isLoading && Array.isArray(items)
   return (
-    <div className=" w-full grid grid-cols-3 space-x-4">
+    <div className="w-full grid grid-cols-3 space-x-4">
       {groups.map((group) => (
         <div
-          className={
-            "h-full overflow-auto justify-items-start rounded-md space-y-4 p-4 " +
-            group.colors.bgLight
-          }
+          className={"justify-items-start rounded-md space-y-4 p-4 " + group.colors.bgLight}
           key={group.label}
         >
           <Chip
@@ -62,7 +58,7 @@ export default function RoadmapKanban({
             size={100}
             className="h-full overflow-auto flex flex-col space-y-4 w-full "
           >
-            {showItems
+            {isLoading
               ? Array.from({ length: Math.ceil(Math.random() * 3) }).map((_, i) => (
                   <SkeletonCard key={i} />
                 ))

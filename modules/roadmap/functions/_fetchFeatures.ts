@@ -27,7 +27,7 @@ type NotionFeature = NotionPage & {
   }
 }
 
-export default async function fetchFeatures() {
+export default async function _fetchFeatures() {
   const featuresDatabase = (await fetchDatabaseByTitle("Features")) as NotionFeaturesDatabase
   const thirtyDaysAgo = new Date()
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
@@ -49,6 +49,7 @@ export default async function fetchFeatures() {
   })
   const statusIdToGroupMap = getDatabaseStatusIdToGroupMap(featuresDatabase)
   const features = extractFeatures(queryResponse, statusIdToGroupMap)
+  console.log(features)
   return features
 }
 

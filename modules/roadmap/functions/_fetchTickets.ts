@@ -29,7 +29,7 @@ type NotionTicket = NotionPage & {
   }
 }
 
-export default async function fetchTickets() {
+export default async function _fetchTickets() {
   try {
     const ticketsDatabase = (await fetchDatabaseByTitle("Tickets")) as NotionTicketsDatabase
     const thirtyDaysAgo = new Date()
@@ -53,6 +53,7 @@ export default async function fetchTickets() {
     const tickets = extractTickets(queryResponse, statusIdToGroupMap)
     const filtered = filterTickets(tickets)
     const sorted = sortTickets(filtered)
+    console.log(sorted)
     return sorted
   } catch (error) {
     console.error(error)
