@@ -8,7 +8,7 @@ export const roadmapStatusGroupNameMap: Map<string, RoadmapStatusGroupName> = ne
 
 export const roadmapTypeInfoMap: Map<RoadmapItemType, { title: string; description: string }> =
   new Map([
-    ["ticket", { title: "Tickets", description: "" }],
-    ["patch", { title: "Patches", description: "" }],
-    ["feature", { title: "Features", description: "" }],
+    ["ticket", { title: "Ticket Triage", description: "" }],
+    ["patch", { title: "Quick Patches", description: "" }],
+    ["feature", { title: "Feature Roadmap", description: "" }],
   ])

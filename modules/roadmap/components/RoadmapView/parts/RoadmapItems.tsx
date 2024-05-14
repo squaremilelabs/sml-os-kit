@@ -4,7 +4,7 @@ import {
   RoadmapItemType,
   RoadmapStatusGroupName,
 } from "@/~sml-os-kit/modules/roadmap/types"
-import { Card, Chip, ScrollShadow, Skeleton } from "@nextui-org/react"
+import { Card, CardBody, Chip, ScrollShadow, Skeleton } from "@nextui-org/react"
 import { useTheme } from "next-themes"
 import { useEffect, useLayoutEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
@@ -46,7 +46,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
               <div
                 className={twMerge(
                   `sticky top-0 p-2 font-medium rounded-lg`,
-                  theme === "light" ? `bg-${color}-100` : `bg-${color}-900`,
+                  theme === "light" ? `bg-${color}-100` : `bg-${color}-800`,
                   "z-20"
                 )}
               >
@@ -57,28 +57,30 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                     .fill(null)
                     .map((_, i) => {
                       return (
-                        <Card key={i} className="h-24 p-4 space-y-2">
-                          <Skeleton key={i} className="h-8 rounded-lg" />
-                          <Skeleton key={i} className="h-6 rounded-lg w-8/12" />
-                          <Skeleton key={i} className="h-6 rounded-lg w-1/2" />
+                        <Card key={i} className="shrink-0 h-24 p-4 space-y-2">
+                          <Skeleton className="h-8 rounded-lg" />
+                          <Skeleton className="h-6 rounded-lg w-8/12" />
+                          <Skeleton className="h-6 rounded-lg w-1/2" />
                         </Card>
                       )
                     })
                 : groupItems.map((item) => {
                     return (
-                      <Card key={item.id} className="min-h-24 z-10 p-4 space-y-2">
-                        {item.urgent ? <Chip color="danger">Urgent</Chip> : null}
-                        <p className="font-semibold">{item.title}</p>
-                        <p className="text-sm whitespace-pre-line">{item.description}</p>
-                        <Chip
-                          variant="dot"
-                          classNames={{
-                            dot: `bg-${item.status?.color}-500`,
-                            content: `text-${item.status?.color}-500`,
-                          }}
-                        >
-                          {item.status?.name}
-                        </Chip>
+                      <Card key={item.id} className="shrink-0 min-h-24 z-10">
+                        <CardBody className="p-4 space-y-2">
+                          {item.urgent ? <Chip color="danger">Urgent</Chip> : null}
+                          <p className="font-semibold">{item.title}</p>
+                          <p className="text-sm whitespace-pre-line">{item.description}</p>
+                          <Chip
+                            variant="dot"
+                            classNames={{
+                              dot: `bg-${item.status?.color}-500`,
+                              content: `text-${item.status?.color}-500`,
+                            }}
+                          >
+                            {item.status?.name}
+                          </Chip>
+                        </CardBody>
                       </Card>
                     )
                   })}
