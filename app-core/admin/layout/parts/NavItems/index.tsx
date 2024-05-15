@@ -60,7 +60,7 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
               href={innerNavItem.href}
               className={twMerge(
                 "justify-between rounded-sm h-fit p-1 w-full pl-4 truncate",
-                isActive ? "font-semibold text-primary" : null
+                isActive ? "font-semibold text-primary dark:text-primary-900" : null
               )}
               variant="light"
               onPress={handlePress}
@@ -90,7 +90,7 @@ function NavItem({ navItem }: { navItem: AdminNavItem }) {
       href={navItem.href}
       className={twMerge(
         "rounded-none gap-0 text-sm justify-start h-9 min-h-9 border-b-1 border-default-200 p-1 truncate",
-        isActive ? "font-semibold text-primary" : null
+        isActive ? "font-semibold text-primary dark:text-primary-900" : null
       )}
       variant="light"
       startContent={<Icon path={navItem.iconPath ?? mdiCircleOutline} className="w-4 mr-2" />}
