@@ -4,11 +4,9 @@ import {
   RoadmapItemType,
   RoadmapStatusGroupName,
 } from "@/~sml-os-kit/modules/roadmap/types"
-import { mdiAlertCircleOutline, mdiExclamation } from "@mdi/js"
-import Icon from "@mdi/react"
 import { Card, CardBody, Chip, ScrollShadow, Skeleton } from "@nextui-org/react"
 import { useTheme } from "next-themes"
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
 
 const itemGroups: { group: RoadmapStatusGroupName; color: string }[] = [
@@ -63,6 +61,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                           key={i}
                           className="shrink-0 py-2 px-3 space-y-2 border border-default-200"
                           shadow="none"
+                          radius="sm"
                         >
                           <Skeleton className="h-4 rounded-lg" />
                           <Skeleton className="h-4 rounded-lg w-8/12" />
