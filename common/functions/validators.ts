@@ -1,3 +1,3 @@
 export function validateEmail(value: string) {
-  return Boolean(value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i))
+  return Boolean(value.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i))
 }
