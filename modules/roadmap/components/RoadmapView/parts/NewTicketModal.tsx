@@ -82,7 +82,7 @@ export default function NewTicketModal({
                 isSelected={formik.values.urgent}
                 {...formik.getFieldProps("urgent")}
                 classNames={{
-                  base: "flex data-[selected=true]:bg-danger-500 rounded-full transition-all px-4 m-0 border border-default-200 data-[selected=true]:border-0",
+                  base: "flex data-[selected=true]:bg-danger-500 rounded-full transition-all px-4 m-0 border border-default-200 data-[selected=true]:border-danger-500",
                   label: twMerge(
                     "text-sm",
                     formik.values.urgent ? "text-white" : "text-default-500"
