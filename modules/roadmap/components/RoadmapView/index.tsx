@@ -39,7 +39,7 @@ export default function RoadmapView({
         <NewTicketModal isOpen={isOpen} onClose={onClose} onAfterSubmit={handleNewTicketSubmit} />
       </div>
       <Tabs
-        size="lg"
+        size="md"
         radius="sm"
         classNames={{
           base: "max-w-full overflow-x-auto",

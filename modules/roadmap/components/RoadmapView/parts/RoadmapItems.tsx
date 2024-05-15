@@ -4,6 +4,8 @@ import {
   RoadmapItemType,
   RoadmapStatusGroupName,
 } from "@/~sml-os-kit/modules/roadmap/types"
+import { mdiAlertCircleOutline, mdiExclamation } from "@mdi/js"
+import Icon from "@mdi/react"
 import { Card, CardBody, Chip, ScrollShadow, Skeleton } from "@nextui-org/react"
 import { useTheme } from "next-themes"
 import { useEffect, useLayoutEffect, useState } from "react"
@@ -41,7 +43,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
           return (
             <ScrollShadow
               key={group}
-              className={twMerge("flex flex-col h-full rounded-lg space-y-4 p-4", "overflow-auto")}
+              className={twMerge("flex flex-col h-full rounded-lg space-y-2 p-2", "overflow-auto")}
             >
               <div
                 className={twMerge(
@@ -57,29 +59,45 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                     .fill(null)
                     .map((_, i) => {
                       return (
-                        <Card key={i} className="shrink-0 h-24 p-4 space-y-2">
-                          <Skeleton className="h-8 rounded-lg" />
-                          <Skeleton className="h-6 rounded-lg w-8/12" />
-                          <Skeleton className="h-6 rounded-lg w-1/2" />
+                        <Card
+                          key={i}
+                          className="shrink-0 py-2 px-3 space-y-2 border border-default-200"
+                          shadow="none"
+                        >
+                          <Skeleton className="h-4 rounded-lg" />
+                          <Skeleton className="h-4 rounded-lg w-8/12" />
+                          <Skeleton className="h-4 rounded-lg w-1/2" />
                         </Card>
                       )
                     })
                 : groupItems.map((item) => {
                     return (
-                      <Card key={item.id} className="shrink-0 min-h-24 z-10 dark:bg-content2">
-                        <CardBody className="p-4 space-y-2">
-                          {item.urgent ? <Chip color="danger">Urgent</Chip> : null}
-                          <p className="font-semibold">{item.title}</p>
-                          <p className="text-sm whitespace-pre-line">{item.description}</p>
-                          <Chip
-                            variant="dot"
-                            classNames={{
-                              dot: `bg-${item.status?.color}-500`,
-                              content: `text-${item.status?.color}-500`,
-                            }}
-                          >
-                            {item.status?.name}
-                          </Chip>
+                      <Card
+                        key={item.id}
+                        className="shrink-0 z-10 bg-background dark:bg-content2 border border-default-200"
+                        shadow="none"
+                        radius="sm"
+                      >
+                        <CardBody className="py-2 px-3 space-y-1">
+                          <p className="font-semibold text-sm">{item.title}</p>
+                          <p className="text-tiny whitespace-pre-line">{item.description}</p>
+                          <div className="flex items-center space-x-2">
+                            {item.urgent ? (
+                              <Chip color="danger" size="sm">
+                                Urgent
+                              </Chip>
+                            ) : null}
+                            <Chip
+                              variant="dot"
+                              size="sm"
+                              classNames={{
+                                dot: `bg-${item.status?.color}-500`,
+                                content: `text-${item.status?.color}-500`,
+                              }}
+                            >
+                              {item.status?.name}
+                            </Chip>
+                          </div>
                         </CardBody>
                       </Card>
                     )

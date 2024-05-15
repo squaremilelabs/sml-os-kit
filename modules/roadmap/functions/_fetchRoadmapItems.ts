@@ -1,6 +1,6 @@
 "use server"
 
-import { getSiteConfig } from "@/~sml-os-kit/config/functions"
+import modulesConfig from "@/$sml-os-config/modules"
 import { roadmapStatusGroupNameMap } from "@/~sml-os-kit/modules/roadmap/constants"
 import { RoadmapItem, RoadmapItemType } from "@/~sml-os-kit/modules/roadmap/types"
 import { Client } from "@notionhq/client"
@@ -16,14 +16,14 @@ export default async function _fetchRoadmapItems({
   type: RoadmapItemType
 }): Promise<RoadmapItem[]> {
   const notion = new Client({ auth: process.env.NOTION_TOKEN })
-  const databaseIds = getSiteConfig().integrations.notion
+  const notionConfig = modulesConfig.roadmap.notion
   const databaseId =
     type === "ticket"
-      ? databaseIds.ticketsDatabaseId
+      ? notionConfig.ticketsDatabaseId
       : type === "feature"
-        ? databaseIds.featuresDatabaseId
+        ? notionConfig.featuresDatabaseId
         : type === "patch"
-          ? databaseIds.patchesDatabaseId
+          ? notionConfig.patchesDatabaseId
           : null
 
   if (!databaseId) throw new Error("Invalid roadmap item type provided")

@@ -1,5 +1,5 @@
 import { RoadmapItemType, RoadmapStatusGroupName } from "@/~sml-os-kit/modules/roadmap/types"
-import { mdiFlashOutline, mdiRoomServiceOutline, mdiWrenchOutline } from "@mdi/js"
+import { mdiLightbulbOnOutline, mdiRoomServiceOutline, mdiWrenchOutline } from "@mdi/js"
 
 export const roadmapStatusGroupNameMap: Map<string, RoadmapStatusGroupName> = new Map([
   ["To-do", "Open"],
@@ -11,5 +11,5 @@ export const roadmapTypeInfoMap: Map<RoadmapItemType, { title: string; iconPath:
   new Map([
     ["ticket", { title: "Tickets", iconPath: mdiRoomServiceOutline }],
     ["patch", { title: "Patches", iconPath: mdiWrenchOutline }],
-    ["feature", { title: "Features", iconPath: mdiFlashOutline }],
+    ["feature", { title: "Features", iconPath: mdiLightbulbOnOutline }],
   ])

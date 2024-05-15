@@ -21,13 +21,6 @@ export interface SiteConfig {
   }
   admin: AdminConfig
   portals?: PortalConfig[]
-  integrations: {
-    notion: {
-      ticketsDatabaseId: string
-      patchesDatabaseId: string
-      featuresDatabaseId: string
-    }
-  }
 }
 
 export interface AdminConfig {
@@ -48,8 +41,12 @@ export interface PortalConfig {
   basePath: string
 }
 
-export interface ModuleConfig {
+export interface ModulesConfig {
   roadmap: {
-    notionDatabaseId: string
+    notion: {
+      ticketsDatabaseId: string
+      patchesDatabaseId: string
+      featuresDatabaseId: string
+    }
   }
 }
