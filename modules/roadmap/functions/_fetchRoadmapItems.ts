@@ -78,7 +78,7 @@ export default async function _fetchRoadmapItems({
     return {
       type,
       id: rawItem.id,
-      title: titleProperty?.type === "title" ? titleProperty.title?.[0]?.plain_text : "",
+      title: titleProperty?.type === "title" ? titleProperty.title?.[0]?.plain_text : "(Untitled)",
       description:
         descriptionProperty?.type === "rich_text"
           ? descriptionProperty.rich_text?.[0]?.plain_text
