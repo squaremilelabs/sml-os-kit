@@ -8,7 +8,7 @@ import React from "react"
 export function StyleProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
-      <NextThemeProvider attribute="class" disableTransitionOnChange>
+      <NextThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
         {children}
       </NextThemeProvider>
     </NextUIProvider>
