@@ -28,7 +28,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
   }, [itemsQuery.data])
 
   return (
-    <div className="flex h-full w-full grid grid-cols-[repeat(3,minmax(300px,1fr))] overflow-x-auto rounded-xl border border-default-200">
+    <div className="flex h-full w-full grid grid-cols-[repeat(3,minmax(300px,1fr))] overflow-x-auto rounded-xl border border-default-200 shadow-lg">
       {itemsQuery.isError ? (
         <>
           <div />
