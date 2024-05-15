@@ -1,9 +1,8 @@
-import { getNextUIPluginConfig } from "@/~sml-os-kit/config/functions"
-import { ConfigTheme } from "@nextui-org/react"
+import { getColorThemes } from "@/~sml-os-kit/config/functions"
 import { Head, Html, Preview, Tailwind } from "@react-email/components"
 import React from "react"
 
-const lightTheme = getNextUIPluginConfig().themes?.light as ConfigTheme
+const lightTheme = getColorThemes().light
 const colors = lightTheme?.colors
 
 export default function EmailRoot({

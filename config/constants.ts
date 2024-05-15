@@ -1,7 +1,5 @@
 import { mdiCogOutline } from "@mdi/js"
 import { SiteConfig } from "./types"
-import { nextui } from "@nextui-org/react"
-import { getNextUIPluginConfig } from "./functions"
 
 export const coreSiteConfig: Partial<SiteConfig> = {
   admin: {
@@ -32,6 +30,11 @@ export const tokenNameSuffix: string = "os-token"
 export const agentNameSuffix: string = "os-agent-uid"
 
 export const coreTailwindConfig = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./~sml-os-kit/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+  ],
   safelist: [
     {
       pattern:
@@ -61,5 +64,4 @@ export const coreTailwindConfig = {
     },
   },
   darkMode: "class",
-  plugins: [nextui(getNextUIPluginConfig())],
 }

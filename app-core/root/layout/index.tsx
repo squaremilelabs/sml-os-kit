@@ -2,8 +2,8 @@
 
 import clsx from "clsx"
 import { StyleProvider } from "../styles/provider"
-import React, { Suspense } from "react"
 import { fontSans } from "../styles/font"
+import React, { Suspense } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 const queryClient = new QueryClient()

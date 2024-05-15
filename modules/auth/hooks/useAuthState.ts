@@ -1,3 +1,5 @@
+"use client"
+
 import { useQuery } from "@tanstack/react-query"
 import _getSessionOSUser from "../functions/_getSessionOSUser"
 import { OSUser } from "../types"

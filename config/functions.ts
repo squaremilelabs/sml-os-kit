@@ -2,8 +2,7 @@ import siteConfig from "../../$sml-os-config/site" // cannot use @ import for ta
 import brandConfig from "../../$sml-os-config/brand" // cannot use @ import for tailwind config
 import { agentNameSuffix, cookieNameSuffix, coreSiteConfig, tokenNameSuffix } from "./constants"
 import { SiteConfig } from "./types"
-import { NextUIPluginConfig } from "@nextui-org/react"
-import { Config } from "tailwindcss"
+import { ConfigTheme } from "@nextui-org/react"
 
 export function getCookieName() {
   return brandConfig.orgSlug + "-" + cookieNameSuffix
@@ -36,7 +35,7 @@ export function getSiteConfig(): SiteConfig {
   }
 }
 
-export function getNextUIPluginConfig(): NextUIPluginConfig {
+export function getColorThemes(): { light: ConfigTheme; dark: ConfigTheme } {
   const brandColors = brandConfig.colors
 
   const lightColorMap = {
@@ -65,7 +64,7 @@ export function getNextUIPluginConfig(): NextUIPluginConfig {
     "900": "100",
   }
 
-  const constructColorConfig = (colorKey: string, theme: "light" | "dark") => {
+  const constructBrandColorConfig = (colorKey: string, theme: "light" | "dark") => {
     const targetColorMap: { [scale: string]: string } = Object.entries(brandColors)
       .filter(([key]) => key.startsWith(`color-${colorKey}-`))
       .reduce((prev, [key, value]) => {
@@ -92,25 +91,22 @@ export function getNextUIPluginConfig(): NextUIPluginConfig {
   }
 
   return {
-    addCommonColors: true,
-    themes: {
-      light: {
-        colors: {
-          focus: brandColors["color-primary-600"],
-          primary: constructColorConfig("primary", "light"),
-          success: constructColorConfig("success", "light"),
-          warning: constructColorConfig("warning", "light"),
-          danger: constructColorConfig("danger", "light"),
-        },
+    light: {
+      colors: {
+        focus: brandColors["color-primary-600"],
+        primary: constructBrandColorConfig("primary", "light"),
+        success: constructBrandColorConfig("success", "light"),
+        warning: constructBrandColorConfig("warning", "light"),
+        danger: constructBrandColorConfig("danger", "light"),
       },
-      dark: {
-        colors: {
-          focus: brandColors["color-primary-200"],
-          primary: constructColorConfig("primary", "dark"),
-          success: constructColorConfig("success", "dark"),
-          warning: constructColorConfig("warning", "dark"),
-          danger: constructColorConfig("danger", "dark"),
-        },
+    },
+    dark: {
+      colors: {
+        focus: brandColors["color-primary-200"],
+        primary: constructBrandColorConfig("primary", "dark"),
+        success: constructBrandColorConfig("success", "dark"),
+        warning: constructBrandColorConfig("warning", "dark"),
+        danger: constructBrandColorConfig("danger", "dark"),
       },
     },
   }
