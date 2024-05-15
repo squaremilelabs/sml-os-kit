@@ -3,6 +3,19 @@ import brandConfig from "../../$sml-os-config/brand" // cannot use @ import for 
 import { agentNameSuffix, cookieNameSuffix, coreSiteConfig, tokenNameSuffix } from "./constants"
 import { SiteConfig } from "./types"
 import { NextUIPluginConfig } from "@nextui-org/react"
+import { Config } from "tailwindcss"
+
+export function getCookieName() {
+  return brandConfig.orgSlug + "-" + cookieNameSuffix
+}
+
+export function getTokenName() {
+  return brandConfig.orgSlug + "-" + tokenNameSuffix
+}
+
+export function getAgentName() {
+  return brandConfig.orgSlug + "-" + agentNameSuffix
+}
 
 export function getSiteConfig(): SiteConfig {
   return {
@@ -101,16 +114,4 @@ export function getNextUIPluginConfig(): NextUIPluginConfig {
       },
     },
   }
-}
-
-export function getCookieName() {
-  return brandConfig.orgSlug + "-" + cookieNameSuffix
-}
-
-export function getTokenName() {
-  return brandConfig.orgSlug + "-" + tokenNameSuffix
-}
-
-export function getAgentName() {
-  return brandConfig.orgSlug + "-" + agentNameSuffix
 }
