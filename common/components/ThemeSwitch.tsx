@@ -4,7 +4,7 @@ import { mdiWeatherNight, mdiWeatherSunny } from "@mdi/js"
 import Icon from "@mdi/react"
 import { Switch } from "@nextui-org/react"
 import { useTheme } from "next-themes"
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 
 export default function ThemeSwitch({
   size = "md",
