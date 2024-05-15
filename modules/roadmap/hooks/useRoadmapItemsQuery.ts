@@ -8,5 +8,6 @@ export default function useRoadmapItemsQuery({ type }: { type: RoadmapItemType }
     queryFn: async () => {
       return _fetchRoadmapItems({ type })
     },
+    retry: (failureCount) => failureCount <= 2,
   })
 }
