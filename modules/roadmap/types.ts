@@ -5,7 +5,7 @@ export interface RoadmapItem {
   type: RoadmapItemType
   title: string
   description?: string
-  creatorEmail?: string | null
+  submitter?: string | null | (string | null)[]
   urgent: boolean
   status: {
     name?: string

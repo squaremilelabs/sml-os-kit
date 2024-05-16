@@ -34,7 +34,7 @@ export default function NewTicketModal({
       title: "",
       description: "",
       urgent: false,
-      creatorEmail: auth?.user?.email ?? "",
+      submitter: auth?.user?.email ?? null,
     },
     validationSchema: Yup.object({
       title: Yup.string().required("Required"),

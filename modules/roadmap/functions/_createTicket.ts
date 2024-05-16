@@ -4,7 +4,7 @@ import { Client } from "@notionhq/client"
 import modulesConfig from "@/$sml-os-config/modules"
 
 export default async function _createTicket(
-  input: Pick<RoadmapItem, "title" | "description" | "urgent" | "creatorEmail">
+  input: Pick<RoadmapItem, "title" | "description" | "urgent" | "submitter">
 ) {
   const notion = new Client({ auth: process.env.NOTION_TOKEN })
   const ticketsDatabaseId = modulesConfig.roadmap.notion.ticketsDatabaseId
@@ -12,7 +12,7 @@ export default async function _createTicket(
   if (!input.title) throw new Error("Title is required")
 
   const properties = {
-    "Title": {
+    Title: {
       title: [
         {
           text: {
@@ -21,7 +21,7 @@ export default async function _createTicket(
         },
       ],
     },
-    "Description": {
+    Description: {
       rich_text: [
         {
           text: {
@@ -30,7 +30,7 @@ export default async function _createTicket(
         },
       ],
     },
-    "Creator Email": { email: input.creatorEmail },
+    Submitter: { email: input.submitter },
   } as Record<string, any>
 
   if (input.urgent) {

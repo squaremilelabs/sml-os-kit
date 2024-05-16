@@ -68,13 +68,14 @@ export default async function _fetchRoadmapItems({
     },
   })
 
-  const items: RoadmapItem[] = queryResponse.results.map((rawItem) => {
+  const items = queryResponse.results.map<RoadmapItem>((rawItem) => {
     const item = rawItem as PageObjectResponse
     const titleProperty = item.properties["Title"]
     const descriptionProperty = item.properties["Description"]
     const urgentProperty = item.properties["Urgent"]
     const statusProperty = item.properties["Status"]
-    const creatorEmailProperty = item.properties["Creator Email"]
+    const submitterProperty = item.properties["Submitter"]
+    const ticketSubmittersProperty = item.properties["Ticket Submitters"]
     return {
       type,
       id: rawItem.id,
@@ -83,7 +84,16 @@ export default async function _fetchRoadmapItems({
         descriptionProperty?.type === "rich_text"
           ? descriptionProperty.rich_text?.[0]?.plain_text
           : undefined,
-      creatorEmail: creatorEmailProperty?.type === "email" ? creatorEmailProperty.email : undefined,
+      submitter:
+        submitterProperty?.type === "email"
+          ? submitterProperty.email
+          : ticketSubmittersProperty.type === "rollup"
+            ? ticketSubmittersProperty.rollup.type === "array"
+              ? ticketSubmittersProperty.rollup.array.map((val) =>
+                  val.type === "email" ? val.email : null
+                )
+              : undefined
+            : undefined,
       urgent: urgentProperty?.type === "select" ? !!urgentProperty.select : false,
       status:
         statusProperty?.type === "status"
