@@ -153,7 +153,6 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
       searchParams,
     })
 
-    // TODO: Handle logging
     if (!skipLog) {
       const logData = {
         userId: agentUser?.id ?? user?.id ?? "system",

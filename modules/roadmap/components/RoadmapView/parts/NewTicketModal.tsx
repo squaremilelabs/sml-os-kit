@@ -40,7 +40,7 @@ export default function NewTicketModal({
       title: Yup.string().required("Required"),
       description: Yup.string().max(240, "Too long!"),
       urgent: Yup.boolean(),
-      creatorEmail: Yup.string().required(),
+      submitter: Yup.string().required(),
     }),
     enableReinitialize: true,
     onSubmit: (values: CreateTicketInput) => {

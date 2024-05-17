@@ -31,6 +31,7 @@ import { mdiAlertCircleOutline } from "@mdi/js"
 import { Key, useLayoutEffect, useState } from "react"
 import roles from "@/$sml-os-config/roles"
 import * as Yup from "yup"
+import _runSafeServerAction from "@/~sml-os-kit/common/functions/_runSafeServerAction"
 
 type CreateUserInput = Parameters<typeof _createUser<BaseOSUser>>[0]
 type UpdateUserInput = Parameters<typeof _updateUser<BaseOSUser>>[1]
@@ -113,7 +114,12 @@ export default function UserModal({
         if (!user) {
           throw new Error("No user to update")
         } else {
-          await _updateUser<BaseOSUser>(user.id, input as UpdateUserInput)
+          const updateUserResponse = await _runSafeServerAction(
+            _updateUser<BaseOSUser>,
+            user.id,
+            input as UpdateUserInput
+          )
+          if (updateUserResponse.type === "error") throw updateUserResponse.result
           await queryClient.invalidateQueries({ queryKey: ["users"] })
           if (mode === "updateSelf") {
             await queryClient.invalidateQueries({ queryKey: ["auth"] })
@@ -128,10 +134,12 @@ export default function UserModal({
     mutationFn: async () => {
       if (!user) throw new Error("No user to update")
       if (user.isDeactivated) {
-        await _reactivateUser(user.id)
+        const reactivateUserResponse = await _runSafeServerAction(_reactivateUser, user.id)
+        if (reactivateUserResponse.type === "error") throw reactivateUserResponse.result
         await queryClient.invalidateQueries({ queryKey: ["users"] })
       } else {
-        await _deactivateUser(user.id)
+        const deactivateUserResponse = await _runSafeServerAction(_deactivateUser, user.id)
+        if (deactivateUserResponse.type === "error") throw deactivateUserResponse.result
         await queryClient.invalidateQueries({ queryKey: ["users"] })
       }
     },
