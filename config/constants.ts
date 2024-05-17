@@ -55,7 +55,7 @@ export const coreTailwindConfig = {
         sans: ["var(--font-sans)"],
       },
       height: {
-        screen: ["100vh", "100dvh"],
+        screen: ["100dvh", "100vh"],
       },
       transitionProperty: {
         layout:

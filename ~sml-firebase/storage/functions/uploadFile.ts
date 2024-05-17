@@ -3,7 +3,7 @@
 import FirebaseClient from "@/~sml-os-kit/~sml-firebase/firebase/FirebaseClient"
 import { StorageFile } from "../types"
 import createFileDoc from "../utilities/_createFileDoc"
-import _getNonExpiringDownloadUrl from "./_getPublicDownloadUrl"
+import _getPublicDownloadUrl from "./_getPublicDownloadUrl"
 
 export default async function uploadFile<ExtStorageFile extends StorageFile>(
   file: File,
@@ -14,7 +14,7 @@ export default async function uploadFile<ExtStorageFile extends StorageFile>(
 
   let publicUrl: string | undefined = undefined
   if (input.isPublic) {
-    publicUrl = await _getNonExpiringDownloadUrl(id)
+    publicUrl = await _getPublicDownloadUrl(id)
   }
 
   const fileDocData = {

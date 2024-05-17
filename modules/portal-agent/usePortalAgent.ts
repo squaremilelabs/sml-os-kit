@@ -89,11 +89,11 @@ export default function usePortalAgent(options?: { initializeListeners?: boolean
   const isAdminAgent = portalUser?.id !== auth.user?.id && auth?.user?.role?.userType === "admin"
 
   return {
-    portalConfig: portal,
-    isAdminAgent,
     portalUser,
+    portalConfig: portal,
+    portalAPI,
+    isAdminAgent,
     clearPortalUser,
     setPortalUserByEmail,
-    portalAPI,
   }
 }

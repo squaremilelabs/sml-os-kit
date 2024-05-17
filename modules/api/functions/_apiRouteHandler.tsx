@@ -88,7 +88,7 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
       }
 
       if (!userResponse.user) {
-        return _constructNextAPIResponse<"error">(401, {
+        return _constructNextAPIResponse<"error">(400, {
           type: "system",
           message: "Missing or invalid access token or session cookie",
         })
