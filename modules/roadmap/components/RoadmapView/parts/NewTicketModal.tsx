@@ -25,7 +25,7 @@ export default function NewTicketModal({
 }: {
   isOpen: boolean
   onClose: () => void
-  onAfterSubmit: () => any
+  onAfterSubmit: () => void
 }) {
   const auth = useAuthState()
 

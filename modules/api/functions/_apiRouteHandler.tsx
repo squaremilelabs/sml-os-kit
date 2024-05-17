@@ -7,7 +7,7 @@ import {
   getSiteConfig,
   getTokenName,
 } from "@/~sml-os-kit/config/functions"
-import _constructNextAPIResponse from "../functions/_constructNextAPIResonse"
+import _constructNextAPIResponse from "./_constructNextAPIResonse"
 import _getOSUserFromAccessToken from "../../auth/functions/_getOSUserFromAccessToken"
 import _getOSUserFromSessionCookie from "../../auth/functions/_getOSUserFromSessionCookie"
 import jsonifyError from "@/~sml-os-kit/common/functions/jsonifyError"
@@ -49,7 +49,7 @@ function isSuccessResponse<T>(
   return response.type === "success"
 }
 
-export default async function apiRouteHandler<ExpectedSuccessJson>(
+export default async function _apiRouteHandler<ExpectedSuccessJson>(
   { request, skipLog, disableAuthError }: HandlerParams,
   callback: (
     params: CallbackParams

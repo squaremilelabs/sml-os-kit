@@ -1,20 +1,24 @@
-import { validateEmail } from "@/~sml-os-kit/common/functions/validators"
 import { Button, Input } from "@nextui-org/react"
 import { FormEvent, useState } from "react"
 import _sendSignInLink from "../../functions/_sendSignInLink"
 import Icon from "@mdi/react"
 import { mdiCheckCircleOutline } from "@mdi/js"
-import Link from "next/link"
 import { useMutation } from "@tanstack/react-query"
+import _runSafeServerAction from "@/~sml-os-kit/common/functions/_runSafeServerAction"
+import _clearSessionCookie from "@/~sml-os-kit/modules/auth/functions/_clearSessionCookie"
 
 export default function LoginForm() {
   const [email, setEmail] = useState("")
 
-  const isDisabled = !email || !validateEmail(email)
+  const isDisabled = !email
 
   const mutation = useMutation({
     mutationKey: [email],
-    mutationFn: async () => _sendSignInLink(email),
+    mutationFn: async () => {
+      const response = await _runSafeServerAction(_sendSignInLink, email)
+      if (response.type === "error") throw response.result
+      return response.result
+    },
   })
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -37,18 +41,6 @@ export default function LoginForm() {
           <Button onPress={mutation.reset} className="self-center px-1 py-1 h-fit" variant="flat">
             Resend
           </Button>
-          {/* TODO: remove demo flow */}
-          {/* {mutation.data ? (
-            <Button
-              as={Link}
-              href={mutation.data}
-              className="self-center px-1 py-1 h-fit"
-              variant="light"
-              radius="none"
-            >
-              Proceed with Demo
-            </Button>
-          ) : null} */}
         </>
       ) : (
         <>
@@ -59,7 +51,7 @@ export default function LoginForm() {
             value={email}
             onValueChange={(value) => setEmail(value)}
             isInvalid={mutation.isError}
-            errorMessage={mutation.error ? "Email not recognized or account is not active" : null}
+            errorMessage={mutation.error?.message ?? undefined}
           />
           <Button
             color="primary"

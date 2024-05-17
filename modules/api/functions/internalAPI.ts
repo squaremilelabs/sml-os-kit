@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios"
 import { APIErrorResponseJson, APIMethod, EndpointConfig } from "../types"
 import { getAgentName } from "@/~sml-os-kit/config/functions"
 
-interface OsAPIInput<M extends APIMethod, E extends EndpointConfig> {
+interface InternalAPIInput<M extends APIMethod, E extends EndpointConfig> {
   method: M
   endpoint: E["endpoint"]
   endpointParams?: E["endpointParams"] extends { [key: string]: string }
@@ -12,8 +12,8 @@ interface OsAPIInput<M extends APIMethod, E extends EndpointConfig> {
   asUserId?: string // for agent
 }
 
-interface OsAPIInputWithPayload<M extends APIMethod, E extends EndpointConfig>
-  extends OsAPIInput<M, E> {
+interface InternalAPIInputWithPayload<M extends APIMethod, E extends EndpointConfig>
+  extends InternalAPIInput<M, E> {
   payload: E[M] extends { payload: any } ? E[M]["payload"] : never
 }
 
@@ -23,13 +23,13 @@ interface OsAPIResponse<M extends APIMethod, E extends EndpointConfig> {
 }
 
 function isInputWithPayload<M extends APIMethod, E extends EndpointConfig>(
-  input: OsAPIInput<M, E> | OsAPIInputWithPayload<M, E>
-): input is OsAPIInputWithPayload<M, E> {
+  input: InternalAPIInput<M, E> | InternalAPIInputWithPayload<M, E>
+): input is InternalAPIInputWithPayload<M, E> {
   return "payload" in input
 }
 
-export default async function osAPI<M extends APIMethod, E extends EndpointConfig = never>(
-  input: E[M] extends { payload: any } ? OsAPIInputWithPayload<M, E> : OsAPIInput<M, E>
+export default async function internalAPI<M extends APIMethod, E extends EndpointConfig = never>(
+  input: E[M] extends { payload: any } ? InternalAPIInputWithPayload<M, E> : InternalAPIInput<M, E>
 ): Promise<OsAPIResponse<M, E>> {
   try {
     // set up url from dynamic path

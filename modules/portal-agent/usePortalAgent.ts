@@ -1,7 +1,7 @@
 import useAuthState from "../auth/hooks/useAuthState"
 import { useLocalStorage } from "usehooks-ts"
-import { useCallback, useEffect, useLayoutEffect } from "react"
-import osAPI from "../api/functions/osAPI"
+import { useCallback, useLayoutEffect } from "react"
+import internalAPI from "../api/functions/internalAPI"
 import { APIMethod, EndpointConfig } from "../api/types"
 import { OSUser } from "../auth/types"
 import _getOSUser from "../auth/functions/_getOSUser"
@@ -81,9 +81,9 @@ export default function usePortalAgent(options?: { initializeListeners?: boolean
   }
 
   const portalAPI = async <M extends APIMethod, E extends EndpointConfig = never>(
-    input: Parameters<typeof osAPI<M, E>>[0]
+    input: Parameters<typeof internalAPI<M, E>>[0]
   ) => {
-    return osAPI<M, E>({ ...input, asUserId: portalUser?.id })
+    return internalAPI<M, E>({ ...input, asUserId: portalUser?.id })
   }
 
   const isAdminAgent = portalUser?.id !== auth.user?.id && auth?.user?.role?.userType === "admin"

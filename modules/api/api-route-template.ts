@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-types */
+// ^ only disabled for the template. this should be removed when implemented.
+
 import jsonifyError from "@/~sml-os-kit/common/functions/jsonifyError"
-import apiRouteHandler from "@/~sml-os-kit/modules/api/handler"
+import _apiRouteHandler from "@/~sml-os-kit/modules/api/functions/_apiRouteHandler"
 import { EndpointConfig } from "@/~sml-os-kit/modules/api/types"
 import { NextRequest } from "next/server"
 
@@ -19,6 +22,9 @@ import { NextRequest } from "next/server"
      > Remove or define `endpointParams` depending on if it is a dynamic route
      > Remove or define each method (get, put, post, delete)
        > If removing, make sure to also remove the corresponding function code
+
+  3. Remove the eslint-disable comment at the top of this file
+
 */
 
 export type NamedEndpoint = Endpoint
@@ -48,7 +54,7 @@ interface Endpoint extends EndpointConfig {
 
 /* --------------------- GET ---------------------- */
 export async function GET(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
-  return apiRouteHandler<Endpoint["get"]["response"]>({ request, skipLog: true }, async (info) => {
+  return _apiRouteHandler<Endpoint["get"]["response"]>({ request, skipLog: true }, async (info) => {
     try {
       const user = info.user
       const agentUser = info.agentUser
@@ -82,7 +88,7 @@ export async function GET(request: NextRequest, nextParams: Endpoint["endpointPa
 
 /* --------------------- PUT ---------------------- */
 export async function PUT(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
-  return apiRouteHandler<Endpoint["put"]["response"]>({ request }, async (info) => {
+  return _apiRouteHandler<Endpoint["put"]["response"]>({ request }, async (info) => {
     try {
       const user = info.user
       const agentUser = info.agentUser
@@ -117,7 +123,7 @@ export async function PUT(request: NextRequest, nextParams: Endpoint["endpointPa
 
 /* --------------------- POST ---------------------- */
 export async function POST(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
-  return apiRouteHandler<Endpoint["post"]["response"]>({ request }, async (info) => {
+  return _apiRouteHandler<Endpoint["post"]["response"]>({ request }, async (info) => {
     try {
       const user = info.user
       const agentUser = info.agentUser
@@ -152,7 +158,7 @@ export async function POST(request: NextRequest, nextParams: Endpoint["endpointP
 
 /* --------------------- DELETE ---------------------- */
 export async function DELETE(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
-  return apiRouteHandler<Endpoint["delete"]["response"]>({ request }, async (info) => {
+  return _apiRouteHandler<Endpoint["delete"]["response"]>({ request }, async (info) => {
     try {
       const user = info.user
       const agentUser = info.agentUser
