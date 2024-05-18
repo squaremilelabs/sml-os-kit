@@ -1,5 +1,7 @@
 import { mdiCogOutline } from "@mdi/js"
 import { SiteConfig } from "./types"
+import { getColorThemes } from "./functions"
+import { NextUIPluginConfig } from "@nextui-org/react"
 
 export const coreSiteConfig: Partial<SiteConfig> = {
   admin: {
@@ -64,4 +66,9 @@ export const coreTailwindConfig = {
     },
   },
   darkMode: "class",
+}
+
+export const coreNextUIPluginConfig: NextUIPluginConfig = {
+  addCommonColors: true,
+  themes: getColorThemes(),
 }

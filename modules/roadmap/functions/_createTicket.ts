@@ -6,6 +6,8 @@ import modulesConfig from "@/$sml-os-config/modules"
 export default async function _createTicket(
   input: Pick<RoadmapItem, "title" | "description" | "urgent" | "submitter">
 ) {
+  const isEnabled = modulesConfig.roadmap.enabled
+  if (!isEnabled) throw new Error("Roadmap not enabled")
   const notion = new Client({ auth: process.env.NOTION_TOKEN })
   const ticketsDatabaseId = modulesConfig.roadmap.notion.ticketsDatabaseId
   if (!ticketsDatabaseId) throw new Error("Tickets database not found")

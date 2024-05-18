@@ -15,6 +15,9 @@ export default async function _fetchRoadmapItems({
 }: {
   type: RoadmapItemType
 }): Promise<RoadmapItem[]> {
+  const isEnabled = modulesConfig.roadmap.enabled
+  if (!isEnabled) throw new Error("Roadmap not enabled")
+
   const notion = new Client({ auth: process.env.NOTION_TOKEN })
   const notionConfig = modulesConfig.roadmap.notion
   const databaseId =

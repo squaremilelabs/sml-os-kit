@@ -1,3 +1,4 @@
+import modulesConfig from "@/$sml-os-config/modules"
 import { Button, Image } from "@nextui-org/react"
 import Link from "next/link"
 
@@ -8,6 +9,8 @@ export default function RoadmapNavButton({
   onPress?: () => any
   href?: string
 }) {
+  const isEnabled = modulesConfig.roadmap.enabled
+  if (!isEnabled) return null
   return (
     <Button
       as={href ? Link : "button"}
