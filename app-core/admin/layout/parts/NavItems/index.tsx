@@ -36,17 +36,25 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
   const screenSize = useScreenSize()
   const handlePress = navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined
   const pathname = usePathname()
+  const hasActiveItem = navItem?.items?.some((item) => item.href === pathname)
   return (
-    <Accordion className="p-0 px-0 py-0">
+    <Accordion
+      className="p-0 px-0 py-0"
+      defaultExpandedKeys={hasActiveItem ? [navItem.label] : undefined}
+    >
       <AccordionItem
         classNames={{
-          title: "text-sm text-foreground data-[open]:text-default-500",
-          trigger: "rounded-sm gap-0 text-foreground data-[open]:text-default-500 p-1 h-9",
+          title: "text-sm text-inherit",
+          trigger: twMerge(
+            hasActiveItem ? "text-primary-700 font-semibold" : null,
+            "data-[open]:text-default-500 data-[open]:font-normal",
+            "rounded-sm gap-0 p-1 h-9"
+          ),
           startContent: "mr-2",
           content: "pb-2 px-1",
           base: "border-b-1 border-default-200 px-0",
         }}
-        key={navItem.href}
+        key={navItem.label}
         title={navItem.label}
         startContent={<Icon path={navItem.iconPath ?? mdiCircleOutline} className="w-4" />}
         isCompact
@@ -60,7 +68,7 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
               href={innerNavItem.href}
               className={twMerge(
                 "justify-between rounded-sm h-fit p-1 w-full pl-4 truncate",
-                isActive ? "font-semibold text-primary dark:text-primary-900" : null
+                isActive ? "font-semibold text-primary-700" : null
               )}
               variant="light"
               onPress={handlePress}
@@ -90,7 +98,7 @@ function NavItem({ navItem }: { navItem: AdminNavItem }) {
       href={navItem.href}
       className={twMerge(
         "rounded-none gap-0 text-sm justify-start h-9 min-h-9 border-b-1 border-default-200 p-1 truncate",
-        isActive ? "font-semibold text-primary dark:text-primary-900" : null
+        isActive ? "font-semibold text-primary-700" : null
       )}
       variant="light"
       startContent={<Icon path={navItem.iconPath ?? mdiCircleOutline} className="w-4 mr-2" />}
