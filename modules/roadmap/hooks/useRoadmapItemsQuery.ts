@@ -11,6 +11,6 @@ export default function useRoadmapItemsQuery({ type }: { type: RoadmapItemType }
       if (response.type === "error") throw response.result
       return response.result
     },
-    retry: (failureCount) => failureCount <= 2,
+    retry: () => false,
   })
 }

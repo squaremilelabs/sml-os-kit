@@ -46,7 +46,7 @@ function NavGroup({ navItem }: { navItem: AdminNavItem }) {
         classNames={{
           title: "text-sm text-inherit",
           trigger: twMerge(
-            hasActiveItem ? "text-primary-700 font-semibold" : null,
+            hasActiveItem ? "text-primary-600 font-semibold" : null,
             "data-[open]:text-default-500 data-[open]:font-normal",
             "rounded-sm gap-0 p-1 h-9"
           ),

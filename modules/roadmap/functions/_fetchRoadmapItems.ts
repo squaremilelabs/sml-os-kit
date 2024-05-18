@@ -87,7 +87,7 @@ export default async function _fetchRoadmapItems({
       submitter:
         submitterProperty?.type === "email"
           ? submitterProperty.email
-          : ticketSubmittersProperty.type === "rollup"
+          : ticketSubmittersProperty?.type === "rollup"
             ? ticketSubmittersProperty.rollup.type === "array"
               ? ticketSubmittersProperty.rollup.array.map((val) =>
                   val.type === "email" ? val.email : null
