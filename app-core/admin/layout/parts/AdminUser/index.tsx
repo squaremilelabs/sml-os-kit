@@ -64,10 +64,21 @@ export default function AdminUser() {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-2 w-52 flex flex-col space-y-2 items-stretch bg-content2">
-          <Button onPress={handleOpenModal} radius="sm" size="sm">
+          <Button
+            onPress={handleOpenModal}
+            radius="sm"
+            size="sm"
+            isDisabled={user?.roleId === "demo"}
+          >
             Update Profile
           </Button>
-          <Button radius="sm" size="sm" variant="flat" onPress={handleLogout}>
+          <Button
+            radius="sm"
+            size="sm"
+            variant="flat"
+            onPress={handleLogout}
+            isDisabled={user?.roleId === "demo"}
+          >
             Logout
           </Button>
         </PopoverContent>

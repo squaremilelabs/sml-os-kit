@@ -1,5 +1,4 @@
 "use client"
-
 import { useQuery } from "@tanstack/react-query"
 import _getSessionOSUser from "../functions/_getSessionOSUser"
 import { OSUser } from "../types"
@@ -9,7 +8,7 @@ export default function useAuthState(): {
   error?: string | null
   user?: OSUser | null
 } {
-  const sessionUserQuery = useQuery({
+  const sessionUserQuery = useQuery<OSUser | null>({
     queryKey: ["auth", "users"],
     queryFn: async () => {
       const user = await _getSessionOSUser()

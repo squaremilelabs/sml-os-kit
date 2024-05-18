@@ -14,25 +14,24 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
   const router = useRouter()
   const auth = useAuthState()
 
+  if (process.env.NEXT_PUBLIC_DEMO_MODE) {
+    return <React.Fragment>{children}</React.Fragment>
+  }
+
   if (auth.state === "error") {
     return (
       <div className="w-screen h-screen flex flex-col items-center justify-center space-y-2">
         <Icon path={mdiCloseCircleOutline} className="w-12 text-default-500" />
         <h1 className="text-2xl font-medium">Authentication Error</h1>
-        <Button variant="flat" onPress={() => router.push("/login")}>
-          Go to Login
-        </Button>
+        <span>Please refresh the page</span>
       </div>
     )
   }
 
   if (auth.state === "noUser") {
-    if (pathname === "/login" || pathname === "/handle-login") {
-      return <React.Fragment>{children}</React.Fragment>
-    } else {
-      router.replace("/login")
-    }
+    router.replace("/login")
   }
+
   // hasUser
   if (auth.state === "hasUser" && auth.user) {
     const userHomePage = getOSUserHomePagePath(auth.user)

@@ -4,7 +4,7 @@ import {
   RoadmapItemType,
   RoadmapStatusGroupName,
 } from "@/~sml-os-kit/modules/roadmap/types"
-import { Card, CardBody, Chip, ScrollShadow, Skeleton } from "@nextui-org/react"
+import { Card, CardBody, Chip, Skeleton } from "@nextui-org/react"
 import { useTheme } from "next-themes"
 import { useLayoutEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
@@ -39,18 +39,19 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
         itemGroups.map(({ group, color }, index) => {
           const groupItems = displayedItems.filter((item) => item.status?.group === group)
           return (
-            <ScrollShadow
+            <div
               key={group}
-              className={twMerge("flex flex-col h-full rounded-lg space-y-2 p-2", "overflow-auto")}
+              className={twMerge("flex flex-col h-full rounded-lg space-y-2", "overflow-auto")}
             >
-              <div
-                className={twMerge(
-                  `sticky top-0 p-2 font-medium rounded-lg`,
-                  theme === "light" ? `bg-${color}-100` : `bg-${color}-800`,
-                  "z-20"
-                )}
-              >
-                {group}
+              <div className="bg-background p-2 pb-0 z-20 sticky top-0">
+                <div
+                  className={twMerge(
+                    `font-medium rounded-lg p-2 text-center`,
+                    theme === "light" ? `bg-${color}-100` : `bg-${color}-800`
+                  )}
+                >
+                  {group}
+                </div>
               </div>
               {itemsQuery.isLoading
                 ? Array(index + 1)
@@ -59,7 +60,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                       return (
                         <Card
                           key={i}
-                          className="shrink-0 py-2 px-3 space-y-2 border border-default-200"
+                          className="shrink-0 py-2 px-3 space-y-2 border border-default-200 mx-2"
                           shadow="none"
                           radius="sm"
                         >
@@ -73,7 +74,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                     return (
                       <Card
                         key={item.id}
-                        className="shrink-0 z-10 bg-background dark:bg-content2 border border-default-200"
+                        className="shrink-0 z-10 bg-background dark:bg-content2 border border-default-200 mx-2"
                         shadow="none"
                         radius="sm"
                       >
@@ -101,7 +102,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                       </Card>
                     )
                   })}
-            </ScrollShadow>
+            </div>
           )
         })
       )}

@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation"
 import { getSiteConfig } from "@/~sml-os-kit/config/functions"
 import roles from "@/$sml-os-config/roles"
 import usePageRouter from "@/~sml-os-kit/common/hooks/usePageRouter"
+import { createId } from "@paralleldrive/cuid2"
 
 export default function usePortalAgent(options?: { initializeListeners?: boolean }) {
   const router = usePageRouter()
@@ -44,6 +45,20 @@ export default function usePortalAgent(options?: { initializeListeners?: boolean
   const setPortalUserByEmail = useCallback(
     async (email: string) => {
       const portalRole = roles.find((role) => role.portalId === portal?.id)
+      if (auth.user?.roleId === "demo") {
+        if (portalRole) {
+          setPortalUser({
+            id: createId(),
+            createdAt: Date.now(),
+            displayName: `Demo ${portalRole.label}`,
+            email,
+            isDeactivated: false,
+            roleId: portalRole.id,
+            role: portalRole,
+          })
+        }
+        return
+      }
       const usersResult = await _queryUsers<OSUser>({
         where: [
           ["email", "==", email],
@@ -56,7 +71,7 @@ export default function usePortalAgent(options?: { initializeListeners?: boolean
       const user = await _getOSUser(baseUser.id)
       setPortalUser(user)
     },
-    [portal, setPortalUser]
+    [portal, setPortalUser, auth]
   )
 
   useLayoutEffect(() => {

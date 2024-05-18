@@ -1,5 +1,6 @@
 "use client"
 
+import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
 import NewTicketModal from "@/~sml-os-kit/modules/roadmap/components/RoadmapView/parts/NewTicketModal"
 import RoadmapItems from "@/~sml-os-kit/modules/roadmap/components/RoadmapView/parts/RoadmapItems"
 import { roadmapTypeInfoMap } from "@/~sml-os-kit/modules/roadmap/constants"
@@ -16,6 +17,7 @@ export default function RoadmapView({
   selectedType: RoadmapItemType
   onSelectType: (selection: RoadmapItemType) => any
 }) {
+  const auth = useAuthState()
   const { isOpen, onClose, onOpen } = useDisclosure()
 
   const queryClient = useQueryClient()
@@ -31,8 +33,10 @@ export default function RoadmapView({
         <h1 className="text-2xl font-medium">Roadmap</h1>
         <Button
           color="primary"
+          size="sm"
           onPress={onOpen}
-          startContent={<Icon path={mdiPlus} className="w-6" />}
+          startContent={<Icon path={mdiPlus} className="w-4" />}
+          isDisabled={auth?.user?.roleId === "demo"}
         >
           New Ticket
         </Button>

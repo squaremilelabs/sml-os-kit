@@ -3,6 +3,7 @@ import brandConfig from "../../$sml-os-config/brand" // cannot use @ import for 
 import { agentNameSuffix, cookieNameSuffix, coreSiteConfig, tokenNameSuffix } from "./constants"
 import { SiteConfig } from "./types"
 import { ConfigTheme } from "@nextui-org/react"
+import { merge } from "ts-deepmerge"
 
 export function getCookieName() {
   return brandConfig.orgSlug + "-" + cookieNameSuffix
@@ -17,22 +18,7 @@ export function getAgentName() {
 }
 
 export function getSiteConfig(): SiteConfig {
-  return {
-    ...siteConfig,
-    public: {
-      pathnames: [
-        ...(coreSiteConfig.public?.pathnames ?? []),
-        ...(siteConfig.public?.pathnames ?? []),
-      ],
-    },
-    admin: {
-      navigation: [
-        ...(siteConfig.admin?.navigation ?? []),
-        ...(coreSiteConfig.admin?.navigation ?? []),
-      ],
-    },
-    portals: siteConfig.portals,
-  }
+  return merge(siteConfig, coreSiteConfig) as SiteConfig
 }
 
 export function getColorThemes(): { light: ConfigTheme; dark: ConfigTheme } {
