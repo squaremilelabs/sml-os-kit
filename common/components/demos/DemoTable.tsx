@@ -1,11 +1,4 @@
-import {
-  mdiDownloadOutline,
-  mdiFilterVariant,
-  mdiMagnify,
-  mdiPlus,
-  mdiTableCog,
-  mdiTrayArrowDown,
-} from "@mdi/js"
+import { mdiFilterVariant, mdiMagnify, mdiPlus, mdiTableCog, mdiTrayArrowDown } from "@mdi/js"
 import Icon from "@mdi/react"
 import {
   Button,
