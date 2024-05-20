@@ -28,7 +28,7 @@ export default function DemoPlaceholderPage() {
   }
 
   return (
-    <div className="h-full w-full flex flex-col space-y-2 items-center justify-center">
+    <div className="flex h-full w-full flex-col items-center justify-center space-y-2">
       <h1 className="text-2xl font-medium">{pageTitle}</h1>
       <p>Let&apos;s build together</p>
       <div className="flex flex-row items-center space-x-1">

@@ -17,7 +17,7 @@ export default function DemoRecordPage({
 }) {
   const router = useRouter()
   return (
-    <div className="grid grid-rows-[auto_minmax(0,1fr)] h-full w-full lg:w-8/12 self-center p-4 space-y-4">
+    <div className="grid h-full w-full grid-rows-[auto_minmax(0,1fr)] space-y-4 self-center p-4 lg:w-8/12">
       <div className="flex flex-col space-y-1">
         <div className="flex items-center space-x-1">
           <Link size="sm" className="cursor-pointer font-medium" onClick={() => router.back()}>

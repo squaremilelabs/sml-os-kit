@@ -43,7 +43,7 @@ export default function UserAvatar({
           user?.displayName ? (
             user.displayName[0]
           ) : (
-            <Icon path={mdiAccountOutline} className="w-full h-full" />
+            <Icon path={mdiAccountOutline} className="h-full w-full" />
           )
         }
         {...avatarProps}

@@ -17,7 +17,7 @@ export default function OSSignInEmail({
           Here is your sign-in link to{" "}
           <strong className="text-primary">{brandConfig.appName}</strong>
         </Text>
-        <Link href={signInLink} className="text-zinc-600 underline text-sm">
+        <Link href={signInLink} className="text-sm text-zinc-600 underline">
           {signInLink}
         </Link>
         <Text className="leading-snug">

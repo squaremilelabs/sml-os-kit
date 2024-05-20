@@ -97,7 +97,7 @@ export default function NewTicketModal({
                 Urgent
               </Checkbox>
             </ModalBody>
-            <ModalFooter className="flex justify-between items-center">
+            <ModalFooter className="flex items-center justify-between">
               {saveMutation.isError ? (
                 <p className="text-sm text-danger">{saveMutation.error.message}</p>
               ) : (

@@ -28,11 +28,11 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
   }, [itemsQuery.data])
 
   return (
-    <div className="flex h-full w-full grid grid-cols-[repeat(3,minmax(300px,1fr))] overflow-x-auto rounded-xl border border-default-200 shadow-lg">
+    <div className="flex grid h-full w-full grid-cols-[repeat(3,minmax(300px,1fr))] overflow-x-auto rounded-xl border border-default-200 shadow-lg">
       {itemsQuery.isError ? (
         <>
           <div />
-          <div className="h-full flex items-center justify-center">Failed to load Roadmap</div>
+          <div className="flex h-full items-center justify-center">Failed to load Roadmap</div>
           <div />
         </>
       ) : (
@@ -41,12 +41,12 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
           return (
             <div
               key={group}
-              className={twMerge("flex flex-col h-full rounded-lg space-y-2", "overflow-auto")}
+              className={twMerge("flex h-full flex-col space-y-2 rounded-lg", "overflow-auto")}
             >
-              <div className="bg-background p-2 pb-0 z-20 sticky top-0">
+              <div className="sticky top-0 z-20 bg-background p-2 pb-0">
                 <div
                   className={twMerge(
-                    `font-medium rounded-lg p-2 text-center`,
+                    `rounded-lg p-2 text-center font-medium`,
                     theme === "light" ? `bg-${color}-100` : `bg-${color}-800`
                   )}
                 >
@@ -60,13 +60,13 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                       return (
                         <Card
                           key={i}
-                          className="shrink-0 py-2 px-3 space-y-2 border border-default-200 mx-2"
+                          className="mx-2 shrink-0 space-y-2 border border-default-200 px-3 py-2"
                           shadow="none"
                           radius="sm"
                         >
                           <Skeleton className="h-4 rounded-lg" />
-                          <Skeleton className="h-4 rounded-lg w-8/12" />
-                          <Skeleton className="h-4 rounded-lg w-1/2" />
+                          <Skeleton className="h-4 w-8/12 rounded-lg" />
+                          <Skeleton className="h-4 w-1/2 rounded-lg" />
                         </Card>
                       )
                     })
@@ -74,13 +74,13 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                     return (
                       <Card
                         key={item.id}
-                        className="shrink-0 z-10 bg-background dark:bg-content2 border border-default-200 mx-2"
+                        className="z-10 mx-2 shrink-0 border border-default-200 bg-background dark:bg-content2"
                         shadow="none"
                         radius="sm"
                       >
-                        <CardBody className="py-2 px-3 space-y-1">
-                          <p className="font-semibold text-sm">{item.title}</p>
-                          <p className="text-tiny whitespace-pre-line">{item.description}</p>
+                        <CardBody className="space-y-1 px-3 py-2">
+                          <p className="text-sm font-semibold">{item.title}</p>
+                          <p className="whitespace-pre-line text-tiny">{item.description}</p>
                           <div className="flex items-center space-x-2">
                             {item.urgent ? (
                               <Chip color="danger" size="sm">

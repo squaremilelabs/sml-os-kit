@@ -1,12 +1,6 @@
 import { PortalId } from "@/$sml-os-config/site"
 
-export type AuthSignInMethod = "signInLink" | "google"
-
 export interface AuthConfig {
-  signInMethods: {
-    console: AuthSignInMethod[]
-    portal: AuthSignInMethod[]
-  }
   roles: {
     console: ConsoleRole[]
     portal: PortalRole[]

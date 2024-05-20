@@ -18,7 +18,7 @@ export default function RoadmapNavButton({
       size="sm"
       radius="sm"
       variant="flat"
-      className={"justify-start grow"}
+      className={"grow justify-start"}
       isDisabled={!isEnabled}
       startContent={
         <Image

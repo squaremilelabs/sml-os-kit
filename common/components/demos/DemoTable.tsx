@@ -70,11 +70,11 @@ export default function DemoTable({
         hideTopContent ? (
           <div />
         ) : (
-          <div className="flex flex-wrap justify-start space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
+          <div className="flex flex-wrap justify-start space-x-0 space-y-2 lg:space-x-2 lg:space-y-0">
             <Input
               variant="bordered"
               placeholder="Search"
-              className="grow w-full lg:w-auto"
+              className="w-full grow lg:w-auto"
               startContent={<Icon path={mdiMagnify} className="w-6 text-default-500" />}
             />
             <div className="flex flex-row space-x-2">
@@ -102,7 +102,7 @@ export default function DemoTable({
         hideBottomContent ? (
           <div />
         ) : (
-          <div className="flex w-full justify-center md:justify-between items-center">
+          <div className="flex w-full items-center justify-center md:justify-between">
             <Button
               className="hidden md:flex"
               variant="flat"

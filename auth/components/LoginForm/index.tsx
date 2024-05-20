@@ -28,17 +28,17 @@ export default function LoginForm() {
 
   return (
     <form
-      className="flex flex-col items-stretch space-y-4 p-8 bg-content2 rounded-lg shadow w-full md:w-96"
+      className="flex w-full flex-col items-stretch space-y-4 rounded-lg bg-content2 p-8 shadow md:w-96"
       onSubmit={handleSubmit}
     >
       {mutation.isSuccess ? (
         <>
-          <div className="flex flex-row items-center self-center space-x-1 text-primary">
-            <h1 className="font-semibold text-lg">Sent!</h1>
+          <div className="flex flex-row items-center space-x-1 self-center text-primary">
+            <h1 className="text-lg font-semibold">Sent!</h1>
             <Icon path={mdiCheckCircleOutline} className="w-6" />
           </div>
           <p className="text-center">A sign-in link was sent to {email}</p>
-          <Button onPress={mutation.reset} className="self-center px-1 py-1 h-fit" variant="flat">
+          <Button onPress={mutation.reset} className="h-fit self-center px-1 py-1" variant="flat">
             Resend
           </Button>
         </>

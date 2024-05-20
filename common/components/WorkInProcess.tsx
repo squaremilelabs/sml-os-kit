@@ -2,7 +2,7 @@ import { Image } from "@nextui-org/react"
 
 export default function WorkInProcess() {
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full">
+    <div className="flex h-full w-full flex-col items-center justify-center">
       <div className="flex items-center space-x-2">
         <Image
           src="https://i.ibb.co/W2b0nX9/sml-gold.png"

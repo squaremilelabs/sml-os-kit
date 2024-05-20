@@ -12,16 +12,16 @@ export default function OSEmailLayout({
 }) {
   return (
     <EmailRoot previewText={previewText}>
-      <Body className="bg-zinc-100 font-sans py-[24px] px-[8px]">
-        <Container className="bg-white rounded border border-solid border-zinc-200">
-          <Section className="px-[16px] py-[8px] border-b border-solid border-zinc-200">
-            <Text className="text-xl text-primary font-semibold">{brandConfig.appName}</Text>
+      <Body className="bg-zinc-100 px-[8px] py-[24px] font-sans">
+        <Container className="rounded border border-solid border-zinc-200 bg-white">
+          <Section className="border-b border-solid border-zinc-200 px-[16px] py-[8px]">
+            <Text className="text-xl font-semibold text-primary">{brandConfig.appName}</Text>
           </Section>
           <Section className="min-h-[200px]">{children}</Section>
-          <Section className="bg-primary px-[8px] rounded-bl rounded-br">
+          <Section className="rounded-bl rounded-br bg-primary px-[8px]">
             <Row>
               <Column align="center">
-                <Text className="text-primary-100 mx-auto">{brandConfig.orgName}</Text>
+                <Text className="mx-auto text-primary-100">{brandConfig.orgName}</Text>
               </Column>
             </Row>
           </Section>
