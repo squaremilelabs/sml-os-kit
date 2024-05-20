@@ -1,5 +1,5 @@
 import _runSafeServerAction from "@/~sml-os-kit/common/functions/_runSafeServerAction"
-import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
+import useAuthState from "@/~sml-os-kit/auth/hooks/useAuthState"
 import _createTicket from "@/~sml-os-kit/modules/roadmap/functions/_createTicket"
 import {
   Button,

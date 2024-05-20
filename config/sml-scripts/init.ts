@@ -1,8 +1,8 @@
 import dotenv from "dotenv"
-import { BaseOSUser } from "@/~sml-os-kit/modules/auth/types"
+import { BaseOSUser } from "@/~sml-os-kit/auth/types"
 import _updateUser from "@/~sml-os-kit/~sml-firebase/auth/user-functions/_updateUser"
 import _createUser from "@/~sml-os-kit/~sml-firebase/auth/user-functions/_createUser"
-import _queryOSUsers from "@/~sml-os-kit/modules/auth/functions/_queryOSUsers"
+import _queryOSUsers from "@/~sml-os-kit/auth/functions/_queryOSUsers"
 
 dotenv.config()
 

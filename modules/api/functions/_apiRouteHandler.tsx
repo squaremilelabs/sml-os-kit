@@ -1,18 +1,19 @@
 import { NextRequest } from "next/server"
-import { OSUser } from "../../auth/types"
+import { OSUser } from "../../../auth/types"
 import { APIErrorResponseJson, APIErrorStatusCode, APISuccessStatusCode } from "../types"
-import {
-  getAgentName,
-  getCookieName,
-  getSiteConfig,
-  getTokenName,
-} from "@/~sml-os-kit/config/functions"
 import _constructNextAPIResponse from "./_constructNextAPIResonse"
-import _getOSUserFromAccessToken from "../../auth/functions/_getOSUserFromAccessToken"
-import _getOSUserFromSessionCookie from "../../auth/functions/_getOSUserFromSessionCookie"
+import _getOSUserFromAccessToken from "../../../auth/functions/_getOSUserFromAccessToken"
+import _getOSUserFromSessionCookie from "../../../auth/functions/_getOSUserFromSessionCookie"
 import jsonifyError from "@/~sml-os-kit/common/functions/jsonifyError"
-import _getOSUser from "../../auth/functions/_getOSUser"
+import _getOSUser from "../../../auth/functions/_getOSUser"
 import prisma from "@/lib/prisma/client"
+import {
+  authActorHeaderName,
+  authCookieName,
+  authTokenHeaderName,
+} from "@/~sml-os-kit/config/auth/constants"
+import siteConfig from "@/$sml-os-config/site"
+import getPortalConfigFromPathname from "@/~sml-os-kit/modules/portal-utils/getPortalConfigFromPathname"
 
 // provided to API handler
 interface HandlerParams {
@@ -23,8 +24,8 @@ interface HandlerParams {
 
 // provided to API routes
 interface CallbackParams {
-  user: OSUser | null | undefined
-  agentUser?: OSUser | null | undefined
+  actorUser: OSUser | null | undefined
+  authUser: OSUser | null | undefined
   authMethod: "accessToken" | "sessionCookie" | "system"
   payload?: any
   searchParams?: any
@@ -57,11 +58,10 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
 ) {
   try {
     const url = request.nextUrl
-    const siteConfig = getSiteConfig()
 
     /* authentication */
-    const accessToken = request.headers.get(getTokenName())
-    const sessionCookie = request.cookies.get(getCookieName())
+    const accessToken = request.headers.get(authTokenHeaderName)
+    const sessionCookie = request.cookies.get(authCookieName)
 
     let userResponse: { user?: OSUser | null; error?: Error } = {}
     if (accessToken) {
@@ -96,10 +96,11 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
 
       // portal user attempting to hit the wrong endpoint
       const { role } = userResponse.user
-      if (role?.userType === "portal") {
-        const portalConfig = siteConfig.portals?.find((portal) => portal.id === role?.portalId)
-        const invalidPortal = portalConfig && !url.pathname.startsWith(portalConfig.basePath)
-        if (!portalConfig || invalidPortal) {
+      if (role?.type === "portal") {
+        const userPortal = siteConfig.portals?.get(role.portalId)
+        const currentPortal = getPortalConfigFromPathname(url.pathname)
+        const invalidPortal = !userPortal || userPortal.id !== currentPortal?.id
+        if (invalidPortal) {
           return _constructNextAPIResponse<"error">(403, {
             type: "system",
             message: "Not authorized",
@@ -109,29 +110,24 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
     }
 
     // get callback auth params
-    const agentUid = request.headers.get(getAgentName())
-    let user: OSUser | null | undefined
-    let agentUser: OSUser | null | undefined
+    const authUser = userResponse.user
+    let actorUser = userResponse.user
+    const actorUid = request.headers.get(authActorHeaderName)
     const authMethod = sessionCookie ? "sessionCookie" : accessToken ? "accessToken" : "system"
 
-    if (agentUid) {
-      const isAdmin = userResponse.user?.role?.userType === "admin"
-      const isSameUser = userResponse.user?.id === agentUid
-      if (isAdmin || isSameUser) {
-        if (isSameUser) {
-          user = userResponse.user
-        } else {
-          user = await _getOSUser(agentUid)
+    if (authUser) {
+      // override actor user
+      if (actorUid && actorUid !== authUser.id) {
+        if (authUser.role?.type === "console") {
+          const portal = getPortalConfigFromPathname(url.pathname)
+          const hasAccess =
+            authUser.role.isAdmin ||
+            authUser.role.accessiblePortalIds?.includes(portal?.id ?? "NOT_A_PORTAL")
+          if (hasAccess) {
+            actorUser = await _getOSUser(actorUid)
+          }
         }
-        agentUser = userResponse.user
-      } else {
-        return _constructNextAPIResponse(400, {
-          type: "system",
-          message: "Only admins may be agents",
-        })
       }
-    } else {
-      user = userResponse.user
     }
 
     // get callback request params
@@ -146,8 +142,8 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
     })
 
     const callbackResponse = await callback({
-      user,
-      agentUser,
+      actorUser,
+      authUser,
       authMethod,
       payload,
       searchParams,
@@ -155,8 +151,8 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
 
     if (!skipLog) {
       const logData = {
-        userId: agentUser?.id ?? user?.id ?? "system",
-        userEmail: agentUser?.email ?? user?.email ?? "system",
+        userId: authUser?.id ?? "system",
+        userEmail: authUser?.email ?? "system",
         method: request.method,
         endpoint: url.pathname,
         status: callbackResponse.status,

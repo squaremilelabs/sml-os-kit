@@ -1,8 +1,8 @@
 "use client"
 import getIdTokenFromSignInLink from "@/~sml-os-kit/~sml-firebase/auth/auth-functions/getIdTokenFromSignInLink"
-import _setSessionCookieFromIdToken from "@/~sml-os-kit/modules/auth/functions/_setSessionCookieFromIdToken"
-import { getOSUserHomePagePath } from "@/~sml-os-kit/modules/auth/functions/getOSUserHomePagePath"
-import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
+import _setSessionCookieFromIdToken from "@/~sml-os-kit/auth/functions/_setSessionCookieFromIdToken"
+import { getOSUserHomePagePath } from "@/~sml-os-kit/auth/functions/getOSUserHomePagePath"
+import useAuthState from "@/~sml-os-kit/auth/hooks/useAuthState"
 import { Spinner } from "@nextui-org/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
@@ -42,7 +42,7 @@ export default function HandleLoginPage() {
   }, [windowDep, queryClient])
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center">
+    <div className="flex h-screen w-screen flex-col items-center justify-center">
       <Spinner />
     </div>
   )

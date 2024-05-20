@@ -9,8 +9,7 @@ export default function RoadmapNavButton({
   onPress?: () => any
   href?: string
 }) {
-  const isEnabled = modulesConfig.roadmap.enabled
-  if (!isEnabled) return null
+  const isEnabled = modulesConfig.roadmap?.enabled
   return (
     <Button
       as={href ? Link : "button"}
@@ -20,6 +19,7 @@ export default function RoadmapNavButton({
       radius="sm"
       variant="flat"
       className={"justify-start grow"}
+      isDisabled={!isEnabled}
       startContent={
         <Image
           src="https://i.ibb.co/W2b0nX9/sml-gold.png"

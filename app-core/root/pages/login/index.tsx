@@ -1,8 +1,9 @@
 "use client"
-import Applogotype from "@/~sml-os-kit/common/components/AppLogotype"
-import LoginForm from "@/~sml-os-kit/modules/auth/components/LoginForm"
-import { getOSUserHomePagePath } from "@/~sml-os-kit/modules/auth/functions/getOSUserHomePagePath"
-import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
+
+import LoginForm from "@/~sml-os-kit/auth/components/LoginForm"
+import { getOSUserHomePagePath } from "@/~sml-os-kit/auth/functions/getOSUserHomePagePath"
+import useAuthState from "@/~sml-os-kit/auth/hooks/useAuthState"
+import BrandLogotype from "@/~sml-os-kit/common/components/BrandLogotype"
 import { useRouter } from "next/navigation"
 import { useLayoutEffect } from "react"
 
@@ -20,8 +21,8 @@ export default function LoginPage() {
   }, [auth, router])
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center space-y-4 p-8">
-      <Applogotype size="lg" />
+    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-4 p-8">
+      <BrandLogotype size="lg" />
       <LoginForm />
     </div>
   )

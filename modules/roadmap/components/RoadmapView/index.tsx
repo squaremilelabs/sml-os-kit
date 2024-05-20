@@ -1,6 +1,6 @@
 "use client"
 
-import useAuthState from "@/~sml-os-kit/modules/auth/hooks/useAuthState"
+import useAuthState from "@/~sml-os-kit/auth/hooks/useAuthState"
 import NewTicketModal from "@/~sml-os-kit/modules/roadmap/components/RoadmapView/parts/NewTicketModal"
 import RoadmapItems from "@/~sml-os-kit/modules/roadmap/components/RoadmapView/parts/RoadmapItems"
 import { roadmapTypeInfoMap } from "@/~sml-os-kit/modules/roadmap/constants"

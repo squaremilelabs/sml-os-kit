@@ -11,7 +11,7 @@ const queryClient = new QueryClient()
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className="bg-background">
-      <body className={twMerge("h-screen font-sans text-foreground border-box", fontSans.variable)}>
+      <body className={twMerge("border-box h-screen font-sans text-foreground", fontSans.variable)}>
         <Suspense>
           <QueryClientProvider client={queryClient}>
             <StyleProvider>{children}</StyleProvider>

@@ -1,4 +1,4 @@
-import { getColorThemes } from "@/~sml-os-kit/config/functions"
+import { getColorThemes } from "@/~sml-os-kit/config/theme/functions"
 import { Head, Html, Preview, Tailwind } from "@react-email/components"
 import React from "react"
 

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios"
 import { APIErrorResponseJson, APIMethod, EndpointConfig } from "../types"
-import { getAgentName } from "@/~sml-os-kit/config/functions"
+import { authActorHeaderName } from "@/~sml-os-kit/config/auth/constants"
 
 interface InternalAPIInput<M extends APIMethod, E extends EndpointConfig> {
   method: M
@@ -9,7 +9,7 @@ interface InternalAPIInput<M extends APIMethod, E extends EndpointConfig> {
     ? E["endpointParams"]
     : never
   searchParams?: E[M] extends { searchParams: object } ? E[M]["searchParams"] : never
-  asUserId?: string // for agent
+  asUserId?: string
 }
 
 interface InternalAPIInputWithPayload<M extends APIMethod, E extends EndpointConfig>
@@ -50,7 +50,7 @@ export default async function internalAPI<M extends APIMethod, E extends Endpoin
 
     if (input.asUserId) {
       config.headers = {
-        [getAgentName()]: input.asUserId,
+        [authActorHeaderName]: input.asUserId,
       }
     }
 

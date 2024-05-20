@@ -1,25 +1,30 @@
 "use client"
 
-import { getSiteConfig } from "@/~sml-os-kit/config/functions"
 import { Image } from "@nextui-org/react"
 import { usePathname } from "next/navigation"
 import BrandLogo from "../BrandLogo"
 import Icon from "@mdi/react"
 import { mdiPlus } from "@mdi/js"
+import siteConfig from "@/$sml-os-config/site"
 
 export default function DemoPlaceholderPage() {
   const pathname = usePathname()
-  const siteConfig = getSiteConfig()
 
-  let pageTitle = ""
-  let pageItem = siteConfig.admin.navigation.find(
-    (item) => item.href === pathname || item.items?.find((innerItem) => innerItem.href === pathname)
-  )
-  if (pageItem?.items?.length) {
-    pageItem = pageItem.items.find((item) => item.href === pathname)
-  }
-  if (pageItem) {
-    pageTitle = pageItem.label
+  let pageTitle: string | undefined
+
+  const pageItem = siteConfig.console.navigation.find((item) => {
+    if (item.type === "group") {
+      return item.items.some((innerItem) => innerItem.href === pathname)
+    } else {
+      return item.href === pathname
+    }
+  })
+
+  if (pageItem?.type === "group") {
+    const innerPageItem = pageItem.items.find((item) => item.href === pathname)
+    pageTitle = innerPageItem?.label
+  } else {
+    pageTitle = pageItem?.label
   }
 
   return (

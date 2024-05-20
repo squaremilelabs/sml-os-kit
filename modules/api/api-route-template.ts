@@ -56,8 +56,8 @@ interface Endpoint extends EndpointConfig {
 export async function GET(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return _apiRouteHandler<Endpoint["get"]["response"]>({ request, skipLog: true }, async (info) => {
     try {
-      const user = info.user
-      const agentUser = info.agentUser
+      const authUser = info.authUser
+      const actorUser = info.actorUser
       const endpointParams = nextParams
       const searchParams = info.searchParams as Endpoint["get"]["searchParams"]
       let response: Endpoint["get"]["response"] = {}
@@ -90,8 +90,8 @@ export async function GET(request: NextRequest, nextParams: Endpoint["endpointPa
 export async function PUT(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return _apiRouteHandler<Endpoint["put"]["response"]>({ request }, async (info) => {
     try {
-      const user = info.user
-      const agentUser = info.agentUser
+      const authUser = info.authUser
+      const actorUser = info.actorUser
       const payload = info.payload as Endpoint["put"]["payload"]
       const endpointParams = nextParams
       const searchParams = info.searchParams as Endpoint["put"]["searchParams"]
@@ -125,8 +125,8 @@ export async function PUT(request: NextRequest, nextParams: Endpoint["endpointPa
 export async function POST(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return _apiRouteHandler<Endpoint["post"]["response"]>({ request }, async (info) => {
     try {
-      const user = info.user
-      const agentUser = info.agentUser
+      const authUser = info.authUser
+      const actorUser = info.actorUser
       const payload = info.payload as Endpoint["post"]["payload"]
       const endpointParams = nextParams
       const searchParams = info.searchParams as Endpoint["post"]["searchParams"]
@@ -160,8 +160,8 @@ export async function POST(request: NextRequest, nextParams: Endpoint["endpointP
 export async function DELETE(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return _apiRouteHandler<Endpoint["delete"]["response"]>({ request }, async (info) => {
     try {
-      const user = info.user
-      const agentUser = info.agentUser
+      const authUser = info.authUser
+      const actorUser = info.actorUser
       const endpointParams = nextParams
       const searchParams = info.searchParams as Endpoint["delete"]["searchParams"]
       let response: Endpoint["delete"]["response"] = {}
