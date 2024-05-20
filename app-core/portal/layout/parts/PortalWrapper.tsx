@@ -46,7 +46,12 @@ export default function PortalWrapper({ children }: { children: React.ReactNode 
   return (
     <>
       {children}
-      <Modal isOpen={modalIsOpen} backdrop="blur" classNames={{ closeButton: "hidden" }}>
+      <Modal
+        isOpen={modalIsOpen}
+        backdrop="blur"
+        classNames={{ closeButton: "hidden" }}
+        placement="top-center"
+      >
         <form
           onSubmit={(e) => {
             e.preventDefault()
