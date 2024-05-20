@@ -42,18 +42,20 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
               <Icon path={mdiMenuClose} rotate={180} size="24px" />
             </Button>
           </div>
-          {basePath === "portal" ? <PortalUser /> : null}
           <NavItems />
           <div className="flex h-fit flex-col items-stretch space-y-2 px-4">
             {basePath === "console" ? <ConsoleUser /> : null}
-            <div className="flex flex-row items-stretch">
+            {basePath === "portal" ? <PortalUser /> : null}
+            <div className="flex flex-row items-center">
               <ThemeSwitch />
               {basePath === "console" ? (
                 <RoadmapNavButton
                   href="/console/core/roadmap"
                   onPress={navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined}
                 />
-              ) : null}
+              ) : (
+                <p className="text-tiny font-medium">{brandConfig.orgName}</p>
+              )}
             </div>
           </div>
         </section>

@@ -40,7 +40,7 @@ export default function ConsoleUser() {
         radius="sm"
         placement="top-start"
         isOpen={popoverOpen}
-        onOpenChange={(open) => setPopoverOpen(open)}
+        onOpenChange={setPopoverOpen}
         isDismissable
       >
         <PopoverTrigger>

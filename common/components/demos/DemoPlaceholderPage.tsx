@@ -12,7 +12,14 @@ export default function DemoPlaceholderPage() {
 
   let pageTitle: string | undefined
 
-  const pageItem = siteConfig.console.navigation.find((item) => {
+  const allNavItems = [
+    ...siteConfig.console.navigation,
+    ...Array.from(siteConfig.portals?.entries() ?? [])
+      .map(([i, config]) => config.navigation)
+      .flat(),
+  ]
+
+  const pageItem = allNavItems.find((item) => {
     if (item.type === "group") {
       return item.items.some((innerItem) => innerItem.href === pathname)
     } else {
