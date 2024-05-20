@@ -291,7 +291,7 @@ export default function UserModal({
                         >
                           {user.isDeactivated ? "Deactivated" : "Active"}
                         </Chip>
-                        {mode !== "viewOnly" ? (
+                        {mode !== "viewOnly" && !user.isSML ? (
                           <Button
                             size="sm"
                             variant="light"
