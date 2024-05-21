@@ -15,6 +15,7 @@ import BrandLogotype from "@/~sml-os-kit/common/components/BrandLogotype"
 import brandConfig from "@/$sml-os-config/brand"
 import AuthWrapper from "@/~sml-os-kit/auth/wrapper"
 import PortalUser from "@/~sml-os-kit/app-core/shared-layout/parts/PortalUser"
+import { twMerge } from "tailwind-merge"
 
 export default function SharedLayout({ children }: { children?: React.ReactNode }) {
   const pathname = usePathname()
@@ -28,7 +29,11 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
       <main>
         {/* NAVIGATION */}
         <section
-          className={`fixed top-0 ${navOpen ? "left-0 opacity-100" : "left-[-768px] opacity-0"} z-10 flex h-screen w-screen flex-col space-y-4 rounded-r-sm border-r-1 border-default-200 bg-content2 py-4 transition-all md:w-72`}
+          className={twMerge(
+            "fixed top-0",
+            `${navOpen ? "left-0 opacity-100" : "left-[-768px] opacity-0"}`,
+            `z-50 flex h-screen w-screen flex-col space-y-4 rounded-r-sm border-r-1 border-default-200 bg-content2 py-4 transition-all md:w-72`
+          )}
         >
           <div className="flex w-full flex-row items-center justify-between space-x-1 px-4">
             <BrandLogotype title={portal?.title ?? brandConfig.appName} />
@@ -61,7 +66,7 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
         </section>
         {/* HEADER */}
         <section
-          className={`fixed left-0 ${navOpen ? "top-[-50px]" : "top-0"} flex h-[50px] w-full flex-row items-center justify-between space-x-1 bg-background px-4 transition-all`}
+          className={`fixed left-0 ${navOpen ? "top-[-50px]" : "top-0"} z-50 flex h-[50px] w-full flex-row items-center justify-between space-x-1 bg-background px-4 transition-all`}
         >
           <BrandLogotype title={portal?.title ?? brandConfig.appName} size="sm" />
           <Button isIconOnly size="sm" variant="light" onPress={() => setNavOpen(true)}>

@@ -1,5 +1,6 @@
 import { getColorThemes } from "./functions"
 import { NextUIPluginConfig } from "@nextui-org/react"
+import plugin from "tailwindcss/plugin"
 
 export const coreTailwindConfig = {
   content: [
@@ -33,9 +34,29 @@ export const coreTailwindConfig = {
         layout:
           "height, width, max-height, max-width, min-height, min-width, padding, margin, flex, flex-direction, flex-grow",
       },
+      screens: {
+        sm: "var(--os-breakpoint-sm)",
+        md: "var(--os-breakpoint-md)",
+        lg: "var(--os-breakpoint-lg)",
+      },
     },
   },
   darkMode: "class",
+  plugins: [
+    plugin(({ addBase }) => {
+      addBase({
+        "@screen sm": {
+          "max-width": "var(--os-breakpoint-sm)",
+        },
+        "@screen md": {
+          "max-width": "var(--os-breakpoint-md)",
+        },
+        "@screen lg": {
+          "max-width": "var(--os-breakpoint-lg)",
+        },
+      })
+    }),
+  ],
 }
 
 export const coreNextUIPluginConfig: NextUIPluginConfig = {
