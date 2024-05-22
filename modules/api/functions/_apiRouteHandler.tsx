@@ -153,7 +153,7 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
       const logData = {
         userId: authUser?.id ?? "system",
         userEmail: authUser?.email ?? "system",
-        method: request.method,
+        // method: request.method,
         endpoint: url.pathname,
         status: callbackResponse.status,
         statusType: callbackResponse.type,
