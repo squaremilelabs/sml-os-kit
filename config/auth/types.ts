@@ -1,5 +1,10 @@
 import { PortalId } from "@/$sml-os-config/site"
 
+/**
+ * If changing the Role type, make sure to also update the core.zmodel AuthRole model
+ * - E
+ */
+
 export interface AuthConfig {
   roles: {
     console: ConsoleRole[]

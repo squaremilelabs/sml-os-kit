@@ -23,6 +23,7 @@ model AuthUser {
   isDeactivated Boolean
   createdAt     DateTime
   photoUrl      String?
+  isSML         Boolean?
   roleId        String
   role          AuthRole @relation(fields: [roleId], references: [id])
   @@auth
