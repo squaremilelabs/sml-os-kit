@@ -8,10 +8,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "node_modules/.bin/eslint . && next lint",
-    "lint-fix": "node_modules/.bin/eslint --fix"
+    "lint-fix": "node_modules/.bin/eslint . --fix"
   },
   "prisma": {
-    "schema": "lib/prisma/schema.prisma"
+    "schema": "lib/db/prisma/schema.prisma"
+  },
+  "zenstack": {
+    "schema": "lib/db/schema.zmodel"
   },
   "keywords": [],
   "author": "",
@@ -27,7 +30,9 @@
     "@prisma/client": "^5.13.0",
     "@react-email/components": "0.0.17",
     "@react-email/render": "^0.0.13",
-    "@tanstack/react-query": "^5.32.1",
+    "@tanstack/react-query": "^5.37.1",
+    "@zenstackhq/runtime": "2.1.2",
+    "@zenstackhq/server": "^2.1.2",
     "axios": "^1.6.8",
     "color2k": "^2.0.3",
     "firebase": "^10.11.1",
@@ -39,7 +44,6 @@
     "mailgun.js": "^10.2.1",
     "next": "^14.2.3",
     "next-themes": "^0.2.1",
-    "prisma": "^5.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-email": "2.1.2",
@@ -47,7 +51,8 @@
     "ts-deepmerge": "^7.0.0",
     "usehooks-ts": "^3.1.0",
     "uuid": "^9.0.1",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@react-aria/ssr": "^3.9.2",
@@ -68,8 +73,11 @@
     "eslint-plugin-prettier": "^5.1.3",
     "postcss": "8.4.38",
     "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "prisma": "^5.13.0",
     "tailwindcss": "^3.4.3",
     "tsx": "^4.9.4",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "zenstack": "2.1.2"
   }
 }
