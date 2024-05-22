@@ -3,7 +3,7 @@
 
 import jsonifyError from "@/~sml-os-kit/common/functions/jsonifyError"
 import _apiRouteHandler from "@/~sml-os-kit/modules/api/functions/_apiRouteHandler"
-import { EndpointConfig } from "@/~sml-os-kit/modules/api/types"
+import { APISuccessResponseJson, EndpointConfig } from "@/~sml-os-kit/modules/api/types"
 import { NextRequest } from "next/server"
 
 /* 
@@ -32,23 +32,23 @@ export type NamedEndpoint = Endpoint
 interface Endpoint extends EndpointConfig {
   endpoint: "/api"
   endpointParams: {}
-  get: {
+  post: {
+    payload: {}
     searchParams: {}
-    response: {}
+    response: {} & APISuccessResponseJson
   }
   put: {
     payload: {}
     searchParams: {}
-    response: {}
-  }
-  post: {
-    payload: {}
-    searchParams: {}
-    response: {}
+    response: {} & APISuccessResponseJson
   }
   delete: {
     searchParams: {}
-    response: {}
+    response: {} & APISuccessResponseJson
+  }
+  get: {
+    searchParams: {}
+    response: {} & APISuccessResponseJson
   }
 }
 
@@ -56,11 +56,6 @@ interface Endpoint extends EndpointConfig {
 export async function GET(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return _apiRouteHandler<Endpoint["get"]["response"]>({ request, skipLog: true }, async (info) => {
     try {
-      const authUser = info.authUser
-      const actorUser = info.actorUser
-      const endpointParams = nextParams
-      const searchParams = info.searchParams as Endpoint["get"]["searchParams"]
-      let response: Endpoint["get"]["response"] = {}
       /* 
 
         Replace with logic
@@ -70,14 +65,18 @@ export async function GET(request: NextRequest, nextParams: Endpoint["endpointPa
       return {
         type: "success",
         status: 200,
-        json: response,
+        json: {
+          meta: {
+            affectedModels: [],
+          },
+        },
       }
     } catch (error: Error & any) {
       return {
         type: "error",
         status: 400,
         json: {
-          type: error?.cause ?? "business",
+          source: error?.cause ?? "business",
           message: error?.message ?? "Could not complete request",
           fullError: jsonifyError(error),
         },
@@ -90,12 +89,6 @@ export async function GET(request: NextRequest, nextParams: Endpoint["endpointPa
 export async function PUT(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return _apiRouteHandler<Endpoint["put"]["response"]>({ request }, async (info) => {
     try {
-      const authUser = info.authUser
-      const actorUser = info.actorUser
-      const payload = info.payload as Endpoint["put"]["payload"]
-      const endpointParams = nextParams
-      const searchParams = info.searchParams as Endpoint["put"]["searchParams"]
-      let response: Endpoint["put"]["response"] = {}
       /* 
 
         Replace with logic
@@ -105,14 +98,18 @@ export async function PUT(request: NextRequest, nextParams: Endpoint["endpointPa
       return {
         type: "success",
         status: 200,
-        json: response,
+        json: {
+          meta: {
+            affectedModels: [],
+          },
+        },
       }
     } catch (error: Error & any) {
       return {
         type: "error",
         status: 400,
         json: {
-          type: error?.cause ?? "business",
+          source: error?.cause ?? "business",
           message: error?.message ?? "Could not complete request",
           fullError: jsonifyError(error),
         },
@@ -125,12 +122,6 @@ export async function PUT(request: NextRequest, nextParams: Endpoint["endpointPa
 export async function POST(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return _apiRouteHandler<Endpoint["post"]["response"]>({ request }, async (info) => {
     try {
-      const authUser = info.authUser
-      const actorUser = info.actorUser
-      const payload = info.payload as Endpoint["post"]["payload"]
-      const endpointParams = nextParams
-      const searchParams = info.searchParams as Endpoint["post"]["searchParams"]
-      let response: Endpoint["post"]["response"] = {}
       /* 
 
         Replace with logic
@@ -140,14 +131,18 @@ export async function POST(request: NextRequest, nextParams: Endpoint["endpointP
       return {
         type: "success",
         status: 200,
-        json: {},
+        json: {
+          meta: {
+            affectedModels: [],
+          },
+        },
       }
     } catch (error: Error & any) {
       return {
         type: "error",
         status: 400,
         json: {
-          type: error?.cause ?? "business",
+          source: error?.cause ?? "business",
           message: error?.message ?? "Could not complete request",
           fullError: jsonifyError(error),
         },
@@ -160,11 +155,6 @@ export async function POST(request: NextRequest, nextParams: Endpoint["endpointP
 export async function DELETE(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
   return _apiRouteHandler<Endpoint["delete"]["response"]>({ request }, async (info) => {
     try {
-      const authUser = info.authUser
-      const actorUser = info.actorUser
-      const endpointParams = nextParams
-      const searchParams = info.searchParams as Endpoint["delete"]["searchParams"]
-      let response: Endpoint["delete"]["response"] = {}
       /* 
 
         Replace with logic
@@ -174,14 +164,18 @@ export async function DELETE(request: NextRequest, nextParams: Endpoint["endpoin
       return {
         type: "success",
         status: 200,
-        json: {},
+        json: {
+          meta: {
+            affectedModels: [],
+          },
+        },
       }
     } catch (error: Error & any) {
       return {
         type: "error",
         status: 400,
         json: {
-          type: error?.cause ?? "business",
+          source: error?.cause ?? "business",
           message: error?.message ?? "Could not complete request",
           fullError: jsonifyError(error),
         },

@@ -6,7 +6,6 @@ import _getOSUserFromAccessToken from "../../../auth/functions/_getOSUserFromAcc
 import _getOSUserFromSessionCookie from "../../../auth/functions/_getOSUserFromSessionCookie"
 import jsonifyError from "@/~sml-os-kit/common/functions/jsonifyError"
 import _getOSUser from "../../../auth/functions/_getOSUser"
-import prisma from "@/lib/prisma/client"
 import {
   authActorHeaderName,
   authCookieName,
@@ -14,6 +13,7 @@ import {
 } from "@/~sml-os-kit/config/auth/constants"
 import siteConfig from "@/$sml-os-config/site"
 import getPortalConfigFromPathname from "@/~sml-os-kit/modules/portal-utils/getPortalConfigFromPathname"
+import prisma from "@/~sml-os-kit/db/prisma"
 
 // provided to API handler
 interface HandlerParams {
@@ -84,12 +84,12 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
         ]
           .filter(Boolean)
           .join("\n")
-        return _constructNextAPIResponse<"error">(500, { type: "system", message })
+        return _constructNextAPIResponse<"error">(500, { source: "os", message })
       }
 
       if (!userResponse.user) {
-        return _constructNextAPIResponse<"error">(400, {
-          type: "system",
+        return _constructNextAPIResponse<"error">(401, {
+          source: "os",
           message: "Missing or invalid access token or session cookie",
         })
       }
@@ -102,7 +102,7 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
         const invalidPortal = !userPortal || userPortal.id !== currentPortal?.id
         if (invalidPortal) {
           return _constructNextAPIResponse<"error">(403, {
-            type: "system",
+            source: "os",
             message: "Not authorized",
           })
         }

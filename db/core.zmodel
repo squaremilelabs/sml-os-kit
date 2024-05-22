@@ -1,0 +1,53 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model x_os_auth_user {
+  id            String   @id
+  displayName   String
+  email         String
+  isDeactivated Boolean
+  createdAt     DateTime
+  photoUrl      String?
+  isSML         Boolean?
+  roleId        String
+  role          x_os_auth_role @relation(fields: [roleId], references: [id])
+  @@auth
+  @@ignore
+}
+
+model x_os_auth_role {
+  id      String  @id
+  isAdmin Boolean
+  users   x_os_auth_user[]
+  @@ignore
+}
+
+abstract model ModelWithMetadata {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  createdBy String   @default("system")
+  updatedAt DateTime @updatedAt
+  updatedBy String   @default("system")
+}
+
+model ApiLog {
+  id         String   @id @default(cuid())
+  timestamp  DateTime @default(now()) @db.Timestamptz(3)
+  method     String
+  userId     String
+  userEmail  String
+  endpoint   String
+  status     Int
+  statusType String
+  request    String
+  response   String
+
+  @@allow('all', true)
+}
