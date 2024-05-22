@@ -1,7 +1,7 @@
-import { APIErrorType } from "./types"
+import { APIErrorSource } from "./types"
 
-export const apiErrorTypes: APIErrorType[] = [
-  "system",
+export const apiErrorSources: APIErrorSource[] = [
+  "os",
   "business",
   "database",
   "external",

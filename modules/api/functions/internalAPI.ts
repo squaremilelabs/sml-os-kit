@@ -17,9 +17,13 @@ interface InternalAPIInputWithPayload<M extends APIMethod, E extends EndpointCon
   payload: E[M] extends { payload: any } ? E[M]["payload"] : never
 }
 
-interface OsAPIResponse<M extends APIMethod, E extends EndpointConfig> {
-  type: "success" | "error"
+interface InternalAPISuccessResponse<M extends APIMethod, E extends EndpointConfig> {
+  type: "success"
   data: E[M] extends { response: object } ? E[M]["response"] : unknown
+}
+interface InternalAPIErrorResponse {
+  type: "error"
+  error: APIErrorResponseJson
 }
 
 function isInputWithPayload<M extends APIMethod, E extends EndpointConfig>(
@@ -30,7 +34,7 @@ function isInputWithPayload<M extends APIMethod, E extends EndpointConfig>(
 
 export default async function internalAPI<M extends APIMethod, E extends EndpointConfig = never>(
   input: E[M] extends { payload: any } ? InternalAPIInputWithPayload<M, E> : InternalAPIInput<M, E>
-): Promise<OsAPIResponse<M, E>> {
+): Promise<InternalAPISuccessResponse<M, E> | InternalAPIErrorResponse> {
   try {
     // set up url from dynamic path
     let url = input.endpoint
@@ -59,11 +63,11 @@ export default async function internalAPI<M extends APIMethod, E extends Endpoin
   } catch (error: AxiosError & any) {
     console.error(error.toJSON())
     if (error.response) {
-      return { type: "error", data: error.response.data as APIErrorResponseJson }
+      return { type: "error", error: error.response.data as APIErrorResponseJson }
     } else if (error.request) {
-      return { type: "error", data: { message: "No response was received" } }
+      return { type: "error", error: { source: "business", message: "No response was received" } }
     } else {
-      return { type: "error", data: { message: "Developer error" } }
+      return { type: "error", error: { source: "os", message: "Developer error" } }
     }
   }
 }
