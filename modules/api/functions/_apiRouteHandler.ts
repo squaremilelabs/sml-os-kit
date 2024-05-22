@@ -14,6 +14,8 @@ import {
 import siteConfig from "@/$sml-os-config/site"
 import getPortalConfigFromPathname from "@/~sml-os-kit/modules/portal-utils/getPortalConfigFromPathname"
 import prisma from "@/~sml-os-kit/db/prisma"
+import _authenticateAPIRoute from "@/~sml-os-kit/modules/api/functions/_authenticateAPIRoute"
+import _authorizeAPIRoute from "@/~sml-os-kit/modules/api/functions/_authorizeAPIRoute"
 
 // provided to API handler
 interface HandlerParams {
@@ -26,7 +28,7 @@ interface HandlerParams {
 interface CallbackParams {
   actorUser: OSUser | null | undefined
   authUser: OSUser | null | undefined
-  authMethod: "accessToken" | "sessionCookie" | "system"
+  authMethod: "accessToken" | "sessionCookie" | null
   payload?: any
   searchParams?: any
 }
@@ -59,74 +61,27 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
   try {
     const url = request.nextUrl
 
-    /* authentication */
-    const accessToken = request.headers.get(authTokenHeaderName)
-    const sessionCookie = request.cookies.get(authCookieName)
-
-    let userResponse: { user?: OSUser | null; error?: Error } = {}
-    if (accessToken) {
-      userResponse = await _getOSUserFromAccessToken(accessToken)
-        .then((user) => ({ user }))
-        .catch((error) => ({ error }))
-    } else if (sessionCookie) {
-      userResponse = await _getOSUserFromSessionCookie(sessionCookie.value)
-        .then((user) => ({ user }))
-        .catch((error) => ({ error }))
-    }
+    // authenticate and authorize
+    const authentication = await _authenticateAPIRoute(request)
+    const authorization = await _authorizeAPIRoute({
+      request,
+      authUser: authentication.authUser,
+    })
 
     // throw auth errors if disableAuthError !== true
     if (!disableAuthError) {
-      // Code or server error occurred in `getOSUserFromX` (should be rare)
-      if (userResponse.error) {
-        const message = [
-          `Failed to get user from access token or session cookie.`,
-          userResponse.error?.message,
-        ]
-          .filter(Boolean)
-          .join("\n")
-        return _constructNextAPIResponse<"error">(500, { source: "os", message })
-      }
-
-      if (!userResponse.user) {
+      if (!authentication.success) {
         return _constructNextAPIResponse<"error">(401, {
           source: "os",
-          message: "Missing or invalid access token or session cookie",
+          message: authentication.errorMessage,
         })
       }
 
-      // portal user attempting to hit the wrong endpoint
-      const { role } = userResponse.user
-      if (role?.type === "portal") {
-        const userPortal = siteConfig.portals?.get(role.portalId)
-        const currentPortal = getPortalConfigFromPathname(url.pathname)
-        const invalidPortal = !userPortal || userPortal.id !== currentPortal?.id
-        if (invalidPortal) {
-          return _constructNextAPIResponse<"error">(403, {
-            source: "os",
-            message: "Not authorized",
-          })
-        }
-      }
-    }
-
-    // get callback auth params
-    const authUser = userResponse.user
-    let actorUser = userResponse.user
-    const actorUid = request.headers.get(authActorHeaderName)
-    const authMethod = sessionCookie ? "sessionCookie" : accessToken ? "accessToken" : "system"
-
-    if (authUser) {
-      // override actor user
-      if (actorUid && actorUid !== authUser.id) {
-        if (authUser.role?.type === "console") {
-          const portal = getPortalConfigFromPathname(url.pathname)
-          const hasAccess =
-            authUser.role.isAdmin ||
-            authUser.role.accessiblePortalIds?.includes(portal?.id ?? "NOT_A_PORTAL")
-          if (hasAccess) {
-            actorUser = await _getOSUser(actorUid)
-          }
-        }
+      if (!authorization.success) {
+        return _constructNextAPIResponse<"error">(403, {
+          source: "os",
+          message: authorization.errorMessage,
+        })
       }
     }
 
@@ -142,17 +97,17 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
     })
 
     const callbackResponse = await callback({
-      actorUser,
-      authUser,
-      authMethod,
+      actorUser: authorization.actorUser,
+      authUser: authentication.authUser,
+      authMethod: authentication.authMethod,
       payload,
       searchParams,
     })
 
     if (!skipLog) {
       const logData = {
-        userId: authUser?.id ?? "system",
-        userEmail: authUser?.email ?? "system",
+        userId: authentication.authUser?.id ?? "system",
+        userEmail: authentication.authUser?.email ?? "system",
         method: request.method,
         endpoint: url.pathname,
         status: callbackResponse.status,
