@@ -8,7 +8,6 @@ import { mdiMenu, mdiMenuClose } from "@mdi/js"
 import ConsoleUser from "@/~sml-os-kit/app-core/shared-layout/parts/ConsoleUser"
 import ThemeSwitch from "@/~sml-os-kit/app-core/shared-layout/parts/ThemeSwitch"
 import RoadmapNavButton from "@/~sml-os-kit/modules/roadmap/components/RoadmapNavButton"
-import useScreenSize from "@/~sml-os-kit/common/hooks/useScreenSize"
 import { usePathname } from "next/navigation"
 import getPortalConfigFromPathname from "@/~sml-os-kit/modules/portal-utils/getPortalConfigFromPathname"
 import BrandLogotype from "@/~sml-os-kit/common/components/BrandLogotype"
@@ -16,13 +15,14 @@ import brandConfig from "@/$sml-os-config/brand"
 import AuthWrapper from "@/~sml-os-kit/auth/wrapper"
 import PortalUser from "@/~sml-os-kit/app-core/shared-layout/parts/PortalUser"
 import { twMerge } from "tailwind-merge"
+import useScreenBreakpoint from "@/~sml-os-kit/common/hooks/useScreenBreakpoint"
 
 export default function SharedLayout({ children }: { children?: React.ReactNode }) {
   const pathname = usePathname()
   const basePath = pathname.split("/")[1]
   const portal = getPortalConfigFromPathname(pathname)
   const { navOpen, setNavOpen } = useNavState()
-  const screenSize = useScreenSize()
+  const breakpoint = useScreenBreakpoint()
 
   return (
     <AuthWrapper>
@@ -31,7 +31,7 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
         <section
           className={twMerge(
             "fixed top-0",
-            `${navOpen ? "left-0 opacity-100" : "left-[-768px] opacity-0"}`,
+            `${navOpen ? "left-0 opacity-100" : "-left-[768px] opacity-0"}`,
             `z-50 flex h-screen w-screen flex-col space-y-4 rounded-r-sm border-r-1 border-default-200 bg-content2 py-4 transition-all md:w-72`
           )}
         >
@@ -56,7 +56,7 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
               {basePath === "console" ? (
                 <RoadmapNavButton
                   href="/console/core/roadmap"
-                  onPress={navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined}
+                  onPress={navOpen && breakpoint < 3 ? () => setNavOpen(false) : undefined}
                 />
               ) : (
                 <p className="text-tiny font-medium">{brandConfig.orgName}</p>
@@ -76,7 +76,7 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
         {/* CANVAS */}
         <section className={`${navOpen ? "ml-72" : "ml-0"} h-screen transition-all`}>
           <div
-            className={`${navOpen ? "pt-0 opacity-0 md:opacity-100" : "pt-[50px]"} flex h-full h-screen flex-col overflow-auto transition-all`}
+            className={`@container/main ${navOpen ? "pt-0 opacity-0 md:opacity-100" : "pt-[50px]"} flex h-full h-screen flex-col overflow-auto transition-all`}
           >
             {children}
           </div>

@@ -2,14 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --os-nav-width: 288px;
-  --os-breakpoint-sm: 576px;
-  --os-breakpoint-md: 672px;
-  --os-breakpoint-lg: 1152px;
-}
-
-:root.os-nav-open {
-  --os-breakpoint-md: 960px;
-  --os-breakpoint-lg: 1440px;
+@layer utilities {
+  .h-screen {
+    height: 100dvh;
+  }
 }

@@ -1,8 +1,9 @@
 import { getColorThemes } from "./functions"
 import { NextUIPluginConfig } from "@nextui-org/react"
-import plugin from "tailwindcss/plugin"
+import tailwindContainerQueryPlugin from "@tailwindcss/container-queries"
+import { Config } from "tailwindcss"
 
-export const coreTailwindConfig = {
+export const coreTailwindConfig: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./~sml-os-kit/**/*.{js,ts,jsx,tsx,mdx}",
@@ -27,36 +28,14 @@ export const coreTailwindConfig = {
       fontFamily: {
         sans: ["var(--font-sans)"],
       },
-      height: {
-        screen: ["100vh", "100dvh"],
-      },
       transitionProperty: {
         layout:
           "height, width, max-height, max-width, min-height, min-width, padding, margin, flex, flex-direction, flex-grow",
       },
-      screens: {
-        sm: "var(--os-breakpoint-sm)",
-        md: "var(--os-breakpoint-md)",
-        lg: "var(--os-breakpoint-lg)",
-      },
     },
   },
   darkMode: "class",
-  plugins: [
-    plugin(({ addBase }) => {
-      addBase({
-        "@screen sm": {
-          "max-width": "var(--os-breakpoint-sm)",
-        },
-        "@screen md": {
-          "max-width": "var(--os-breakpoint-md)",
-        },
-        "@screen lg": {
-          "max-width": "var(--os-breakpoint-lg)",
-        },
-      })
-    }),
-  ],
+  plugins: [tailwindContainerQueryPlugin],
 }
 
 export const coreNextUIPluginConfig: NextUIPluginConfig = {

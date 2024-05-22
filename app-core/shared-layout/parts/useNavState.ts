@@ -7,7 +7,6 @@ export default function useNavState() {
 
   useLayoutEffect(() => {
     setNavOpen(navOpenLocal)
-    document.documentElement.classList.toggle("os-nav-open", navOpenLocal)
   }, [navOpenLocal])
 
   return { navOpen, setNavOpen: setNavOpenLocal }

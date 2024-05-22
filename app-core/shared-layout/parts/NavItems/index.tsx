@@ -6,11 +6,11 @@ import Icon from "@mdi/react"
 import { Accordion, AccordionItem, Button, ScrollShadow, Spacer } from "@nextui-org/react"
 import Link from "next/link"
 import useNavState from "../useNavState"
-import useScreenSize from "@/~sml-os-kit/common/hooks/useScreenSize"
 import { twMerge } from "tailwind-merge"
 import { usePathname } from "next/navigation"
 import { NavGroup as INavGroup, NavPageOrLink } from "@/~sml-os-kit/config/site/types"
 import getNavItems from "@/~sml-os-kit/app-core/shared-layout/parts/NavItems/getNavItems"
+import useScreenBreakpoint from "@/~sml-os-kit/common/hooks/useScreenBreakpoint"
 
 export default function NavItems() {
   const auth = useAuthState()
@@ -34,8 +34,8 @@ export default function NavItems() {
 
 function NavGroup({ navItem }: { navItem: INavGroup }) {
   const { navOpen, setNavOpen } = useNavState()
-  const screenSize = useScreenSize()
-  const handlePress = navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined
+  const breakpoint = useScreenBreakpoint()
+  const handlePress = navOpen && breakpoint < 3 ? () => setNavOpen(false) : undefined
   const pathname = usePathname()
   const hasActiveItem = navItem?.items?.some((item) => item.href === pathname)
   return (
@@ -88,8 +88,8 @@ function NavGroup({ navItem }: { navItem: INavGroup }) {
 
 function NavItem({ navItem }: { navItem: NavPageOrLink }) {
   const { navOpen, setNavOpen } = useNavState()
-  const screenSize = useScreenSize()
-  const handlePress = navOpen && screenSize !== "lg" ? () => setNavOpen(false) : undefined
+  const breakpoint = useScreenBreakpoint()
+  const handlePress = navOpen && breakpoint < 3 ? () => setNavOpen(false) : undefined
   const pathname = usePathname()
   const isActive = pathname === navItem.href
 

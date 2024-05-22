@@ -84,7 +84,7 @@ export default function UserTable() {
         fullWidth
         classNames={{
           wrapper: "h-full p-0 rounded-lg",
-          base: "grid grid-rows-[auto_minmax(0,1fr)] max-h-full",
+          base: "@container/users grid grid-rows-[auto_minmax(0,1fr)] max-h-full",
           thead: "[&>tr]:!rounded-none",
           th: "!rounded-none",
         }}
@@ -97,11 +97,11 @@ export default function UserTable() {
         }}
         topContentPlacement="outside"
         topContent={
-          <div className="flex flex-wrap justify-start space-x-0 space-y-2 lg:space-x-2 lg:space-y-0">
+          <div className="flex flex-wrap justify-start space-x-0 space-y-2 @[700px]/users:space-x-2 @[700px]/users:space-y-0">
             <Input
               variant="bordered"
               placeholder="Search"
-              className="w-full grow lg:w-auto"
+              className="w-full grow @[700px]/users:w-auto"
               startContent={<Icon path={mdiMagnify} className="w-6 text-default-500" />}
               value={search}
               onValueChange={setSearch}
