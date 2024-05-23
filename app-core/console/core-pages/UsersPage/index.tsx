@@ -1,7 +1,6 @@
 "use client"
 
 import UserTable from "@/~sml-os-kit/auth/components/UserTable"
-import PageLayout from "@/~sml-os-kit/common/components/PageLayout"
 
 export default function UsersPage() {
   return (
