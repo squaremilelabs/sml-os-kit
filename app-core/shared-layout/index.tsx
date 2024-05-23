@@ -76,7 +76,11 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
         {/* CANVAS */}
         <section className={`${navOpen ? "ml-72" : "ml-0"} h-screen transition-all`}>
           <div
-            className={`@container/main ${navOpen ? "pt-0 opacity-0 md:opacity-100" : "pt-[50px]"} flex h-full h-screen flex-col overflow-auto transition-all`}
+            className={twMerge(
+              "@container/main",
+              navOpen ? "pt-0 opacity-0 md:opacity-100" : "pt-[50px]",
+              `flex h-screen flex-col items-center overflow-auto transition-all`
+            )}
           >
             {children}
           </div>

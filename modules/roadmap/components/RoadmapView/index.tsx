@@ -28,7 +28,7 @@ export default function RoadmapView({
   }
 
   return (
-    <div className="grid h-full w-full grid-rows-[auto_auto_1fr] gap-4 p-4">
+    <div className="w-olg grid h-full max-w-full grid-rows-[auto_auto_1fr] gap-4 p-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-medium">Roadmap</h1>
         <Button

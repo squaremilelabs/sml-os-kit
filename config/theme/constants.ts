@@ -24,7 +24,19 @@ export const coreTailwindConfig: Config = {
     },
   ],
   theme: {
+    containers: {
+      osm: "576px",
+      omd: "864px",
+      olg: "1152px",
+      oxl: "1440px",
+    },
     extend: {
+      width: {
+        osm: "576px",
+        omd: "864px",
+        olg: "1152px",
+        oxl: "1440px",
+      },
       fontFamily: {
         sans: ["var(--font-sans)"],
       },
