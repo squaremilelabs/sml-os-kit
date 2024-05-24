@@ -83,10 +83,8 @@ export default function UserTable() {
         aria-label="Users table"
         fullWidth
         classNames={{
-          wrapper: "h-full p-0 rounded-lg",
-          base: "@container/usersTable max-w-full grid grid-rows-[auto_minmax(0,1fr)] max-h-full",
-          thead: "[&>tr]:!rounded-none",
-          th: "!rounded-none",
+          wrapper: "h-full",
+          base: "@container",
         }}
         isHeaderSticky
         selectionMode="single"
@@ -97,11 +95,11 @@ export default function UserTable() {
         }}
         topContentPlacement="outside"
         topContent={
-          <div className="@omd/usersTable:space-x-2 @omd/usersTable:space-y-0 flex flex-wrap justify-start space-x-0 space-y-2">
+          <div className="flex flex-wrap justify-start space-x-0 space-y-2 @omd:space-x-2 @omd:space-y-0">
             <Input
               variant="bordered"
               placeholder="Search"
-              className="@omd/usersTable:w-auto w-full grow"
+              className="w-full grow @omd:w-auto"
               startContent={<Icon path={mdiMagnify} className="w-6 text-default-500" />}
               value={search}
               onValueChange={setSearch}

@@ -64,7 +64,7 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
             </div>
           </div>
         </section>
-        {/* HEADER */}
+        {/* HEADER WHEN NAV IS CLOSED */}
         <section
           className={`fixed left-0 ${navOpen ? "top-[-50px]" : "top-0"} z-50 flex h-[50px] w-full flex-row items-center justify-between space-x-1 bg-background px-4 transition-all`}
         >
@@ -77,7 +77,7 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
         <section className={`${navOpen ? "ml-72" : "ml-0"} h-screen transition-all`}>
           <div
             className={twMerge(
-              "@container/main",
+              "@container/canvas",
               navOpen ? "pt-0 opacity-0 md:opacity-100" : "pt-[50px]",
               `flex h-screen flex-col items-center overflow-auto transition-all`
             )}
