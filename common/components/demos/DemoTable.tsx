@@ -70,11 +70,11 @@ export default function DemoTable({
         hideTopContent ? (
           <div />
         ) : (
-          <div className="flex flex-wrap justify-start space-x-0 space-y-2 lg:space-x-2 lg:space-y-0">
+          <div className="flex flex-wrap justify-start space-x-0 space-y-2 @omd:space-x-2 @omd:space-y-0">
             <Input
               variant="bordered"
               placeholder="Search"
-              className="w-full grow lg:w-auto"
+              className="w-full grow @omd:w-auto"
               startContent={<Icon path={mdiMagnify} className="w-6 text-default-500" />}
             />
             <div className="flex flex-row space-x-2">
