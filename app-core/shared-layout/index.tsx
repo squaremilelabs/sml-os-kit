@@ -34,14 +34,14 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
           className={twMerge(
             "fixed top-0",
             `${navOpen ? "left-0 opacity-100" : "-left-oxs opacity-0"}`,
-            `border-default-200 bg-content2 z-50 flex h-screen w-oxs max-w-full flex-col space-y-4 rounded-r-sm border-r-1 py-4 transition-all`
+            `z-50 flex h-screen w-oxs max-w-full flex-col space-y-4 rounded-r-sm border-r-1 border-default-200 bg-content2 py-4 transition-all`
           )}
         >
           <div className="flex w-full flex-row items-center justify-between space-x-1 px-4">
             <BrandLogotype title={portal?.title ?? brandConfig.appName} />
             <Button
               isIconOnly
-              className="text-foreground md:text-default-400 transition-all"
+              className="text-foreground transition-all md:text-default-400"
               size="sm"
               variant="light"
               onPress={() => setNavOpen(false)}
@@ -70,7 +70,7 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
         <section
           className={twMerge(
             navOpen ? "top-[-36px]" : "top-0",
-            `bg-background fixed left-0 z-50 flex h-[36px] w-full flex-row items-center justify-between space-x-1 px-2 transition-all`
+            `fixed left-0 z-50 flex h-[36px] w-full flex-row items-center justify-between space-x-1 bg-background px-2 transition-all`
           )}
         >
           <button onClick={() => setNavOpen(true)}>

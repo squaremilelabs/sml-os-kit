@@ -65,6 +65,7 @@ function NavGroup({ navItem }: { navItem: INavGroup }) {
           return (
             <Button
               as={Link}
+              target={innerNavItem.type === "link" ? "_blank" : undefined}
               key={innerNavItem.href}
               href={innerNavItem.href}
               className={twMerge(
@@ -97,6 +98,7 @@ function NavItem({ navItem }: { navItem: NavPageOrLink }) {
     <Button
       as={Link}
       href={navItem.href}
+      target={navItem.type === "link" ? "_blank" : undefined}
       className={twMerge(
         "h-9 min-h-9 justify-start gap-0 truncate rounded-none border-b-1 border-default-200 p-1 text-sm",
         isActive ? "font-semibold text-primary-600" : null
