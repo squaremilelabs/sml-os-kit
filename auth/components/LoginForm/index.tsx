@@ -28,7 +28,7 @@ export default function LoginForm() {
 
   return (
     <form
-      className="flex w-full flex-col items-stretch space-y-4 rounded-lg bg-content2 p-8 shadow md:w-96"
+      className="flex w-full flex-col items-stretch space-y-4 rounded-lg border border-default-200 p-8 md:w-96"
       onSubmit={handleSubmit}
     >
       {mutation.isSuccess ? (
@@ -47,7 +47,6 @@ export default function LoginForm() {
           <Input
             type="email"
             label="Email"
-            variant="bordered"
             value={email}
             onValueChange={(value) => setEmail(value)}
             isInvalid={mutation.isError}

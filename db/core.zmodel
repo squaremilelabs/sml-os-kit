@@ -32,9 +32,9 @@ model x_os_auth_role {
 abstract model ModelWithMetadata {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  createdBy String   @default("system")
+  createdBy String   @default(auth().id)
   updatedAt DateTime @updatedAt
-  updatedBy String   @default("system")
+  updatedBy String   @default(auth().id)
 }
 
 model ApiLog {

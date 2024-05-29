@@ -27,12 +27,14 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
   return (
     <AuthWrapper>
       <main>
-        {/* NAVIGATION */}
+        {/* NAVIGATION DRAWER */}
         <section
+          role="navigation"
+          aria-hidden={!navOpen}
           className={twMerge(
             "fixed top-0",
-            `${navOpen ? "left-0 opacity-100" : "-left-[768px] opacity-0"}`,
-            `z-50 flex h-screen w-screen flex-col space-y-4 rounded-r-sm border-r-1 border-default-200 bg-content2 py-4 transition-all md:w-72`
+            `${navOpen ? "left-0 opacity-100" : "-left-oxs opacity-0"}`,
+            `z-50 flex h-screen w-oxs max-w-full flex-col space-y-4 rounded-r-sm border-r-1 border-default-200 bg-content2 py-4 transition-all`
           )}
         >
           <div className="flex w-full flex-row items-center justify-between space-x-1 px-4">
@@ -66,19 +68,27 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
         </section>
         {/* HEADER WHEN NAV IS CLOSED */}
         <section
-          className={`fixed left-0 ${navOpen ? "top-[-50px]" : "top-0"} z-50 flex h-[50px] w-full flex-row items-center justify-between space-x-1 bg-background px-4 transition-all`}
+          className={twMerge(
+            navOpen ? "top-[-36px]" : "top-0",
+            `fixed left-0 z-50 flex h-[36px] w-full flex-row items-center justify-between space-x-1 bg-background px-2 transition-all`
+          )}
         >
-          <BrandLogotype title={portal?.title ?? brandConfig.appName} size="sm" />
+          <button onClick={() => setNavOpen(true)}>
+            <BrandLogotype title={portal?.title ?? brandConfig.appName} size="sm" />
+          </button>
           <Button isIconOnly size="sm" variant="light" onPress={() => setNavOpen(true)}>
             <Icon path={mdiMenu} size="24px" />
           </Button>
         </section>
         {/* CANVAS */}
-        <section className={`${navOpen ? "ml-72" : "ml-0"} h-screen transition-all`}>
+        <section
+          className={`${navOpen ? "ml-0 cursor-pointer blur-sm md:ml-oxs md:cursor-auto md:blur-none" : "ml-0"} h-screen transition-all`}
+          onClick={() => (breakpoint < 3 && navOpen ? setNavOpen(false) : null)}
+        >
           <div
             className={twMerge(
               "@container/canvas",
-              navOpen ? "pt-0 opacity-0 md:opacity-100" : "pt-[50px]",
+              navOpen ? "pointer-events-none pt-0 md:pointer-events-auto" : "pt-[36px]",
               `flex h-screen flex-col items-center overflow-auto transition-all`
             )}
           >

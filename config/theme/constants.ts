@@ -12,26 +12,23 @@ export const coreTailwindConfig: Config = {
   safelist: [
     {
       pattern:
-        /bg-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuschia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
+        /(bg|text|border)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuschia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
     },
     {
-      pattern:
-        /text-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuschia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
-    },
-    {
-      pattern:
-        /border-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuschia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
+      pattern: /(w|max-w|min-w)-(oxs|osm|omd|olg|oxl)/,
     },
   ],
   theme: {
     containers: {
+      oxs: "288px",
       osm: "576px",
       omd: "864px",
       olg: "1152px",
       oxl: "1440px",
     },
     extend: {
-      width: {
+      spacing: {
+        oxs: "288px",
         osm: "576px",
         omd: "864px",
         olg: "1152px",
