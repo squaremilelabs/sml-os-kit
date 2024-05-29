@@ -145,7 +145,7 @@ export default function UserModal({
   })
 
   const consoleRoles = authConfig.roles.console
-  const portalRoles = authConfig.roles.portal
+  const portalRoles = authConfig.roles.portal ?? []
   const allRoles = [...consoleRoles, ...portalRoles]
 
   // Various helpers for UI
@@ -317,7 +317,7 @@ export default function UserModal({
                     ) : null}
                   </div>
                   {saveMutation.isError ? (
-                    <span className="text-right text-sm text-danger">
+                    <span className="text-danger text-right text-sm">
                       {saveMutation.error.message}
                     </span>
                   ) : null}

@@ -8,7 +8,7 @@ import { PortalId } from "@/$sml-os-config/site"
 export interface AuthConfig {
   roles: {
     console: ConsoleRole[]
-    portal: PortalRole[]
+    portal?: PortalRole[]
   }
 }
 
