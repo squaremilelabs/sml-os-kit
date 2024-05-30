@@ -27,6 +27,12 @@ export const coreTailwindConfig: Config = {
       oxl: "1440px",
     },
     extend: {
+      borderRadius: {
+        sm: "4px",
+        md: "4px",
+        DEFAULT: "4px",
+        lg: "8px",
+      },
       spacing: {
         oxs: "288px",
         osm: "576px",
@@ -50,4 +56,16 @@ export const coreTailwindConfig: Config = {
 export const coreNextUIPluginConfig: NextUIPluginConfig = {
   addCommonColors: true,
   themes: getColorThemes(),
+  layout: {
+    radius: {
+      small: "4px",
+      medium: "4px",
+      large: "8px",
+    },
+    borderWidth: {
+      small: "1px",
+      medium: "1px",
+      large: "2px",
+    },
+  },
 }
