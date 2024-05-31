@@ -7,5 +7,5 @@ export default function BrandLogo(imageProps: Omit<ImageProps, "src" | "alt">) {
   const imageSrc =
     theme === "light" ? brandConfig?.assetPaths?.logoOnLight : brandConfig?.assetPaths?.logoOnDark
   const imageAlt = brandConfig?.orgSlug
-  return <Image src={imageSrc} alt={imageAlt} {...imageProps} />
+  return <Image src={imageSrc} alt={imageAlt} radius="none" {...imageProps} />
 }
