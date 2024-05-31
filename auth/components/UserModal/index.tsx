@@ -317,7 +317,7 @@ export default function UserModal({
                     ) : null}
                   </div>
                   {saveMutation.isError ? (
-                    <span className="text-danger text-right text-sm">
+                    <span className="text-right text-sm text-danger">
                       {saveMutation.error.message}
                     </span>
                   ) : null}
