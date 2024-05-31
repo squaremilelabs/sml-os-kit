@@ -4,7 +4,7 @@ import NavItems from "./parts/NavItems"
 import useNavState from "./parts/useNavState"
 import { Button } from "@nextui-org/react"
 import Icon from "@mdi/react"
-import { mdiMenu, mdiMenuClose } from "@mdi/js"
+import { mdiMenu, mdiMenuClose, mdiOpenInNew } from "@mdi/js"
 import ConsoleUser from "@/~sml-os-kit/app-core/shared-layout/parts/ConsoleUser"
 import ThemeSwitch from "@/~sml-os-kit/app-core/shared-layout/parts/ThemeSwitch"
 import RoadmapNavButton from "@/~sml-os-kit/modules/roadmap/components/RoadmapNavButton"
@@ -16,6 +16,7 @@ import AuthWrapper from "@/~sml-os-kit/auth/wrapper"
 import PortalUser from "@/~sml-os-kit/app-core/shared-layout/parts/PortalUser"
 import { twMerge } from "tailwind-merge"
 import useScreenBreakpoint from "@/~sml-os-kit/common/hooks/useScreenBreakpoint"
+import Link from "next/link"
 
 export default function SharedLayout({ children }: { children?: React.ReactNode }) {
   const pathname = usePathname()
@@ -61,7 +62,17 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
                   onPress={navOpen && breakpoint < 3 ? () => setNavOpen(false) : undefined}
                 />
               ) : (
-                <p className="text-tiny font-medium">{brandConfig.orgName}</p>
+                <Button
+                  as={Link}
+                  size="sm"
+                  target="_blank"
+                  variant="flat"
+                  href={brandConfig.orgWebsite}
+                  className="grow justify-between"
+                  endContent={<Icon path={mdiOpenInNew} className="w-4" />}
+                >
+                  {brandConfig.orgName}
+                </Button>
               )}
             </div>
           </div>
