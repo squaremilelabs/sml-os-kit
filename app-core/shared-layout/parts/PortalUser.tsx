@@ -54,9 +54,7 @@ export default function PortalUser() {
           }
           endContent={<Icon path={mdiChevronDown} className="w-4" />}
         >
-          <span className="grow truncate text-left text-xs">
-            {portalUser?.displayName ?? portalUser?.email}
-          </span>
+          <span className="grow truncate text-left text-xs">{portalUser?.email}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="flex w-52 flex-col items-stretch space-y-2 bg-content2 p-2">
