@@ -44,6 +44,7 @@ export default function DemoTable({
   onRowAction = console.log,
   hideTopContent = false,
   hideBottomContent = false,
+  hideActions = false,
 }: {
   columns: DemoTableColumn[]
   items: DemoTableItem[]
@@ -51,6 +52,7 @@ export default function DemoTable({
   hideBottomContent?: boolean
   selectionMode?: TableProps["selectionMode"]
   onRowAction?: TableProps["onRowAction"]
+  hideActions?: boolean
 }) {
   return (
     <Table
@@ -70,30 +72,36 @@ export default function DemoTable({
         hideTopContent ? (
           <div />
         ) : (
-          <div className="flex flex-wrap justify-start space-x-0 space-y-2 @omd:space-x-2 @omd:space-y-0">
+          <div
+            className={twMerge(
+              "flex flex-wrap justify-start space-x-0 space-y-2 @omd:space-x-2 @omd:space-y-0"
+            )}
+          >
             <Input
               variant="bordered"
               placeholder="Search"
               className="w-full grow @omd:w-auto"
               startContent={<Icon path={mdiMagnify} className="w-6 text-default-500" />}
             />
-            <div className="flex flex-row space-x-2">
-              <Button
-                variant="bordered"
-                endContent={<Icon path={mdiFilterVariant} className="w-6 text-default-500" />}
-              >
-                Filters
-              </Button>
-              <Button
-                variant="bordered"
-                endContent={<Icon path={mdiTableCog} className="w-6 text-default-500" />}
-              >
-                Columns
-              </Button>
-              <Button color="primary" startContent={<Icon path={mdiPlus} className="w-6" />}>
-                New
-              </Button>
-            </div>
+            {hideActions ? null : (
+              <div className="flex flex-row space-x-2">
+                <Button
+                  variant="bordered"
+                  endContent={<Icon path={mdiFilterVariant} className="w-6 text-default-500" />}
+                >
+                  Filters
+                </Button>
+                <Button
+                  variant="bordered"
+                  endContent={<Icon path={mdiTableCog} className="w-6 text-default-500" />}
+                >
+                  Columns
+                </Button>
+                <Button color="primary" startContent={<Icon path={mdiPlus} className="w-6" />}>
+                  New
+                </Button>
+              </div>
+            )}
           </div>
         )
       }
