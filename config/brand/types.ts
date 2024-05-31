@@ -4,6 +4,7 @@ export interface BrandConfig {
   orgNamePossesive: string
   orgTicker: string
   orgSlug: string
+  orgWebsite: string
   assetPaths: {
     logoOnLight: string
     logoOnDark: string
