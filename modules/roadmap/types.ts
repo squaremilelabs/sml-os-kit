@@ -2,6 +2,7 @@ export type RoadmapItemType = "ticket" | "patch" | "feature"
 export type RoadmapStatusGroupName = "Open" | "Active" | "Closed"
 export interface RoadmapItem {
   id: string
+  url: string
   type: RoadmapItemType
   title: string
   description?: string

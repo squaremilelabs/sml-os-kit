@@ -35,14 +35,24 @@ export default async function _fetchRoadmapItems({
   const database = await notion.databases.retrieve({ database_id: databaseId })
   const statusOptions = extractStatusOptionsWithGroups(database.properties["Status"])
 
-  const sorts: QueryDatabaseParameters["sorts"] = [
-    { property: "Closed Date", direction: "descending" },
-    { property: "Status", direction: "descending" },
-    { timestamp: "created_time", direction: "descending" },
-  ]
+  let sorts: QueryDatabaseParameters["sorts"] = []
 
-  if (type !== "feature") {
-    sorts.unshift({ property: "Urgent", direction: "descending" })
+  if (type === "ticket" || type === "patch") {
+    sorts = [
+      { property: "Urgent", direction: "descending" },
+      { property: "Closed Date", direction: "descending" },
+      { property: "Status", direction: "descending" },
+      { timestamp: "created_time", direction: "descending" },
+    ]
+  }
+
+  if (type === "feature") {
+    sorts = [
+      { property: "Closed Date", direction: "descending" },
+      { property: "Status", direction: "descending" },
+      { property: "Impact", direction: "ascending" },
+      { timestamp: "created_time", direction: "descending" },
+    ]
   }
 
   const queryResponse = await notion.databases.query({
@@ -82,7 +92,8 @@ export default async function _fetchRoadmapItems({
     const ticketSubmittersProperty = item.properties["Ticket Submitters"]
     return {
       type,
-      id: rawItem.id,
+      id: item.id,
+      url: item.public_url ?? item.url,
       title: titleProperty?.type === "title" ? titleProperty.title?.[0]?.plain_text : "(Untitled)",
       description:
         descriptionProperty?.type === "rich_text"

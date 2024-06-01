@@ -4,10 +4,11 @@ import {
   RoadmapItemType,
   RoadmapStatusGroupName,
 } from "@/~sml-os-kit/modules/roadmap/types"
-import { mdiCircleOutline, mdiCircleSlice5, mdiCircleSlice8 } from "@mdi/js"
+import { mdiCircleOutline, mdiCircleSlice5, mdiCircleSlice8, mdiOpenInNew } from "@mdi/js"
 import Icon from "@mdi/react"
-import { Card, CardBody, Chip, Skeleton } from "@nextui-org/react"
+import { Button, Card, CardBody, Chip, Image, Skeleton } from "@nextui-org/react"
 import { useTheme } from "next-themes"
+import Link from "next/link"
 import { useLayoutEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
 
@@ -89,22 +90,40 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
                       <CardBody className="space-y-1 px-3 py-2">
                         <p className="text-sm font-semibold">{item.title}</p>
                         <p className="whitespace-pre-line text-tiny">{item.description}</p>
-                        <div className="flex items-center space-x-2">
-                          {item.urgent ? (
-                            <Chip color="danger" size="sm">
-                              Urgent
+                        <div className="flex w-full items-center justify-between space-x-2">
+                          <div className="flex items-center space-x-2">
+                            {item.urgent ? (
+                              <Chip color="danger" size="sm">
+                                Urgent
+                              </Chip>
+                            ) : null}
+                            <Chip
+                              variant="dot"
+                              size="sm"
+                              classNames={{
+                                dot: `bg-${item.status?.color}-500`,
+                                content: `text-${item.status?.color}-500`,
+                              }}
+                            >
+                              {item.status?.name}
                             </Chip>
-                          ) : null}
-                          <Chip
-                            variant="dot"
-                            size="sm"
-                            classNames={{
-                              dot: `bg-${item.status?.color}-500`,
-                              content: `text-${item.status?.color}-500`,
-                            }}
-                          >
-                            {item.status?.name}
-                          </Chip>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              as={Link}
+                              href={item.url}
+                              target="_blank"
+                              variant="bordered"
+                              isIconOnly
+                              className="h-fit min-h-0 w-fit min-w-0 p-1"
+                            >
+                              <Image
+                                alt="Notion"
+                                src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png"
+                                className="w-4 rounded-none"
+                              />
+                            </Button>
+                          </div>
                         </div>
                       </CardBody>
                     </Card>
