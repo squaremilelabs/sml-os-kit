@@ -34,7 +34,7 @@ export default function usePortal() {
     async <M extends APIMethod, E extends EndpointConfig>(
       input: Parameters<typeof internalAPI<M, E>>[0]
     ) => {
-      return _runSafeServerAction(internalAPI<M, E>, { ...input, asUserId: portalUser?.id })
+      return internalAPI<M, E>({ ...input, asUserId: portalUser?.id })
     },
     [portalUser]
   )
