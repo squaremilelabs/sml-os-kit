@@ -54,7 +54,7 @@ export default function SharedLayout({ children }: { children?: React.ReactNode 
           <div className="flex h-fit flex-col items-stretch space-y-2 px-4">
             {basePath === "console" ? <ConsoleUser /> : null}
             {basePath === "portal" ? <PortalUser /> : null}
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-stretch space-x-1">
               <ThemeSwitch />
               {basePath === "console" ? (
                 <RoadmapNavButton

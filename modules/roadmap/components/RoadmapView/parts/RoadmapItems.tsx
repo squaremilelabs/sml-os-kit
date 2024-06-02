@@ -1,3 +1,5 @@
+"use client"
+
 import useRoadmapItemsQuery from "@/~sml-os-kit/modules/roadmap/hooks/useRoadmapItemsQuery"
 import {
   RoadmapItem,
@@ -20,7 +22,7 @@ const itemGroups: { group: RoadmapStatusGroupName; color: string; iconPath: stri
 
 export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
   const itemsQuery = useRoadmapItemsQuery({ type })
-  const { theme } = useTheme()
+  const { resolvedTheme: theme } = useTheme()
 
   // Setting this up now to prepare for adding client-side filters
   const [displayedItems, setDisplayedItems] = useState<RoadmapItem[]>([])
@@ -31,7 +33,7 @@ export default function RoadmapItems({ type }: { type: RoadmapItemType }) {
   }, [itemsQuery.data])
 
   return (
-    <div className="flex grid h-full w-full grid-cols-[repeat(3,minmax(300px,1fr))] overflow-x-auto rounded border border-default-200 shadow-lg">
+    <div className="grid h-full w-full grid-cols-[repeat(3,minmax(300px,1fr))] overflow-x-auto rounded border border-default-200 shadow-lg">
       {itemsQuery.isError ? (
         <>
           <div />

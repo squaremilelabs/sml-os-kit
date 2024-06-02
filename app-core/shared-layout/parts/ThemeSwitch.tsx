@@ -1,39 +1,42 @@
 "use client"
 
-import { mdiWeatherNight, mdiWeatherSunny } from "@mdi/js"
+import { mdiLaptop, mdiWeatherNight, mdiWeatherSunny } from "@mdi/js"
 import Icon from "@mdi/react"
-import { Switch } from "@nextui-org/react"
+import { Button, ButtonGroup } from "@nextui-org/react"
 import { useTheme } from "next-themes"
-import { useLayoutEffect, useState } from "react"
+import { twMerge } from "tailwind-merge"
 
-export default function ThemeSwitch({
-  size = "md",
-  withLabel,
-}: {
-  size?: "sm" | "md" | "lg"
-  withLabel?: boolean
-}) {
+export default function ThemeSwitch() {
   const { theme, setTheme } = useTheme()
-  const [isSelected, setIsSelected] = useState(false) // selected == "dark"
 
-  useLayoutEffect(() => {
-    setIsSelected(theme === "dark")
-  }, [theme])
+  const baseClassName = "h-fit min-h-0 w-fit min-w-0 p-2 bg-content3 text-default-800"
+  const selectedClassName = "bg-content4"
 
   return (
-    <Switch
-      isSelected={isSelected}
-      onValueChange={() => setTheme(theme === "light" ? "dark" : "light")}
-      size={size}
-      color="default"
-      endContent={<Icon path={mdiWeatherSunny} />}
-      startContent={<Icon path={mdiWeatherNight} />}
-      classNames={{
-        wrapper: "rounded-lg group-data-[selected=true]:bg-default-200",
-        label: "text-xs",
-      }}
-    >
-      {withLabel ? (theme === "dark" ? "Dark mode" : "Light mode") : ""}
-    </Switch>
+    <>
+      <ButtonGroup>
+        <Button
+          isIconOnly
+          className={twMerge(baseClassName, theme === "light" ? selectedClassName : null)}
+          onPress={() => setTheme("light")}
+        >
+          <Icon path={mdiWeatherSunny} className="w-4" />
+        </Button>
+        <Button
+          isIconOnly
+          className={twMerge(baseClassName, theme === "dark" ? selectedClassName : null)}
+          onPress={() => setTheme("dark")}
+        >
+          <Icon path={mdiWeatherNight} className="w-4" />
+        </Button>
+        <Button
+          isIconOnly
+          className={twMerge(baseClassName, theme === "system" ? selectedClassName : null)}
+          onPress={() => setTheme("system")}
+        >
+          <Icon path={mdiLaptop} className="w-4" />
+        </Button>
+      </ButtonGroup>
+    </>
   )
 }
