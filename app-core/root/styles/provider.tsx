@@ -8,9 +8,7 @@ import React from "react"
 export function StyleProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
-      <NextThemeProvider attribute="class" defaultTheme="light">
-        {children}
-      </NextThemeProvider>
+      <NextThemeProvider attribute="class">{children}</NextThemeProvider>
     </NextUIProvider>
   )
 }
