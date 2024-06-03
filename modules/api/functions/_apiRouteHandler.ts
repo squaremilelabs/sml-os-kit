@@ -2,17 +2,7 @@ import { NextRequest } from "next/server"
 import { OSUser } from "../../../auth/types"
 import { APIErrorResponseJson, APIErrorStatusCode, APISuccessStatusCode } from "../types"
 import _constructNextAPIResponse from "./_constructNextAPIResonse"
-import _getOSUserFromAccessToken from "../../../auth/functions/_getOSUserFromAccessToken"
-import _getOSUserFromSessionCookie from "../../../auth/functions/_getOSUserFromSessionCookie"
 import jsonifyError from "@/~sml-os-kit/common/functions/jsonifyError"
-import _getOSUser from "../../../auth/functions/_getOSUser"
-import {
-  authActorHeaderName,
-  authCookieName,
-  authTokenHeaderName,
-} from "@/~sml-os-kit/config/auth/constants"
-import siteConfig from "@/$sml-os-config/site"
-import getPortalConfigFromPathname from "@/~sml-os-kit/modules/portal-utils/getPortalConfigFromPathname"
 import prisma from "@/~sml-os-kit/db/prisma"
 import _authenticateAPIRoute from "@/~sml-os-kit/modules/api/functions/_authenticateAPIRoute"
 import _authorizeAPIRoute from "@/~sml-os-kit/modules/api/functions/_authorizeAPIRoute"
@@ -103,7 +93,6 @@ export default async function _apiRouteHandler<ExpectedSuccessJson>(
       payload,
       searchParams,
     })
-
     if (!skipLog) {
       const logData = {
         userId: authentication.authUser?.id ?? "system",
