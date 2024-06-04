@@ -2,7 +2,6 @@ import { PipeFunction } from "./types"
 import { authCookieName, authTokenHeaderName } from "@/~sml-os-kit/config/auth/constants"
 import _getOSUserFromAccessToken from "@/~sml-os-kit/auth/functions/_getOSUserFromAccessToken"
 import _getOSUserFromSessionCookie from "@/~sml-os-kit/auth/functions/_getOSUserFromSessionCookie"
-import _constructNextAPIResponse from "@/~sml-os-kit/modules/api/functions/_constructNextAPIResonse"
 import { OSUser } from "@/~sml-os-kit/auth/types"
 import APIError from "@/~sml-os-kit/modules/api/error"
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { Next, NextContext, PipeFunctionOrHandler } from "./types"
+import { Next, PipeFunctionOrHandler } from "./types"
 
 type ExtractType<T> = T extends PipeFunctionOrHandler<infer U> ? U : never
 export type ExtractMiddlewareContext<T extends any[]> = {
@@ -7,14 +7,14 @@ export type ExtractMiddlewareContext<T extends any[]> = {
 }[number]
 
 export function pipe(...pipeFunctions: PipeFunctionOrHandler<any>[]) {
-  return async function internalHandler(req: NextRequest, context: NextContext) {
+  return async function internalHandler(req: NextRequest, context: any) {
     return await startPiping(req, context, pipeFunctions, 0)
   }
 }
 
 async function startPiping(
   req: NextRequest,
-  context: NextContext,
+  context: any,
   pipeFunctions: PipeFunctionOrHandler<any>[],
   currentPipeFunctionIndex: number
 ) {

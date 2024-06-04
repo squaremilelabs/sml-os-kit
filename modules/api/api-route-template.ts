@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // ^ only disabled for the template. this should be removed when implemented.
 
-import jsonifyError from "@/~sml-os-kit/common/functions/jsonifyError"
-import _apiRouteHandler from "@/~sml-os-kit/modules/api/functions/_apiRouteHandler"
 import { APISuccessResponseJson, EndpointConfig } from "@/~sml-os-kit/modules/api/types"
-import { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
+import {
+  pipe,
+  ExtractMiddlewareContext,
+  withAuthentication,
+  withLogger,
+  withErrorHandler,
+  Handler,
+} from "@/~sml-os-kit/modules/api/middleware"
 
 /* 
   Template Usage Steps:
@@ -52,134 +58,36 @@ interface Endpoint extends EndpointConfig {
   }
 }
 
-/* --------------------- GET ---------------------- */
-export async function GET(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
-  return _apiRouteHandler<Endpoint["get"]["response"]>({ request, skipLog: true }, async (info) => {
-    try {
-      /* 
+/* --------------------- MIDDLEWARE ---------------------- */
+const middlewares = [withErrorHandler, withLogger, withAuthentication]
+type MiddlewareContext = ExtractMiddlewareContext<typeof middlewares> & {
+  params: Endpoint["endpointParams"]
+}
 
-        Replace with logic
-        (make sure to set `response`)
-      
-      */
-      return {
-        type: "success",
-        status: 200,
-        json: {
-          meta: {
-            affectedModels: [],
-          },
-        },
-      }
-    } catch (error: Error & any) {
-      return {
-        type: "error",
-        status: 400,
-        json: {
-          source: error?.cause ?? "business",
-          message: error?.message ?? "Could not complete request",
-          fullError: jsonifyError(error),
-        },
-      }
-    }
+/* NOTE: You can specify unique middleware for each method if needed - just extract a new type to pass in to the corresponding handler */
+
+/* --------------------- GET ---------------------- */
+const GETHandler: Handler<MiddlewareContext> = async (request, context) => {
+  return NextResponse.json<Endpoint["get"]["response"]>({
+    meta: { affectedModels: [] },
   })
 }
+export const GET = pipe(...middlewares, GETHandler)
 
 /* --------------------- PUT ---------------------- */
-export async function PUT(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
-  return _apiRouteHandler<Endpoint["put"]["response"]>({ request }, async (info) => {
-    try {
-      /* 
-
-        Replace with logic
-        (make sure to set `response`)
-      
-      */
-      return {
-        type: "success",
-        status: 200,
-        json: {
-          meta: {
-            affectedModels: [],
-          },
-        },
-      }
-    } catch (error: Error & any) {
-      return {
-        type: "error",
-        status: 400,
-        json: {
-          source: error?.cause ?? "business",
-          message: error?.message ?? "Could not complete request",
-          fullError: jsonifyError(error),
-        },
-      }
-    }
-  })
+const PUTHandler: Handler<MiddlewareContext> = async (request, context) => {
+  return NextResponse.json<Endpoint["put"]["response"]>({ meta: { affectedModels: [] } })
 }
+export const PUT = pipe(...middlewares, PUTHandler)
 
 /* --------------------- POST ---------------------- */
-export async function POST(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
-  return _apiRouteHandler<Endpoint["post"]["response"]>({ request }, async (info) => {
-    try {
-      /* 
-
-        Replace with logic
-        (make sure to set `response`)
-      
-      */
-      return {
-        type: "success",
-        status: 200,
-        json: {
-          meta: {
-            affectedModels: [],
-          },
-        },
-      }
-    } catch (error: Error & any) {
-      return {
-        type: "error",
-        status: 400,
-        json: {
-          source: error?.cause ?? "business",
-          message: error?.message ?? "Could not complete request",
-          fullError: jsonifyError(error),
-        },
-      }
-    }
-  })
+const POSTHandler: Handler<MiddlewareContext> = async (request, context) => {
+  return NextResponse.json<Endpoint["post"]["response"]>({ meta: { affectedModels: [] } })
 }
+export const POST = pipe(...middlewares, POSTHandler)
 
 /* --------------------- DELETE ---------------------- */
-export async function DELETE(request: NextRequest, nextParams: Endpoint["endpointParams"]) {
-  return _apiRouteHandler<Endpoint["delete"]["response"]>({ request }, async (info) => {
-    try {
-      /* 
-
-        Replace with logic
-        (make sure to set `response`)
-      
-      */
-      return {
-        type: "success",
-        status: 200,
-        json: {
-          meta: {
-            affectedModels: [],
-          },
-        },
-      }
-    } catch (error: Error & any) {
-      return {
-        type: "error",
-        status: 400,
-        json: {
-          source: error?.cause ?? "business",
-          message: error?.message ?? "Could not complete request",
-          fullError: jsonifyError(error),
-        },
-      }
-    }
-  })
+const DELETEHandler: Handler<MiddlewareContext> = async (request, context) => {
+  return NextResponse.json<Endpoint["delete"]["response"]>({ meta: { affectedModels: [] } })
 }
+export const DELETE = pipe(...middlewares, DELETEHandler)
